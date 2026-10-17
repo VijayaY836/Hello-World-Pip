@@ -40,6 +40,9 @@
       <button class="ctrl" id="themeBtn" type="button" aria-pressed="false" aria-label="Switch to day mode">
         <span class="ctrl__icon" aria-hidden="true">☀️</span><span class="ctrl__label">day</span>
       </button>
+      <button class="ctrl" id="chaosBtn" type="button" aria-pressed="false" aria-label="Turn on chaos mode">
+        <span class="ctrl__icon" aria-hidden="true">🌀</span><span class="ctrl__label">chaos</span>
+      </button>
     </div>
   </header>
 
@@ -62,7 +65,7 @@
 
       <div class="hero__text">
         <p class="kicker">★ welcome to my homepage ★</p>
-        <h1 id="hello-title" class="hero__title">Pip</h1><br>
+        <h1 id="hello-title" class="hero__title">Pip</h1>
         <p class="hero__role">Junior Dream Engineer · <span>Midnight Nursery</span></p>
         <p class="hero__tagline">“I build the dreams you fall asleep inside.”</p>
 
@@ -289,6 +292,14 @@
               <label><input type="radio" name="labVoice" value="hum" /> <span>pip hum</span></label>
               <label><input type="radio" name="labVoice" value="chime" /> <span>chimes</span></label>
             </fieldset>
+            <fieldset class="seg seg--timer">
+              <legend>sleep timer</legend>
+              <label><input type="radio" name="labTimer" value="0" checked /> <span>off ∞</span></label>
+              <label><input type="radio" name="labTimer" value="30" /> <span>30s</span></label>
+              <label><input type="radio" name="labTimer" value="60" /> <span>1 min</span></label>
+              <label><input type="radio" name="labTimer" value="300" /> <span>5 min</span></label>
+              <label><input type="radio" name="labTimer" value="600" /> <span>10 min</span></label>
+            </fieldset>
             <div class="lab__tools">
               <button class="chip" id="labPreset" type="button">♫ pip’s lullaby</button>
               <button class="chip" id="labDream" type="button">✨ dream one up</button>
@@ -457,6 +468,12 @@
     <div class="foot__inner">
       <p class="foot__bye">goodnight! come back when you can’t sleep ♡</p>
       <p class="foot__hint">p.s. someone in town is still awake…</p>
+
+      <div class="odo-wrap">
+        <p class="odo__label" id="odoLabel">★ hit counter ★</p>
+        <div class="odo" id="odo" role="img" aria-label="loading"></div>
+        <p class="odo__caption" id="odoCaption">counting dreamers…</p>
+      </div>
 
       <ul class="badges" aria-label="Site badges">
         <li class="b88 b88--a">best at<br>2 a.m.</li>

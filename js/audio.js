@@ -165,19 +165,20 @@ export function bzzt() {
 }
 
 /** One note in the Lullaby Lab, in one of three voices. */
-export function voiceNote(freq, voice = 'box') {
-  if (!ready()) return;
+export function voiceNote(freq, voice = 'box', gain = 1) {
+  if (!ready() || gain <= 0.01) return;
+  const g = Math.min(1, gain);
   if (voice === 'hum') {
-    tone({ freq, dur: 0.7, type: 'triangle', vol: 0.1, attack: 0.05, vibrato: 5 });
-    tone({ freq: freq * 2, dur: 0.5, vol: 0.02, attack: 0.06 });
+    tone({ freq, dur: 0.7, type: 'triangle', vol: 0.1 * g, attack: 0.05, vibrato: 5 });
+    tone({ freq: freq * 2, dur: 0.5, vol: 0.02 * g, attack: 0.06 });
   } else if (voice === 'chime') {
-    tone({ freq: freq * 2, dur: 2.2, vol: 0.09, attack: 0.003 });
-    tone({ freq: freq * 2 * 2.76, dur: 0.9, vol: 0.02, attack: 0.002 });
-    tone({ freq: freq * 2 * 5.4, dur: 0.3, vol: 0.008, attack: 0.002 });
+    tone({ freq: freq * 2, dur: 2.2, vol: 0.09 * g, attack: 0.003 });
+    tone({ freq: freq * 2 * 2.76, dur: 0.9, vol: 0.02 * g, attack: 0.002 });
+    tone({ freq: freq * 2 * 5.4, dur: 0.3, vol: 0.008 * g, attack: 0.002 });
   } else {
-    tone({ freq: freq * 2, dur: 1.2, vol: 0.11, attack: 0.004 });
-    tone({ freq: freq * 2 * 3.01, dur: 0.3, vol: 0.022, attack: 0.002 });
-    tone({ freq: freq * 2 * 5.4, dur: 0.1, vol: 0.01, attack: 0.002 });
+    tone({ freq: freq * 2, dur: 1.2, vol: 0.11 * g, attack: 0.004 });
+    tone({ freq: freq * 2 * 3.01, dur: 0.3, vol: 0.022 * g, attack: 0.002 });
+    tone({ freq: freq * 2 * 5.4, dur: 0.1, vol: 0.01 * g, attack: 0.002 });
   }
 }
 
@@ -202,4 +203,21 @@ export function pageTurn() {
   src.buffer = buf;
   src.connect(filter).connect(gain).connect(master);
   src.start();
+}
+
+/** Baby-rattle click for buttons. */
+export function rattle() {
+  if (!ready()) return;
+  for (let i = 0; i < 3; i++) tone({ freq: 1700 + Math.random() * 900, t: i * 0.045, dur: 0.05, type: 'triangle', vol: 0.045 });
+}
+
+/** Two soft wind-chime notes for links. */
+export function windChime() {
+  if (!ready()) return;
+  const scale = [NOTE.C5, NOTE.D5, NOTE.E5, NOTE.G5, NOTE.A4 * 2];
+  for (let i = 0; i < 2; i++) {
+    const f = scale[Math.floor(Math.random() * scale.length)] * 2;
+    tone({ freq: f, t: i * 0.09, dur: 1.1, vol: 0.05 });
+    tone({ freq: f * 2.76, t: i * 0.09, dur: 0.4, vol: 0.01 });
+  }
 }

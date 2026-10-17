@@ -25,6 +25,17 @@ Long ago, a little ghost named Wisp couldn't fall asleep because nobody sang to 
 | **Tier 2 · Storybook** | "Mumble and the Very Big Dark", an original 10-page picture book with 3D page turns; buttons, ← → keys, swipe or tap |
 | **Tier 2 · Mini-game** | Catch the Dreams: 30-second canvas game, combos, alarm clocks to dodge, best score + all-time "dreams delivered" |
 
+### Side quests
+
+| Quest | How |
+|---|---|
+| ✨ Sparkle cursor trail | Canvas glitter that follows the pointer (theme-aware, rainbow in chaos mode, off for reduced-motion) |
+| 🔢 Hit counter odometer | Rolling odometer in the footer, backed by `api/hits.js` (Vercel function + Upstash Redis); falls back to an honest "your visits" count |
+| 🔊 Click sounds + mute | Buttons rattle, links wind-chime; mute switch always in the top bar |
+| 🌀 Responsive Chaos Mode | Toggle in the top bar: the chaos reshapes to the screen (shape-based personalities, stickers scale with screen area, re-tilts on resize, live W×H badge, DVD-style bouncing Pip) |
+
+The Lullaby Lab also has a **sleep timer** (off / 30s / 1 / 5 / 10 min) with a gentle fade-out.
+
 All sound is synthesized live with the Web Audio API, starts **off**, and has a mute switch that's always visible in the top bar.
 
 ## Run it
@@ -54,6 +65,11 @@ js/storybook.js  flip-page bedtime storybook
 js/nightroom.js  Lights-Out Nursery (flashlight cursor)
 js/game.js     Catch the Dreams mini-game
 js/fx.js       speech bubble, toast, star sparks
+js/sparkles.js sparkle cursor trail
+js/clicks.js   click sounds
+js/counter.js  hit counter odometer
+js/chaos.js    Responsive Chaos Mode
+api/hits.js    Vercel function for the site-wide hit counter
 assets/        3 WebP images from the official pack (cut out, optimized)
 ```
 

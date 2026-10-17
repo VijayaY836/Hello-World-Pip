@@ -11,6 +11,10 @@ import { initNightRoom } from './nightroom.js';
 import { initGame } from './game.js';
 import { initLab } from './lab.js';
 import { initStorybook } from './storybook.js';
+import { initSparkles } from './sparkles.js';
+import { initClickSounds } from './clicks.js';
+import { initCounter } from './counter.js';
+import { initChaos } from './chaos.js';
 
 const NIGHT_LINES = [
   "hi! i'm pip ♡",
@@ -75,5 +79,11 @@ initLab();
 initStorybook();
 initNightRoom();
 initGame();
+
+// --- Side quests ---
+initSparkles();
+initClickSounds();
+initCounter();
+initChaos();
 
 console.log('%c☾ hi, curious one! pip says: someone in town is still awake…', 'color:#ff9fbd;font:16px/1.4 monospace');

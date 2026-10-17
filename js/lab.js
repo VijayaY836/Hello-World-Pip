@@ -110,6 +110,20 @@ export function initLab() {
   let step = 0;
   let timer = 0;
 
+  // Sleep timer: 0 = play forever. Otherwise stop after N seconds, fading out over the last few.
+  const FADE_S = 4;
+  const timerSeconds = () => Number(lab.querySelector('input[name="labTimer"]:checked').value);
+  let endsAt = 0;          // performance.now() when playback should stop (0 = never)
+  let clock = 0;           // interval that refreshes the countdown text
+  let endedMessage = '';
+
+  function remaining() { return endsAt ? Math.max(0, (endsAt - performance.now()) / 1000) : Infinity; }
+  function armTimer() {
+    const secs = timerSeconds();
+    endsAt = playing && secs ? performance.now() + secs * 1000 : 0;
+  }
+  const fmt = (secs) => { const t = Math.ceil(secs); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; };
+
   function spawnNote() {
     const n = document.createElement('span');
     n.className = 'fly-note';
@@ -122,6 +136,9 @@ export function initLab() {
   }
 
   function tick() {
+    const left = remaining();
+    if (left <= 0) { finish(); return; }
+    const fade = Math.min(1, left / FADE_S); // gentle fade-out at the end of a timed lullaby
     cells.forEach((row) => row[(step + STEPS - 1) % STEPS].classList.remove('is-head'));
     let any = false;
     cells.forEach((row, r) => {
@@ -129,7 +146,7 @@ export function initLab() {
       cell.classList.add('is-head');
       if (pattern[step] & (1 << r)) {
         any = true;
-        voiceNote(ROWS[r][1], voice());
+        voiceNote(ROWS[r][1], voice(), fade);
         cell.classList.remove('is-ping'); void cell.offsetWidth; cell.classList.add('is-ping');
       }
     });
@@ -138,10 +155,16 @@ export function initLab() {
     timer = setTimeout(tick, tempo());
   }
 
+  function finish() {
+    endedMessage = '🌙 sleep timer finished. sweet dreams!';
+    setPlaying(false);
+  }
+
   function showStatus() {
     status.replaceChildren();
-    if (!playing) { status.textContent = ''; return; }
-    if (sound.on) { status.textContent = `♪ now playing: ${name}`; return; }
+    if (!playing) { status.textContent = endedMessage; return; }
+    const countdown = endsAt ? ` · 🌙 stops in ${fmt(remaining())}` : ' · ∞ playing until you stop it';
+    if (sound.on) { status.textContent = `♪ now playing: ${name}${countdown}`; return; }
     status.append('🔇 sound is off, so the stars are singing very quietly. ');
     const on = document.createElement('button');
     on.type = 'button';
@@ -155,15 +178,27 @@ export function initLab() {
   function setPlaying(on) {
     playing = on;
     clearTimeout(timer);
+    clearInterval(clock);
     playBtn.setAttribute('aria-pressed', String(on));
     playBtn.textContent = on ? '■ stop' : '▶ play';
     box.classList.toggle('is-playing', on);
-    if (on) { step = 0; tick(); }
-    else cells.forEach((row) => row.forEach((cell) => cell.classList.remove('is-head')));
+    if (on) {
+      endedMessage = '';
+      step = 0;
+      armTimer();
+      tick();
+      // Refresh the countdown text once a second (only matters when a timer is set).
+      clock = setInterval(() => { if (endsAt && sound.on) showStatus(); }, 1000);
+    } else {
+      endsAt = 0;
+      cells.forEach((row) => row.forEach((cell) => cell.classList.remove('is-head')));
+    }
     showStatus();
   }
-  playBtn.addEventListener('click', () => setPlaying(!playing));
-  document.addEventListener('visibilitychange', () => { if (document.hidden && playing) setPlaying(false); });
+  playBtn.addEventListener('click', () => { if (playing) endedMessage = ''; setPlaying(!playing); });
+  // Keep singing in a background tab if it's audible (a sleep timer should survive a locked phone);
+  // if sound is off there's nothing to hear, so stop.
+  document.addEventListener('visibilitychange', () => { if (document.hidden && playing && !sound.on) setPlaying(false); });
 
   // ---------- tools ----------
   document.getElementById('labPreset').addEventListener('click', () => { pattern = [...PRESET]; save('pips_lullaby.mid'); plink(); });
@@ -191,7 +226,10 @@ export function initLab() {
       toast('🔗 your lullaby link is in the address bar now.');
     }
   });
-  lab.addEventListener('change', (e) => { if (e.target.name === 'labVoice' || e.target.name === 'labTempo') plink(); });
+  lab.addEventListener('change', (e) => {
+    if (e.target.name === 'labVoice' || e.target.name === 'labTempo' || e.target.name === 'labTimer') plink();
+    if (e.target.name === 'labTimer' && playing) { armTimer(); showStatus(); } // timer counts from when you pick it
+  });
 
   paint();
   if (fromHash) requestAnimationFrame(() => lab.scrollIntoView());
