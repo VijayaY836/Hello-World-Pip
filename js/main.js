@@ -15,6 +15,7 @@ import { initSparkles } from './sparkles.js';
 import { initClickSounds } from './clicks.js';
 import { initCounter } from './counter.js';
 import { initChaos } from './chaos.js';
+import { initRoutes } from './routes.js';
 
 const NIGHT_LINES = [
   "hi! i'm pip ♡",
@@ -77,6 +78,7 @@ initToys();
 initEggs();
 initLab();
 initStorybook();
+initRoutes();
 initNightRoom();
 initGame();
 

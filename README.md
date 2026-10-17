@@ -23,6 +23,7 @@ Long ago, a little ghost named Wisp couldn't fall asleep because nobody sang to 
 | **Tier 2 · Flashlight cursor** | Lights-Out Nursery: your cursor/finger is Pip's lantern (canvas mask). Find 5 hidden dream doodles to switch the lights on |
 | **Tier 2 · Lullaby Lab** | Playable 8×8 star-grid sequencer (pentatonic, so it always sounds gentle): 3 voices, 3 speeds, presets, "dream one up", shareable `#lullaby=` links |
 | **Tier 2 · Storybook** | "Mumble and the Very Big Dark", an original 10-page picture book with 3D page turns; buttons, ← → keys, swipe or tap |
+| **Tier 2 · Dream Delivery Routes** | Scroll-synced SVG map: the flight path draws itself (stroke-dashoffset) while Pip flies along it; 5 rooftop stops light up as dreams drop down the chimneys, with a live delivery log |
 | **Tier 2 · Mini-game** | Catch the Dreams: 30-second canvas game, combos, alarm clocks to dodge, best score + all-time "dreams delivered" |
 
 ### Side quests
@@ -62,6 +63,7 @@ js/toys.js     the three showcase projects
 js/eggs.js     secrets
 js/lab.js      Lullaby Lab sequencer
 js/storybook.js  flip-page bedtime storybook
+js/routes.js   Dream Delivery Routes map
 js/nightroom.js  Lights-Out Nursery (flashlight cursor)
 js/game.js     Catch the Dreams mini-game
 js/fx.js       speech bubble, toast, star sparks

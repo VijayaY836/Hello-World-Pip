@@ -30,6 +30,7 @@
       <a href="#work">work</a>
       <a href="#lab">lab</a>
       <a href="#book">book</a>
+      <a href="#routes">map</a>
       <a href="#nightroom">lights</a>
       <a href="#play">play</a>
     </nav>
@@ -328,6 +329,28 @@
           <button class="btn btn--ghost" id="bookPrev" type="button" aria-label="Previous page">← back</button>
           <span class="book__count" id="bookCount" aria-live="polite">cover</span>
           <button class="btn" id="bookNext" type="button" aria-label="Next page">turn page →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Tier 2 · Dream Delivery Routes (scroll-synced SVG path) ===== -->
+    <section class="routes" id="routes" aria-labelledby="routes-title">
+      <div class="routes__stage">
+        <header class="routes__head">
+          <p class="kicker">C:\PIP\ROUTES&gt;</p>
+          <h2 id="routes-title">Dream Delivery Routes</h2>
+          <p>My map for tonight’s shift. Scroll to fly the route with me!</p>
+        </header>
+        <div class="routes__body">
+          <div class="win routes__map-win">
+            <div class="win__bar"><span>route_map.svg</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+            <svg class="routes__map" id="routeMap" role="img" aria-label="A night-time map of the neighbourhood. A glowing flight path links five rooftops: Wisp's house, the Moth House, Nana Noctua's oak, the Midnight Nursery, and your window."></svg>
+          </div>
+          <div class="win routes__log-win">
+            <div class="win__bar"><span>delivery_log.txt</span><span class="routes__tally">★ <b id="routeTally">0/5</b></span></div>
+            <p class="routes__now" id="routeNow" aria-live="polite">en route…</p>
+            <ol class="routes__log" id="routeLog"></ol>
+          </div>
         </div>
       </div>
     </section>

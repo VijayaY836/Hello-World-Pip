@@ -906,3 +906,55 @@ html.chaos[data-shape="tiny"] .dims-x, html.chaos[data-shape="tall"] .dims-x { b
 html.chaos[data-shape="wide"] .hero__title { font-size: clamp(6rem, 16vw, 13rem); }
 html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
 @media (prefers-reduced-motion: reduce) { html.chaos body { animation: none; } }
+
+/* ---------- Dream Delivery Routes ---------- */
+.routes { position: relative; height: 340svh; margin-top: 40px; }
+.routes__stage { position: sticky; top: var(--bar-h); height: calc(100svh - var(--bar-h)); display: flex; flex-direction: column; justify-content: center; gap: 12px; padding: 12px var(--gutter); max-width: 1200px; margin: 0 auto; }
+.routes__head { text-align: center; }
+.routes__head h2 { font-family: var(--font-display); font-weight: 800; font-variation-settings: "SOFT" 100; font-size: clamp(1.9rem, 4.6vw, 3.2rem); line-height: 1; margin: 0 0 .2rem; color: var(--accent); }
+.routes__head p:last-child { margin: 0; color: var(--ink-soft); }
+.routes__body { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 18px; align-items: start; min-height: 0; }
+.routes__map { display: block; width: 100%; height: auto; max-height: calc(100svh - var(--bar-h) - 190px); }
+.routes__map .bld { fill: #3b2f7a; }
+.routes__map .route-back rect { fill: #1d1850; }
+.routes__map .win { fill: #2a2f5e; transition: fill .6s; }
+.routes__map .is-done .win { fill: #ffd88a; filter: drop-shadow(0 0 6px rgba(255, 210, 130, .9)); }
+.routes__map .trunk { fill: #6b4a3f; }
+.routes__map .canopy { fill: #2f6b5a; }
+.routes__map .owl-eye { fill: #ffe7a8; opacity: 0; transition: opacity .4s; }
+.routes__map .is-done .owl-eye { opacity: 1; }
+.routes__map .sign { fill: #ffe7c2; }
+.routes__map .sign-text { font-family: var(--font-pixel); fill: #6b3d58; }
+.routes__map .heart { fill: #ff9fbd; opacity: .4; transition: opacity .5s; }
+.routes__map .is-done .heart { opacity: 1; }
+.routes__map .route-star { fill: #fff; opacity: .7; }
+.routes__map .route-plan { fill: none; stroke: #c9b6f2; stroke-width: 3; stroke-dasharray: 2 12; stroke-linecap: round; opacity: .55; }
+.routes__map .route-flown { fill: none; stroke: #ffd27a; stroke-width: 5; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(255, 210, 122, .9)); }
+.routes__map .dream { fill: #ffe9fb; filter: drop-shadow(0 0 8px #c9b6f2); opacity: 0; }
+.routes__map .is-done .dream { animation: dream-drop .9s ease-in forwards; }
+@keyframes dream-drop { 0% { opacity: 1; transform: translateY(0); } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(46px) scale(.4); } }
+.routes__map .drop { transform-box: fill-box; }
+.routes__map .tick { fill: #7be0a0; font-family: var(--font-display); font-weight: 800; opacity: 0; transition: opacity .4s .6s; }
+.routes__map .is-done .tick { opacity: 1; }
+.routes__map .route-pip image { filter: drop-shadow(0 6px 10px rgba(0, 0, 0, .5)); }
+.routes__tally { font-family: var(--font-pixel); }
+.routes__tally b { font-weight: 400; }
+.routes__now { margin: 0; padding: 10px 14px 4px; font-family: var(--font-pixel); font-size: 1.25rem; color: var(--gold); }
+.routes__log { list-style: none; margin: 0; padding: 4px 14px 14px; display: grid; gap: 8px; }
+.routes__log li { display: flex; gap: 10px; align-items: flex-start; opacity: .55; transition: opacity .4s; font-size: .92rem; line-height: 1.3; }
+.routes__log li small { color: var(--ink-soft); }
+.routes__log li.is-next, .routes__log li.is-done { opacity: 1; }
+.log__box { flex: none; width: 20px; height: 20px; margin-top: 2px; border: 2px solid var(--win-edge); border-radius: 5px; display: grid; place-items: center; font-size: .8rem; }
+.routes__log li.is-done .log__box { background: #7be0a0; border-color: #7be0a0; }
+.routes__log li.is-done .log__box::after { content: "✓"; color: #1d4a32; font-weight: 700; }
+.routes__log li.is-next .log__box { border-color: var(--gold); animation: blink-badge 1.2s steps(2) infinite; }
+
+@media (max-width: 759px) {
+  .routes { height: 300svh; }
+  .routes__stage { justify-content: flex-start; gap: 8px; padding-top: 10px; }
+  .routes__head p:last-child { font-size: .9rem; }
+  .routes__body { grid-template-columns: 1fr; gap: 8px; }
+  .routes__map { max-height: calc(100svh - var(--bar-h) - 250px); margin: 0 auto; }
+  .routes__log { display: none; }  /* phones show the "en route" line + tally instead */
+  .routes__now { padding-bottom: 10px; font-size: 1.15rem; }
+}
