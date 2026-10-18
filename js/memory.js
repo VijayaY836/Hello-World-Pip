@@ -17,7 +17,7 @@ const store = {
 };
 
 function fresh() {
-  return { first: 0, last: 0, prev: 0, visits: 0, name: '', lastPage: '', storyDone: false, dreams: 0, bookDone: false, routesDone: false, composed: false, wished: false, played: false, eggs: {}, visited: {} };
+  return { first: 0, last: 0, prev: 0, visits: 0, name: '', lastPage: '', storyDone: false, dreams: 0, bookDone: false, routesDone: false, composed: false, wished: false, played: false, eggs: {}, visited: {}, found: {} };
 }
 function load() {
   try { return { ...fresh(), ...JSON.parse(store.get(KEY) || '{}') }; } catch { return fresh(); }
@@ -30,7 +30,7 @@ const save = () => { store.set(KEY, JSON.stringify(mem)); listeners.forEach((fn)
 /** Record something memorable. Numbers only ever go up; eggs merge. */
 export function remember(patch) {
   for (const [k, v] of Object.entries(patch)) {
-    if (k === 'eggs' || k === 'visited') mem[k] = { ...(mem[k] || {}), ...v };
+    if (k === 'eggs' || k === 'visited' || k === 'found') mem[k] = { ...(mem[k] || {}), ...v };
     else if (typeof v === 'number' && typeof mem[k] === 'number' && k !== 'last') mem[k] = Math.max(mem[k], v);
     else mem[k] = v;
   }
