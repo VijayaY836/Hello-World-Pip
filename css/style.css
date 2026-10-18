@@ -1905,15 +1905,15 @@ html[data-theme="day"]:is([data-view="story"], [data-view="work"], [data-view="p
 
 /* =====================================================================
    Retro pixel cursors (like the old online games): arrow, pointing glove, grab hands.
-   Drawn as 16×16 pixel art, shown at 32px (with a sharp 2× version for high-DPI screens).
+   Drawn as 16×16 pixel art, shown at 32px as crisp SVG (sharp on any screen), with a PNG backup.
    ===================================================================== */
 :root {
-  --cur: image-set(url("../assets/cursors/arrow.png") 1x, url("../assets/cursors/arrow@2x.png") 2x) 1 1, auto;
-  --cur-hand: image-set(url("../assets/cursors/hand.png") 1x, url("../assets/cursors/hand@2x.png") 2x) 10 1, pointer;
-  --cur-grab: image-set(url("../assets/cursors/grab.png") 1x, url("../assets/cursors/grab@2x.png") 2x) 16 14, grab;
-  --cur-grabbing: image-set(url("../assets/cursors/grabbing.png") 1x, url("../assets/cursors/grabbing@2x.png") 2x) 16 18, grabbing;
+  --cur: url("../assets/cursors/arrow.svg") 1 1, url("../assets/cursors/arrow.png") 1 1, auto;
+  --cur-hand: url("../assets/cursors/hand.svg") 10 1, url("../assets/cursors/hand.png") 10 1, pointer;
+  --cur-grab: url("../assets/cursors/grab.svg") 16 14, url("../assets/cursors/grab.png") 16 14, grab;
+  --cur-grabbing: url("../assets/cursors/grabbing.svg") 16 18, url("../assets/cursors/grabbing.png") 16 18, grabbing;
 }
-html { cursor: url("../assets/cursors/arrow.png") 1 1, auto; cursor: var(--cur); }
-:where(a[href], button:not(:disabled), summary, label, select, [role="button"], [role="radio"], [role="tab"], input[type="radio"], input[type="checkbox"], input[type="range"]) { cursor: url("../assets/cursors/hand.png") 10 1, pointer; cursor: var(--cur-hand); }
+html { cursor: var(--cur); }
+:where(a[href], button:not(:disabled), summary, label, select, [role="button"], [role="radio"], [role="tab"], input[type="radio"], input[type="checkbox"], input[type="range"]) { cursor: var(--cur-hand); }
 :where(input:not([type="radio"]):not([type="checkbox"]):not([type="range"]):not([type="submit"]):not([type="button"]), textarea) { cursor: text; }
 :where(button:disabled) { cursor: var(--cur); }
