@@ -57,101 +57,219 @@ function buildPip(THREE) {
   const squish = new THREE.Group();   // for the squish bounce
   pip.add(squish);
 
-  // ---- head: the round moon-skull ----
+  // ---- head: Pip's soft skull shape (not a ball!) ----
+  // One smooth sphere, reshaped in code: a wide dome on top, puffy cheeks, a jaw that tapers to
+  // a soft chin, a flatter face, and two squircle-shaped eye hollows pressed into it.
   const head = new THREE.Group();
-  head.position.y = 0.9;
+  head.position.y = 0.88;
   squish.add(head);
-  const skull = mesh(new THREE.SphereGeometry(1, 56, 40), mat('#eee4dc'), [], head);
-  skull.scale.set(1.08, 1, 0.95);
 
-  const socketMat = mat('#3d2722', { roughness: 0.45 });
-  const glintMat = new THREE.MeshBasicMaterial({ color: '#ffe7a0' });
-  const haloMat = new THREE.MeshBasicMaterial({ color: '#ffc45c', transparent: true, opacity: 0.35, depthWrite: false });
-  const lidMat = mat('#efe4dc');
+  const V = (x, y, z) => new THREE.Vector3(x, y, z).normalize();
+  const EYE = { a: 0.33, b: 0.31, p: 2.45, depth: 0.11, tilt: 0.14 }; // squircle half-width/height (in sphere directions), roundness, depth, tilt
+  const eyeDirs = [-1, 1].map((side) => V(0.47 * side, -0.1, 0.86));
+  const eyeFrames = eyeDirs.map((e, i) => {
+    const side = i ? 1 : -1;
+    const tx = new THREE.Vector3(0, 1, 0).cross(e).normalize().negate(); // points to Pip's right on the face
+    const ty = e.clone().cross(tx).normalize().negate();                 // points up the face
+    if (ty.y < 0) ty.negate();
+    const c = Math.cos(EYE.tilt * side), s = Math.sin(EYE.tilt * side);  // outer corners a touch lower
+    return { e, tx: tx.clone().multiplyScalar(c).addScaledVector(ty, s), ty: ty.clone().multiplyScalar(c).addScaledVector(tx, -s), side };
+  });
+  const cheekDirs = [-1, 1].map((side) => V(0.7 * side, -0.52, 0.55));
+  const smooth = (e0, e1, x) => { const t = Math.min(1, Math.max(0, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
+
+  /** How far "inside" an eye squircle a sphere direction is: 0 = centre, 1 = the rim. */
+  function eyeDist(n, f) {
+    if (n.dot(f.e) < 0.6) return 9; // only the front of the face (no sockets on the back of the head!)
+    const d = n.clone().sub(f.e);
+    const u = d.dot(f.tx) / EYE.a, v = d.dot(f.ty) / EYE.b;
+    const vv = v > 0 ? v * 1.08 : v * 0.94; // flatter top, fuller bottom
+    return Math.pow(Math.pow(Math.abs(u), EYE.p) + Math.pow(Math.abs(vv), EYE.p), 1 / EYE.p);
+  }
+  /** Sphere direction -> point on Pip's head (shape + dents). */
+  function shape(n) {
+    const t = Math.max(0, -n.y);                       // 0 above the middle, 1 at the chin
+    const jaw = 1 - 0.2 * t * t;                       // jaw tapers in
+    const p = new THREE.Vector3(n.x * 1.12 * jaw, n.y * (n.y < 0 ? 0.93 : 1.0), n.z * 0.97 * (1 - 0.12 * t * t));
+    if (n.z > 0) p.z *= 1 - 0.1 * n.z * n.z * n.z;      // flatter face
+    for (const c of cheekDirs) p.addScaledVector(n, 0.055 * Math.exp(-n.distanceToSquared(c) / (2 * 0.17 * 0.17))); // puffy cheeks
+    for (const f of eyeFrames) {
+      const d = eyeDist(n, f);
+      if (d < 1.25) p.addScaledVector(n, -EYE.depth * smooth(1.2, 0.7, d)); // soft-rimmed hollow
+    }
+    return p;
+  }
+  const headGeo = new THREE.SphereGeometry(1, 240, 180); // dense, so the socket edges are smooth
+  const hpos = headGeo.attributes.position;
+  // Each vertex stores how far it is from the nearest eye centre (0 centre, 1 rim) and where it is
+  // vertically inside that socket; the GPU turns that into a crisp, smooth-edged dark socket per pixel.
+  const eyeD = new Float32Array(hpos.count), eyeV = new Float32Array(hpos.count);
+  const hn = new THREE.Vector3();
+  for (let i = 0; i < hpos.count; i++) {
+    hn.set(hpos.getX(i), hpos.getY(i), hpos.getZ(i)).normalize();
+    const p = shape(hn);
+    hpos.setXYZ(i, p.x, p.y, p.z);
+    let best = 9, v = 0;
+    for (const f of eyeFrames) {
+      const d = eyeDist(hn, f);
+      if (d < best) { best = d; v = hn.clone().sub(f.e).dot(f.ty) / EYE.b; }
+    }
+    eyeD[i] = best; eyeV[i] = v;
+  }
+  headGeo.setAttribute('eyeD', new THREE.BufferAttribute(eyeD, 1));
+  headGeo.setAttribute('eyeV', new THREE.BufferAttribute(eyeV, 1));
+  headGeo.computeVertexNormals();
+  const skullMat = mat('#efe6de', { roughness: 0.62 });
+  skullMat.onBeforeCompile = (sh) => {
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', '#include <common>\nattribute float eyeD; attribute float eyeV; varying float vEyeD; varying float vEyeV;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvEyeD = eyeD; vEyeV = eyeV;');
+    sh.fragmentShader = sh.fragmentShader
+      .replace('#include <common>', '#include <common>\nvarying float vEyeD; varying float vEyeV;')
+      .replace('#include <color_fragment>', `#include <color_fragment>
+        vec3 sockDeep = vec3(0.105, 0.052, 0.045);
+        vec3 sockWarm = vec3(0.33, 0.19, 0.15);
+        vec3 sock = mix(sockDeep, sockWarm, smoothstep(0.1, -0.95, vEyeV) * 0.55);
+        float inside = 1.0 - smoothstep(0.93, 0.985, vEyeD);
+        diffuseColor.rgb = mix(diffuseColor.rgb, sock, inside);`)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.32, 1.0 - smoothstep(0.93, 0.985, vEyeD));');
+  };
+  mesh(headGeo, skullMat, [], head);
+
+  /** A point on the face plus the surface direction there (for placing nose, smile, cheeks). */
+  const surfaceAt = (x, y, out = 0) => { const d = V(x / 1.12, y, Math.sqrt(Math.max(0.05, 1 - (x / 1.12) ** 2 - y * y))); return { p: shape(d).addScaledVector(d, out), d }; };
+
+  // glints live inside the hollows, low and toward the nose, like the art
+  const glintMat = new THREE.MeshBasicMaterial({ color: '#fff3c2' });
+  const haloMat = new THREE.MeshBasicMaterial({ color: '#ffc45c', transparent: true, opacity: 0.22, depthWrite: false });
   const lashMat = mat('#6b4a3f');
-  const eyes = [-1, 1].map((side) => {
+  const squircle = new THREE.Shape();
+  for (let k = 0; k <= 64; k++) {
+    const t = (k / 64) * Math.PI * 2, c = Math.cos(t), sn = Math.sin(t);
+    const x = Math.sign(c) * Math.abs(c) ** (2 / EYE.p) * EYE.a * 1.02, y = Math.sign(sn) * Math.abs(sn) ** (2 / EYE.p) * EYE.b * (sn > 0 ? 0.93 : 1.06);
+    k ? squircle.lineTo(x, y) : squircle.moveTo(x, y);
+  }
+  const eyes = eyeFrames.map((f) => {
     const g = new THREE.Group();
-    g.position.set(0.36 * side, 0.04, 0.82);
-    g.rotation.y = 0.38 * side;
+    g.position.copy(shape(f.e));                                   // bottom of the hollow
+    const m = new THREE.Matrix4().makeBasis(f.tx, f.ty, f.e);
+    g.quaternion.setFromRotationMatrix(m);
     head.add(g);
-    const socket = mesh(new THREE.SphereGeometry(0.27, 32, 20), socketMat, [], g);
-    socket.scale.set(1, 1.12, 0.42);
-    const glint = mesh(new THREE.SphereGeometry(0.055, 16, 12), glintMat, [0, 0, 0.12], g);
-    const halo = mesh(new THREE.SphereGeometry(0.11, 16, 12), haloMat, [0, 0, 0.11], g);
-    const lid = new THREE.Group();     // day mode: Pip sleeps, lids slide shut
-    lid.position.z = 0.115;
+    const base = { x: -0.07 * f.side, y: -0.06 };                    // low and toward the nose
+    const glint = mesh(new THREE.SphereGeometry(0.042, 16, 12), glintMat, [base.x, base.y, 0.035], g);
+    const halo = mesh(new THREE.SphereGeometry(0.075, 16, 12), haloMat, [base.x, base.y, 0.03], g);
+    const lid = new THREE.Group();     // day mode: Pip sleeps, squircle lids slide shut over the hollows
+    lid.position.z = EYE.depth + 0.012;
     g.add(lid);
-    const lidDisc = mesh(new THREE.CircleGeometry(0.28, 32), lidMat, [], lid);
-    lidDisc.scale.y = 1.12;
-    const lash = mesh(new THREE.TorusGeometry(0.13, 0.018, 8, 20, Math.PI * 0.8), lashMat, [0, -0.02, 0.01], lid);
+    mesh(new THREE.ShapeGeometry(squircle, 48), mat('#efe6de', { roughness: 0.62 }), [], lid);
+    const lash = mesh(new THREE.TorusGeometry(0.15, 0.018, 8, 24, Math.PI * 0.8), lashMat, [0, -0.03, 0.006], lid);
     lash.rotation.z = Math.PI + Math.PI * 0.1;
     lid.scale.y = 0.001;
-    return { g, glint, halo, lid };
+    return { g, glint, halo, lid, base };
   });
 
-  const nose = mesh(new THREE.ConeGeometry(0.065, 0.08, 3), socketMat, [0, -0.17, 0.92], head);
-  nose.rotation.x = Math.PI; nose.rotation.z = Math.PI / 6;
-  const smile = mesh(new THREE.TorusGeometry(0.13, 0.02, 8, 28, Math.PI * 0.7), socketMat, [0, -0.3, 0.87], head);
-  smile.rotation.z = Math.PI + (Math.PI - Math.PI * 0.7) / 2;
-  smile.rotation.x = -0.32;
-  const cheekMat = mat('#ff8fab', { transparent: true, opacity: 0.75, roughness: 1 });
-  [-1, 1].forEach((side) => {
-    const ch = mesh(new THREE.SphereGeometry(0.13, 20, 12), cheekMat, [0.58 * side, -0.24, 0.775], head);
-    ch.scale.set(1, 0.7, 0.32);
-    ch.rotation.y = 0.65 * side;
+  const FWD = new THREE.Vector3(0, 0, 1);
+  const face = (obj, dir) => obj.quaternion.setFromUnitVectors(FWD, dir.clone().normalize()); // point +Z along the surface (local space)
+
+  // the nose: an upside-down heart (point at the top, two soft lobes at the bottom), like the art
+  const socketMat = mat('#3a2420', { roughness: 0.35 });
+  const noseShape = new THREE.Shape();
+  noseShape.moveTo(0, 0.12);
+  noseShape.bezierCurveTo(0.025, 0.08, 0.085, 0.01, 0.08, -0.04);
+  noseShape.bezierCurveTo(0.075, -0.085, 0.02, -0.085, 0, -0.045);
+  noseShape.bezierCurveTo(-0.02, -0.085, -0.075, -0.085, -0.08, -0.04);
+  noseShape.bezierCurveTo(-0.085, 0.01, -0.025, 0.08, 0, 0.12);
+  const noseGeo = new THREE.ExtrudeGeometry(noseShape, { depth: 0.015, bevelEnabled: true, bevelSize: 0.005, bevelThickness: 0.008, bevelSegments: 2, curveSegments: 20 });
+  noseGeo.center();
+  const ns = surfaceAt(0, -0.31, 0.01);
+  const nose = mesh(noseGeo, socketMat, [ns.p.x, ns.p.y, ns.p.z], head);
+  face(nose, ns.d);
+  nose.scale.setScalar(0.72);
+
+  const sm = surfaceAt(0, -0.46, 0.006);
+  const smile = mesh(new THREE.TorusGeometry(0.11, 0.019, 8, 28, Math.PI * 0.62), socketMat, [sm.p.x, sm.p.y, sm.p.z], head);
+  face(smile, sm.d);
+  smile.rotateZ(Math.PI + (Math.PI - Math.PI * 0.62) / 2);
+  const cheekMat = mat('#ff9bb3', { transparent: true, opacity: 0.7, roughness: 1 });
+  cheekDirs.forEach((c) => {
+    const ch = mesh(new THREE.SphereGeometry(0.15, 20, 12), cheekMat, [], head);
+    ch.position.copy(shape(c)).addScaledVector(c, -0.03);
+    face(ch, c);
+    ch.scale.set(1, 0.62, 0.3);
   });
 
-  // ---- the starry nightcap, pom-pom and pink bow ----
+  // ---- the floppy starry nightcap: a cone bent so it flops over to Pip's left ----
   const capTex = patternTexture(THREE, '#efe2c8', '#d4a548', 'star', 14);
   capTex.repeat.set(2, 1.5);
   const capMat = mat('#ffffff', { map: capTex, roughness: 0.95 });
+  const H = 2.25, Y0 = 0.62, R = 0.56; // straight part, then an arc of radius R
+  const capGeo = new THREE.ConeGeometry(0.99, H, 56, 40);
+  capGeo.translate(0, H / 2, 0);
+  const pos = capGeo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i), y = pos.getY(i);
+    if (y <= Y0) continue;
+    const th = (y - Y0) / R;
+    pos.setXY(i, -R + (R + x) * Math.cos(th), Y0 + (R + x) * Math.sin(th));
+  }
+  capGeo.computeVertexNormals();
   const cap = new THREE.Group();
-  cap.position.set(0, 0.58, -0.06);
-  cap.rotation.set(-0.28, 0, 0.32);
+  cap.position.set(0, 0.42, -0.06);
+  cap.rotation.set(-0.2, 0, 0.26);
   head.add(cap);
-  mesh(new THREE.ConeGeometry(0.78, 1.25, 48), capMat, [0, 0.6, 0], cap);
-  const brim = mesh(new THREE.TorusGeometry(0.8, 0.14, 16, 56), mat('#f6eedf', { roughness: 1 }), [0, 0, 0], cap);
+  mesh(capGeo, capMat, [], cap);
+  const thEnd = (H - Y0) / R;
+  mesh(new THREE.SphereGeometry(0.24, 28, 20), mat('#f1e6d4', { roughness: 1 }), [-R + R * Math.cos(thEnd), Y0 + R * Math.sin(thEnd), 0], cap);
+  const brim = mesh(new THREE.TorusGeometry(1.0, 0.17, 20, 64), mat('#f6eedf', { roughness: 1 }), [0, 0.02, 0], cap);
   brim.rotation.x = Math.PI / 2;
-  mesh(new THREE.SphereGeometry(0.2, 24, 16), mat('#efe3cf', { roughness: 1 }), [0, 1.24, 0], cap);
-  const bowMat = mat('#f7a8bd', { roughness: 0.6 });
+  brim.scale.set(1, 0.95, 0.85);
+
+  // plump pink bow on the brim, front-left
+  const bowMat = mat('#f5a3ba', { roughness: 0.55 });
   const bow = new THREE.Group();
-  bow.position.set(-0.42, 0.66, 0.62);
-  bow.rotation.set(0.25, -0.45, 0.3);
-  bow.scale.setScalar(1.35);
+  bow.position.set(-0.46, 0.66, 0.86);
+  bow.rotation.set(0.05, -0.45, 0.26);
+  bow.scale.setScalar(1.15);
   head.add(bow);
   [-1, 1].forEach((side) => {
-    const wing = mesh(new THREE.ConeGeometry(0.13, 0.26, 20), bowMat, [0.13 * side, 0, 0], bow);
-    wing.rotation.z = (Math.PI / 2) * side;
-    wing.scale.z = 0.55;
+    const loop = mesh(new THREE.SphereGeometry(0.15, 24, 16), bowMat, [0.17 * side, 0, 0], bow);
+    loop.scale.set(1.25, 0.82, 0.5);
+    loop.rotation.z = 0.35 * side;
+    const tail = mesh(new THREE.SphereGeometry(0.07, 16, 12), bowMat, [0.1 * side, -0.14, 0.02], bow);
+    tail.scale.set(0.8, 1.4, 0.5);
   });
-  mesh(new THREE.SphereGeometry(0.075, 16, 12), bowMat, [], bow);
+  mesh(new THREE.SphereGeometry(0.075, 16, 12), bowMat, [0, 0, 0.03], bow);
 
-  // ---- body in a heart onesie ----
+  // ---- little body in a heart onesie with pink cuffs ----
   const onesieTex = patternTexture(THREE, '#f5e2c4', '#ee8fac', 'heart', 16);
   onesieTex.repeat.set(1.5, 1.5);
   const onesie = mat('#ffffff', { map: onesieTex });
-  const body = mesh(new THREE.SphereGeometry(0.62, 40, 28), onesie, [0, -0.2, 0], squish);
-  body.scale.set(1, 1.02, 0.9);
-  const handMat = mat('#f3ece6');
+  const body = mesh(new THREE.SphereGeometry(0.54, 40, 28), onesie, [0, -0.3, 0], squish);
+  body.scale.set(1, 1.04, 0.9);
+  const handMat = mat('#f2ebe5');
+  const cuffMat = mat('#f2a7c0', { roughness: 0.8 });
   const arms = [-1, 1].map((side) => {
     const pivot = new THREE.Group();
-    pivot.position.set(0.48 * side, 0.12, 0.05);
-    pivot.rotation.z = side * 0.75;
+    pivot.position.set(0.4 * side, -0.02, 0.06);
     squish.add(pivot);
-    mesh(new THREE.CapsuleGeometry(0.14, 0.34, 8, 16), onesie, [0, -0.28, 0], pivot);
-    mesh(new THREE.SphereGeometry(0.15, 20, 14), handMat, [0, -0.55, 0], pivot);
+    mesh(new THREE.CapsuleGeometry(0.13, 0.38, 8, 16), onesie, [0, -0.28, 0], pivot);
+    const cuff = mesh(new THREE.TorusGeometry(0.12, 0.045, 10, 24), cuffMat, [0, -0.52, 0], pivot);
+    cuff.rotation.x = Math.PI / 2;
+    mesh(new THREE.SphereGeometry(0.15, 20, 14), handMat, [0, -0.63, 0], pivot);
     return pivot;
   });
+  arms[0].rotation.set(-0.7, 0, -0.55);  // left hand rests in the lap
+  arms[1].rotation.set(-0.35, 0, 1.95);  // right hand up: hello!
   const soleMat = mat('#c7b2e8');
   [-1, 1].forEach((side) => {
-    const leg = mesh(new THREE.CapsuleGeometry(0.17, 0.2, 8, 16), onesie, [0.3 * side, -0.6, 0.28], squish);
-    leg.rotation.x = Math.PI / 2.4;
-    const foot = mesh(new THREE.SphereGeometry(0.2, 24, 16), soleMat, [0.3 * side, -0.68, 0.52], squish);
-    foot.scale.set(1, 0.85, 0.55);
+    const leg = mesh(new THREE.CapsuleGeometry(0.15, 0.16, 8, 16), onesie, [0.26 * side, -0.66, 0.25], squish);
+    leg.rotation.x = Math.PI / 2.3;
+    const foot = mesh(new THREE.SphereGeometry(0.18, 24, 16), soleMat, [0.26 * side, -0.72, 0.47], squish);
+    foot.scale.set(1, 0.9, 0.5);
   });
 
   // ---- the cloud seat ----
-  const cloudMat = mat('#fff6fb', { roughness: 1, emissive: '#3a2c66', emissiveIntensity: 0.12 });
+  const cloudMat = mat('#fff3f8', { roughness: 1, emissive: '#5a3c7a', emissiveIntensity: 0.1 });
   const cloud = new THREE.Group();
   cloud.position.y = -0.95;
   pip.add(cloud);
@@ -329,14 +447,14 @@ export function initPip3D() {
       const right = model.arms[1];
       if (waveT < 1) {
         waveT = Math.min(1, waveT + dt * 0.6);
-        const up = Math.sin(Math.min(1, waveT * 1.4) * Math.PI);
-        right.rotation.z = 0.75 + up * 1.7 + Math.sin(t * 14) * 0.35 * up;
-      } else right.rotation.z += (0.75 - right.rotation.z) * 0.1;
+        const amt = Math.sin(waveT * Math.PI);
+        right.rotation.z = 1.95 + Math.sin(t * 14) * 0.4 * amt;
+      } else right.rotation.z = 1.95 + (still ? 0 : Math.sin(t * 2.2) * 0.07); // a tiny idle wiggle
 
       // eyes: glints follow the pointer; in day mode Pip is asleep (lids close)
       const day = isDay();
       model.eyes.forEach((eye) => {
-        const tx = look.x * 0.075, ty = look.y * 0.08;
+        const tx = eye.base.x + look.x * 0.07, ty = eye.base.y + look.y * 0.07;
         eye.glint.position.x += (tx - eye.glint.position.x) * 0.15;
         eye.glint.position.y += (ty - eye.glint.position.y) * 0.15;
         eye.halo.position.x = eye.glint.position.x; eye.halo.position.y = eye.glint.position.y;
@@ -344,6 +462,7 @@ export function initPip3D() {
         const lidGoal = day ? 1 : 0.001;
         eye.lid.scale.y += (lidGoal - eye.lid.scale.y) * 0.12;
         eye.glint.visible = eye.halo.visible = eye.lid.scale.y < 0.6;
+        eye.lid.visible = eye.lid.scale.y > 0.02; // a fully open lid is hidden (no stray line across the eye)
       });
 
       // orbiting stars
