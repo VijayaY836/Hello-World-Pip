@@ -21,9 +21,8 @@ import { initGuestbook } from './guestbook.js';
 import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
 
-// Memories first (so this visit is counted), then pages.
+// Memories first, so this visit is counted.
 initMemory();
-initRouter();
 
 const NIGHT_LINES = [
   "hi! i'm pip ♡",
@@ -38,7 +37,7 @@ setDefaultLine(() => (isDay() ? 'zzz… night shift… zzz…' : NIGHT_LINES[0])
 const soundBtn = document.getElementById('soundBtn');
 function renderSound(on) {
   soundBtn.setAttribute('aria-pressed', String(on));
-  soundBtn.setAttribute('aria-label', on ? 'Sound is on. Mute' : 'Sound is off. Turn sound on');
+  soundBtn.setAttribute('aria-label', on ? 'sound on: mute' : 'sound off: turn sound on');
   soundBtn.querySelector('.ctrl__icon').textContent = on ? '🔊' : '🔇';
   soundBtn.querySelector('.ctrl__label').textContent = on ? 'sound on' : 'sound off';
   document.documentElement.classList.toggle('sound-on', on);
@@ -79,27 +78,36 @@ setInterval(() => {
   say(NIGHT_LINES[lineIndex], 4200);
 }, 9000);
 
-// --- Story, projects, secrets ---
-const story = initStory({
-  onScene(n) {
-    if (n === 4) hum(); // Pip's first wobbly hum: the first sound in the story
-    if (n === 6) remember({ storyDone: true });
+// --- Each page sets itself up the first time it's opened (keeps the first load light) ---
+let story = null;
+const PAGES = {
+  story() {
+    story = initStory({
+      onScene(n) {
+        if (n === 4) hum(); // Pip's first wobbly hum: the first sound in the story
+        if (n === 6) remember({ storyDone: true });
+      },
+    });
   },
+  work() { initToys(); initLab(); initStorybook(); initRoutes(); },
+  play() { initNightRoom(); initGame(); initGuestbook(); },
+};
+const ready = new Set();
+window.addEventListener('pip:view', (e) => {
+  const view = e.detail;
+  if (PAGES[view] && !ready.has(view)) { ready.add(view); PAGES[view](); }
 });
-initToys();
-initEggs();
-initLab();
-initStorybook();
-initRoutes();
-initNightRoom();
-initGame();
+
+initEggs(); // the footer town (on every page)
 
 // --- Side quests ---
 initSparkles();
 initClickSounds();
 initCounter();
-initGuestbook();
 initChat();
 initChaos();
+
+// Pages last: showing the first page also sets it up.
+initRouter();
 
 console.log('%c☾ hi, curious one! pip says: someone in town is still awake…', 'color:#ff9fbd;font:16px/1.4 monospace');

@@ -77,7 +77,7 @@ export function initChaos() {
     bouncer.type = 'button';
     bouncer.className = 'chaos-pip';
     bouncer.setAttribute('aria-label', 'Bouncing Pip screensaver. Catch it!');
-    bouncer.innerHTML = '<img src="assets/pip-cloud.webp" width="587" height="781" alt="" />';
+    bouncer.innerHTML = '<img src="assets/pip-sm.webp" width="180" height="240" alt="" />';
     layer.appendChild(bouncer);
     const pos = { x: rand(0, innerWidth - 80), y: rand(60, innerHeight - 110) };
     const vel = { x: rand(1.4, 2.2) * (Math.random() < 0.5 ? -1 : 1), y: rand(1.2, 2) * (Math.random() < 0.5 ? -1 : 1) };

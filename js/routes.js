@@ -145,10 +145,10 @@ export function initRoutes() {
     // Where along the path each stop sits.
     stopAt = targets.map((t) => {
       let best = 0, bestD = Infinity;
-      for (let i = 0; i <= 400; i++) {
-        const q = path.getPointAtLength((i / 400) * len);
+      for (let i = 0; i <= 160; i++) {
+        const q = path.getPointAtLength((i / 160) * len);
         const dist = Math.hypot(q.x - t.x, q.y - (t.y - 6));
-        if (dist < bestD) { bestD = dist; best = i / 400; }
+        if (dist < bestD) { bestD = dist; best = i / 160; }
       }
       return best;
     });
