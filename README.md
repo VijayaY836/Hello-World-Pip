@@ -1,7 +1,3 @@
-<!--
-  ✦ Vij: replace YOUR-LIVE-LINK (2 places: the top links and the "visit" line under them) with your Vercel link. ✦
--->
-
 <p align="center">
   <img src="assets/pip-sm.webp" width="120" alt="Pip, a baby with a smooth moon-skull face and glowing star eyes, waving from a little cloud" />
 </p>
@@ -27,13 +23,13 @@
 </p>
 
 <p align="center">
-  <a href="hello-world-pip.vercel.app"><b>🌙 visit the nursery</b></a> &nbsp;·&nbsp;
+  <a href="https://hello-world-pip.vercel.app"><b>🌙 visit the nursery</b></a> &nbsp;·&nbsp;
   <a href="#tour">🗺️ take the tour</a> &nbsp;·&nbsp;
   <a href="#brief">✅ the brief, ticked off</a> &nbsp;·&nbsp;
   <a href="#credits">📜 credits</a>
 </p>
 
-<p align="center"><sub>live at <b>hello-world-pip.vercel.app</b></sub></p>
+<p align="center"><sub>live at <a href="https://hello-world-pip.vercel.app"><b>hello-world-pip.vercel.app</b></a></sub></p>
 
 <p align="center">
   <img src="docs/screenshots/home-night.webp" alt="The home page: a living map of Pip's mushroom-pond dreamland at night, with Pip floating on his cloud in the middle and banners for the Moon, the Mushroom Workshop and Mushroom Hollow" />
@@ -70,9 +66,7 @@ This is my website. You can explore my whole dreamland, read how I was born, bui
 
 ---
 
-<a id="story"></a>
-
-## 🌙 how i was born
+## <a name="story"></a>🌙 how i was born
 
 ### *The Dream Nobody Dreamed*
 
@@ -86,9 +80,7 @@ The story is told in **6 scroll-driven scenes**: you scroll, and the dream-orb r
 
 ---
 
-<a id="tour"></a>
-
-## 🗺️ a tour of my dreamland
+## <a name="tour"></a>🗺️ a tour of my dreamland
 
 ### the dream cartographer (home)
 
@@ -108,9 +100,7 @@ My home page is a **living map**. I float on my cloud in the middle of the mushr
 
 ---
 
-<a id="workshop"></a>
-
-## ✨ the dream workshop
+## <a name="workshop"></a>✨ the dream workshop
 
 **This is my actual job, and now you get to do it too.**
 
@@ -127,9 +117,7 @@ Pick four ingredients (**who** the dream is for, the **mood**, the **place** and
 
 ---
 
-<a id="make"></a>
-
-## 🛠️ things i make
+## <a name="make"></a>🛠️ things i make
 
 | | |
 |:---:|:---:|
@@ -140,9 +128,7 @@ Pick four ingredients (**who** the dream is for, the **mood**, the **place** and
 
 ---
 
-<a id="games"></a>
-
-## 🎮 games & secrets
+## <a name="games"></a>🎮 games & secrets
 
 | | |
 |:---:|:---:|
@@ -153,9 +139,7 @@ Pick four ingredients (**who** the dream is for, the **mood**, the **place** and
 
 ---
 
-<a id="chat"></a>
-
-## 💬 talk to me
+## <a name="chat"></a>💬 talk to me
 
 Tap **talk to pip** on any page. I know about **35 things** (my story, my friends, lullabies, secrets, jokes, the time, and building dreams), there are buttons to tap so you never have to think of a question, and some answers *do* things: I'll sing, open a page, or flip day and night for you. I also remember your name. No AI service, just me, so it's instant and works offline.
 
@@ -163,9 +147,7 @@ Tap **talk to pip** on any page. I know about **35 things** (my story, my friend
 
 ---
 
-<a id="chaos"></a>
-
-## 🌀 chaos mode (welcome to 1999)
+## <a name="chaos"></a>🌀 chaos mode (welcome to 1999)
 
 Press 🌀 and my site turns into a 1999 homepage: rainbow window bars, spinning stickers (*cool site award 1999 · best viewed in Dreamscape 4.0 · 🌙 web ring member*), a live **“best viewed at W×H (that's you!)”** badge, and a bouncing-me screensaver. It's **responsive chaos**: it reshapes itself to your screen, scales the stickers to your screen size and re-tilts everything when you resize.
 
@@ -173,9 +155,7 @@ Press 🌀 and my site turns into a 1999 homepage: rainbow window bars, spinning
 
 ---
 
-<a id="phones"></a>
-
-## 📱 pocket-sized pip
+## <a name="phones"></a>📱 pocket-sized pip
 
 Built for phones first: swipe the map, tap twice on hidden spots (once to peek, once to fly), and the story scenes re-stage themselves for tall screens.
 
@@ -183,9 +163,7 @@ Built for phones first: swipe the map, tap twice on hidden spots (once to peek, 
 
 ---
 
-<a id="secrets"></a>
-
-## 🥚 secrets (spoilers!)
+## <a name="secrets"></a>🥚 secrets (spoilers!)
 
 <details>
 <summary><b>only open if you've already looked for them yourself 👀</b></summary>
@@ -200,9 +178,7 @@ Built for phones first: swipe the map, tap twice on hidden spots (once to peek, 
 
 ---
 
-<a id="brief"></a>
-
-## ✅ the brief, ticked off
+## <a name="brief"></a>✅ the brief, ticked off
 
 Built for [**Baby's First Website**](https://hax.baby/baby-problem) by haX.baby, 17–19 Oct 2026, **Track 1: the skull baby**.
 
@@ -237,9 +213,7 @@ Built for [**Baby's First Website**](https://hax.baby/baby-problem) by haX.baby,
 
 ---
 
-<a id="early-web"></a>
-
-## 📟 early-web soul
+## <a name="early-web"></a>📟 early-web soul
 
 Under the dreamy paint, this is a proper little old-school homepage:
 
@@ -253,9 +227,7 @@ Under the dreamy paint, this is a proper little old-school homepage:
 
 ---
 
-<a id="speed"></a>
-
-## ⚡ fast, gentle & kind to everyone
+## <a name="speed"></a>⚡ fast, gentle & kind to everyone
 
 | Lighthouse (measured locally, served compressed) | mobile | desktop |
 |---|:---:|:---:|
@@ -280,9 +252,7 @@ And kind:
 
 ---
 
-<a id="built"></a>
-
-## 🧰 how it's built
+## <a name="built"></a>🧰 how it's built
 
 **Plain HTML, CSS and JavaScript modules.** No framework, no bundler, no build step. Three.js is the only library, and it only loads for 3D Pip.
 
@@ -356,9 +326,7 @@ docs/screenshots/   the pictures in this README
 
 ---
 
-<a id="credits"></a>
-
-## 📜 credits
+## <a name="credits"></a>📜 credits
 
 - **Pip, the music box and the lantern:** the official haX.baby Track 1 asset pack. Backgrounds removed; the eye glints were painted out and are redrawn live in CSS so they can follow you. The story uses the pack's portrait of Pip, with its lettering painted out.
 - **Nana Noctua illustration:** added by Vij for this site.
