@@ -1139,3 +1139,19 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
 /* keep the floating chat button clear of the toast and the chaos-mode size badge */
 @media (max-width: 720px) { .toast { bottom: 76px; } }
 .chat__title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+/* ---------- 3D Pip ---------- */
+.pip3d { max-width: 760px; margin: 0 auto; }
+.pip3d:focus-visible { outline: 3px dashed var(--gold); outline-offset: 4px; }
+.pip3d__stage { position: relative; aspect-ratio: 4 / 3; background: radial-gradient(circle at 50% 45%, #3a2f86, #120f33 72%); overflow: hidden; }
+.pip3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; }
+.pip3d__canvas:active { cursor: grabbing; }
+.pip3d__canvas.is-pixel { image-rendering: pixelated; }
+.pip3d__fallback { position: absolute; left: 50%; top: 50%; height: 80%; width: auto; transform: translate(-50%, -50%); display: none; }
+.pip3d.is-fallback .pip3d__fallback { display: block; }
+.pip3d.is-fallback .pip3d__canvas { display: none; }
+.pip3d__status { position: absolute; left: 0; right: 0; bottom: 10px; margin: 0; text-align: center; font-family: var(--font-pixel); font-size: 1.2rem; color: #ffe7c2; text-shadow: 0 2px 0 rgba(0, 0, 0, .4); pointer-events: none; }
+.pip3d__tools { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 12px; }
+.pip3d__tools .chip { color: var(--ink); border-color: var(--win-edge); }
+.pip3d__tools .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+@media (max-width: 720px) { .pip3d__stage { aspect-ratio: 4 / 5; } }

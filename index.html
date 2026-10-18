@@ -534,6 +534,29 @@
         <p class="sr" id="gameLive" aria-live="polite"></p>
       </div>
     </section>
+    <!-- ===== Tier 3 · 3D Pip (Three.js) ===== -->
+    <section class="sec pip3d-sec" id="pip3d-sec" aria-labelledby="p3-title">
+      <header class="sec__head">
+        <p class="kicker">C:\PIP\3D&gt;</p>
+        <h2 id="p3-title">Pip in 3D</h2>
+        <p>Nana Noctua knitted a 3D version of me! Drag to spin me around, and tap me for a squish.</p>
+      </header>
+      <div class="win pip3d" id="pip3d" tabindex="0" aria-label="3D Pip. Drag or use the left and right arrow keys to spin; use the buttons to squish, wave or spin.">
+        <div class="win__bar"><span>pip_3d.exe · powered by WebGL</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+        <div class="pip3d__stage">
+          <canvas class="pip3d__canvas" id="pip3dCanvas" role="img" aria-label="A 3D Pip in a starry nightcap, sitting on a cloud with little stars orbiting around."></canvas>
+          <img class="pip3d__fallback" src="assets/pip-story.webp" width="452" height="640" alt="Pip on a cloud, holding a lantern and a music box." loading="lazy" decoding="async" />
+          <p class="pip3d__status" id="pip3dStatus" aria-live="polite">scroll here and i’ll appear in 3D…</p>
+        </div>
+        <div class="pip3d__tools">
+          <button class="chip" type="button" data-act="squish">🤗 squish</button>
+          <button class="chip" type="button" data-act="wave">👋 wave</button>
+          <button class="chip" type="button" data-act="spin">🔄 spin</button>
+          <button class="chip" type="button" data-act="pixel" aria-pressed="false">🕹️ 1998 mode</button>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== Tier 3 / side quest · Live dream guestbook ===== -->
     <section class="sec guestbook" id="guestbook" aria-labelledby="gb-title">
       <header class="sec__head">
@@ -611,7 +634,7 @@
           <li>Nana Noctua illustration: added by Vij for this site.</li>
           <li>Wisp, Mumble, the town, the storybook pictures, the basket &amp; the grumpy mitten: hand-drawn SVG for this site.</li>
           <li>All sounds synthesized live with the Web Audio API. Lullaby melody: Johannes Brahms, “Wiegenlied” (1868, public domain).</li>
-          <li>Fonts: Fraunces, Fredoka &amp; VT323 via Google Fonts. No frameworks, no libraries.</li>
+          <li>3D Pip: drawn with Three.js (MIT licence), loaded only for that section. Fonts: Fraunces, Fredoka &amp; VT323 via Google Fonts. No other libraries.</li>
         </ul>
       </section>
       <p class="foot__copy">© 1999–2026 Pip · all dreams reserved · last updated tonight, 2:14 a.m.</p>

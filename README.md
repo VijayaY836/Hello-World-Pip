@@ -45,6 +45,7 @@ Home has three big doors (Story, Work, Play); each opens its own page (`#/story`
 | 🧠 Pip remembers you | Returning visitors get a personal greeting (name, days away, unfinished story, doodles left, best score, late-night visits). `pip_remembers_you.txt` on Home shows visit count, first-met date, a discovery checklist, a resume link and a name Pip can call you. Stored only in the visitor's browser, with a two-tap "forget me" |
 | 💬 Pip chats back | **PipMessenger 98** (the "talk to pip" button on every page): a rule-based chat in Pip's voice with ~35 topics. Tappable default questions to start, follow-up suggestions after every answer, free typing too. Pip uses what it remembers (name, visits, best score), and some answers act: sing a lullaby, open a page, switch day/night or chaos mode. No AI service: instant, free, works offline |
 | ⚡ Lighthouse 90+ | Mobile: Performance 91, Accessibility 100, Best Practices 96, SEO 100. Desktop: 100 / 100 / 96 / 100 (local run, before Vercel's compression). Each page sets itself up only when first opened, fonts don't block the first paint, small thumbnails for small images, long cache headers for art (`vercel.json`) |
+| 🧸 3D Pip | Play page: Pip modelled in code with Three.js from simple shapes (moon-skull head, glowing star-eyes that follow your pointer, starry nightcap with pom-pom and bow, heart onesie, cloud, orbiting stars). Drag to spin (with inertia), tap to squish, wave, spin, arrow keys, and a pixelated "1998 low-poly" render mode. Eyes close in day mode. Loaded only when the section comes into view; 2D fallback without WebGL |
 
 ### Side quests
 
@@ -96,6 +97,8 @@ js/chaos.js    Responsive Chaos Mode
 js/guestbook.js  the Dream Wall guestbook
 js/memory.js   Pip remembers you
 js/chat.js     PipMessenger 98: Pip chats back
+js/pip3d.js    3D Pip (Three.js)
+js/vendor/     three.module.min.js + its MIT licence
 api/hits.js    Vercel function for the site-wide hit counter
 api/guestbook.js  Vercel function for the guestbook
 assets/        WebP images from the official pack (cut out, optimized) + small thumbnails
@@ -109,4 +112,4 @@ vercel.json    cache headers
 - **Wisp, Mumble, the town, the storybook illustrations, the basket and the grumpy mitten:** hand-drawn SVG for this site. The bedtime story is original.
 - **Lullaby melody:** Johannes Brahms, “Wiegenlied” Op. 49 No. 4 (1868, public domain). Every sound is synthesized in the browser.
 - **Fonts:** Fraunces, Fredoka and VT323 via Google Fonts.
-- No frameworks or libraries. Built with AI assistance (Claude).
+- **3D:** [Three.js](https://threejs.org) r160 (MIT licence), bundled in `js/vendor/`, loaded only for the 3D Pip section. No other libraries or frameworks. Built with AI assistance (Claude).

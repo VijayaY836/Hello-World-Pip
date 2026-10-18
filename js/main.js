@@ -20,6 +20,7 @@ import { initRouter } from './router.js';
 import { initGuestbook } from './guestbook.js';
 import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
+import { initPip3D } from './pip3d.js';
 
 // Memories first, so this visit is counted.
 initMemory();
@@ -90,7 +91,7 @@ const PAGES = {
     });
   },
   work() { initToys(); initLab(); initStorybook(); initRoutes(); },
-  play() { initNightRoom(); initGame(); initGuestbook(); },
+  play() { initNightRoom(); initGame(); initPip3D(); initGuestbook(); },
 };
 const ready = new Set();
 window.addEventListener('pip:view', (e) => {

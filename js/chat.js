@@ -134,6 +134,12 @@ const TOPICS = [
     chips: ['where do you deliver dreams?', 'goodnight, pip'],
   },
   {
+    id: '3d', test: /\b3d\b|three ?d|spin you|rotate you|in 3 ?d/i,
+    replies: ['ooh, Nana knitted a 3D me! you can spin me around and squish me. there’s even a 1998 mode. 🕹️'],
+    link: { href: '#pip3d-sec', label: '🧸 see 3D pip' },
+    chips: ["let's play!", 'tell me a secret'],
+  },
+  {
     id: 'play', test: /\bplay|game|bored|\bfun\b|catch/i,
     replies: [() => `yay! i have a dream-catching game and a dark room full of hidden doodles. ${best() ? `your best shift is ${best()} ★. beat it?` : 'can you catch 20 dreams?'}`],
     link: { href: '#/play', label: '🎮 go play' },
