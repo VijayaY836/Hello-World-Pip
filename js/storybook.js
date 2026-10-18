@@ -3,6 +3,7 @@
 // Turn pages with the buttons, ← → keys, a swipe, or a tap on the page edge.
 
 import { pageTurn } from './audio.js';
+import { remember } from './memory.js';
 
 // ---------- illustrations (hand-drawn SVG) ----------
 const BODY = 'M-56 46 V4 Q-56 -36 0 -36 Q56 -36 56 4 V46 l-14 -10 -14 10 -14 -10 -14 10 -14 -10 -14 10 -14 -10 Z';
@@ -140,6 +141,7 @@ export function initStorybook() {
     prev.disabled = turned === 0;
     next.disabled = turned >= maxTurn();
     count.textContent = label();
+    if (currentPage() === PAGES.length - 1) remember({ bookDone: true });
     if (animate) pageTurn();
   }
 

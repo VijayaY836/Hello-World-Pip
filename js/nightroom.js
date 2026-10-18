@@ -5,6 +5,7 @@
 
 import { plink, chime } from './audio.js';
 import { sparks, toast, say, centerOf } from './fx.js';
+import { remember } from './memory.js';
 
 const DWELL_MS = 350; // how long the light must rest on a doodle to "find" it
 
@@ -62,6 +63,7 @@ export function initNightRoom() {
     d.found = true;
     d.el.classList.add('is-found');
     const n = doodles.filter((x) => x.found).length;
+    remember({ dreams: n });
     counter.textContent = `✦ ${n}/${total} found`;
     status.textContent = n < total ? `Found: ${d.el.dataset.dream}! (${n} of ${total})` : `All ${total} dreams found!`;
     plink(1 + n * 0.12);

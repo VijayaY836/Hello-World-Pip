@@ -2,6 +2,8 @@
 // Header and footer stay; only the middle swaps. Old section links (#lab, #book…)
 // and shared lullaby links (#lullaby=…) still work: they open the right page and scroll there.
 
+import { remember } from './memory.js';
+
 const VIEWS = ['home', 'story', 'work', 'play'];
 const TITLES = {
   home: 'Pip · Junior Dream Engineer',
@@ -35,6 +37,7 @@ export function initRouter() {
     current = view;
     for (const [name, el] of Object.entries(views)) el.hidden = name !== view;
     document.documentElement.dataset.view = view;
+    if (view !== 'home') remember({ lastPage: view }); // where to pick up next time
     document.title = TITLES[view];
     if (address) address.textContent = ADDRESS + FILE[view];
     navLinks.forEach((a) => (a.dataset.route === view ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));

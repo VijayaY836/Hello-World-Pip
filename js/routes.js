@@ -3,6 +3,7 @@
 // and the delivery log ticks it off. Desktop and phones get different map shapes.
 
 import { plink } from './audio.js';
+import { remember } from './memory.js';
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
@@ -170,6 +171,7 @@ export function initRoutes() {
       items[i].classList.toggle('is-next', i === n);
     });
     tally.textContent = `${n}/${STOPS.length}`;
+    if (n >= STOPS.length && animate) remember({ routesDone: true });
     now.textContent = n >= STOPS.length ? 'all dreams delivered. goodnight, town ♡' : `en route to: ${STOPS[n].name}…`;
     if (animate && forward && n > 0) plink(1 + n * 0.1);
   }

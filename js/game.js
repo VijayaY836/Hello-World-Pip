@@ -3,6 +3,7 @@
 
 import { catchNote, chime, bzzt, plink } from './audio.js';
 import { sparks, centerOf } from './fx.js';
+import { remember } from './memory.js';
 
 const ROUND = 30;
 const BEST_KEY = 'pip-best';
@@ -141,6 +142,7 @@ export function initGame() {
 
   function end() {
     state = 'over';
+    remember({ played: true });
     root.classList.remove('is-playing');
     const best = store.get(BEST_KEY);
     const isBest = score > best;

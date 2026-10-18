@@ -1071,3 +1071,23 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
   .gb { grid-template-columns: 1fr; }
   .gb__wall { max-height: 520px; }
 }
+
+/* ---------- Pip remembers you ---------- */
+.about { grid-template-columns: repeat(2, minmax(0, 460px)); justify-content: center; align-items: start; gap: 24px; }
+.about .nfo { max-width: none; }
+.memo__body { padding: 12px 16px 14px; display: grid; gap: 8px; }
+.memo__hello { margin: 0; font-family: var(--font-pixel); font-size: 1.25rem; color: var(--gold); }
+.memo__name { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.memo__name label { font-size: .92rem; color: var(--ink-soft); }
+.memo__name input { flex: 1 1 120px; min-width: 0; font: inherit; font-size: .95rem; color: var(--ink); background: var(--bg); border: 2px inset var(--win-edge); border-radius: 8px; padding: 4px 8px; }
+.memo__name input:focus-visible { outline: 3px dashed var(--gold); outline-offset: 2px; }
+.memo__name .chip, .memo__actions .chip { color: var(--ink); border-color: var(--win-edge); text-decoration: none; }
+.memo__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .95rem; }
+.memo__list li { display: flex; align-items: center; gap: 8px; color: var(--ink-soft); }
+.memo__list li.is-done { color: var(--ink); }
+.memo__box { flex: none; width: 18px; height: 18px; border: 2px solid var(--win-edge); border-radius: 5px; display: grid; place-items: center; font-size: .75rem; font-weight: 700; }
+.memo__list li.is-done .memo__box { background: #7be0a0; border-color: #7be0a0; color: #1d4a32; }
+.memo__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.memo__actions [hidden] { display: none; }
+.memo__note { margin: 0; font-size: .82rem; color: var(--ink-soft); }
+@media (max-width: 860px) { .about { grid-template-columns: minmax(0, 560px); } }

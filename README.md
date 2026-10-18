@@ -37,6 +37,13 @@ Home has three big doors (Story, Work, Play); each opens its own page (`#/story`
 | **Tier 2 · Dream Delivery Routes** | Scroll-synced SVG map: the flight path draws itself (stroke-dashoffset) while Pip flies along it; 5 rooftop stops light up as dreams drop down the chimneys, with a live delivery log |
 | **Tier 2 · Mini-game** | Catch the Dreams: 30-second canvas game, combos, alarm clocks to dodge, best score + all-time "dreams delivered" |
 
+### Tier 3
+
+| Feature | How |
+|---|---|
+| 📌 Live dream guestbook | See "Live guestbook" below: a real backend (Vercel function + Upstash Redis) |
+| 🧠 Pip remembers you | Returning visitors get a personal greeting (name, days away, unfinished story, doodles left, best score, late-night visits). `pip_remembers_you.txt` on Home shows visit count, first-met date, a discovery checklist, a resume link and a name Pip can call you. Stored only in the visitor's browser, with a two-tap "forget me" |
+
 ### Side quests
 
 | Quest | How |
@@ -85,6 +92,7 @@ js/clicks.js   click sounds
 js/counter.js  hit counter odometer
 js/chaos.js    Responsive Chaos Mode
 js/guestbook.js  the Dream Wall guestbook
+js/memory.js   Pip remembers you
 api/hits.js    Vercel function for the site-wide hit counter
 api/guestbook.js  Vercel function for the guestbook
 assets/        3 WebP images from the official pack (cut out, optimized)

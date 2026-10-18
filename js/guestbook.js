@@ -5,6 +5,7 @@
 
 import { chime } from './audio.js';
 import { sparks, toast, centerOf } from './fx.js';
+import { remember, memory } from './memory.js';
 
 const STICKERS = { moon: '🌙', star: '⭐', zzz: '💤', bear: '🧸', ghost: '👻', owl: '🦉' };
 const LOCAL_KEY = 'pip-guestbook-local';
@@ -144,7 +145,13 @@ export function initGuestbook() {
     const first = wall.firstElementChild;
     if (first) { const c = centerOf(first); sparks(c.x, c.y, { count: 20, spread: 120 }); }
     toast('📌 Pip pinned your wish to the dream wall!');
+    remember(saved.n && saved.n !== 'a sleepy visitor' && !memory().name ? { wished: true, name: saved.n } : { wished: true });
   });
+
+  // Pip already knows your name? Fill it in.
+  const nameField = document.getElementById('gbName');
+  if (memory().name && !nameField.value) nameField.value = memory().name;
+  window.addEventListener('pip:named', (e) => { if (!nameField.value) nameField.value = e.detail; });
 
   load();
 }

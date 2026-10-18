@@ -4,6 +4,7 @@
 
 import { giggle, sneeze, chime } from './audio.js';
 import { say, sparks, toast, centerOf } from './fx.js';
+import { remember } from './memory.js';
 
 const BOOP_LINES = ['hehe!', 'boop!', 'that tickles!', 'again?!', 'a… a…'];
 
@@ -34,6 +35,7 @@ function initNoseBoop() {
     }
     boops = 0;
     sneeze();
+    remember({ eggs: { sneeze: true } });
     say('a… a… ACHOO! ✨', 3000);
     const { x, y } = centerOf(nose);
     setTimeout(() => sparks(x, y, { count: 34, spread: 220 }), 750);
@@ -81,6 +83,7 @@ function initWisp() {
   let hideTimer = 0;
 
   secret.addEventListener('click', () => {
+    remember({ eggs: { wisp: true } });
     const t = town.getBoundingClientRect();
     const w = secret.getBoundingClientRect();
     wisp.style.left = `${w.left - t.left + w.width / 2}px`;

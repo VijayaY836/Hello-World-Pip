@@ -18,8 +18,10 @@ import { initChaos } from './chaos.js';
 import { initRoutes } from './routes.js';
 import { initRouter } from './router.js';
 import { initGuestbook } from './guestbook.js';
+import { initMemory, remember, greeting, memory } from './memory.js';
 
-// Pages first, so every feature starts on the right page.
+// Memories first (so this visit is counted), then pages.
+initMemory();
 initRouter();
 
 const NIGHT_LINES = [
@@ -64,7 +66,10 @@ initTheme({
 // --- Pip, the living hero ---
 const heroPip = document.getElementById('heroPip');
 initEyes(heroPip);
-say(isDay() ? 'zzz… night shift… zzz…' : NIGHT_LINES[0], 0);
+// Pip greets you with what Pip remembers.
+say(isDay() ? (memory().name ? `zzz… oh, it's you, ${memory().name}… zzz` : 'zzz… night shift… zzz…') : greeting(), 7000);
+window.addEventListener('pip:named', (e) => { if (e.detail) say(`${e.detail}! what a lovely name. i'll remember ♡`, 3500); });
+window.addEventListener('pip:forgot', () => say('…who are you? hi, stranger! ♡ (i forgot everything)', 4000));
 
 let lineIndex = 0;
 setInterval(() => {
@@ -77,6 +82,7 @@ setInterval(() => {
 const story = initStory({
   onScene(n) {
     if (n === 4) hum(); // Pip's first wobbly hum: the first sound in the story
+    if (n === 6) remember({ storyDone: true });
   },
 });
 initToys();

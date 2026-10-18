@@ -4,6 +4,7 @@
 
 import { sound, voiceNote, plink } from './audio.js';
 import { toast } from './fx.js';
+import { remember } from './memory.js';
 
 const ROWS = [ // top (high) → bottom (low)
   ['E5', 659.25], ['D5', 587.33], ['C5', 523.25], ['A4', 440],
@@ -74,6 +75,7 @@ export function initLab() {
 
   function save(newName) {
     if (newName) name = newName;
+    if (newName === 'my_lullaby.mid' || newName === 'dreamed_up.mid') remember({ composed: true });
     try { localStorage.setItem(STORE_KEY, encode(pattern)); } catch { /* storage unavailable */ }
     paint();
   }

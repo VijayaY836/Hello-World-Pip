@@ -110,6 +110,23 @@
           </dl>
           <p class="nfo__about">My face is made of moonlight, and two little stars got stuck in my eyes. I’m sleepy and a bit clumsy, but I’m very good at one thing: making nights feel less quiet.</p>
         </div>
+      <div class="win memo" id="memo">
+        <div class="win__bar"><span>pip_remembers_you.txt</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+        <div class="memo__body">
+          <p class="memo__hello" id="memoHello"></p>
+          <form class="memo__name" id="memoNameForm">
+            <label for="memoName">pip calls you</label>
+            <input id="memoName" type="text" maxlength="24" autocomplete="nickname" placeholder="your name" />
+            <button class="chip" type="submit">save</button>
+          </form>
+          <ul class="memo__list" id="memoList" aria-label="What Pip remembers about your visits"></ul>
+          <div class="memo__actions">
+            <a class="chip" id="memoResume" href="#/" hidden></a>
+            <button class="chip" id="memoForget" type="button">forget me</button>
+          </div>
+          <p class="memo__note">Pip keeps these memories in your browser only.</p>
+        </div>
+      </div>
     </section>
 
     <div class="marquee" aria-hidden="true">
