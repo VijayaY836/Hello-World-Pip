@@ -23,11 +23,28 @@ export function initEyes(pip) {
   window.addEventListener('pointermove', onPointer, { passive: true });
   window.addEventListener('pointerdown', onPointer, { passive: true });
 
-  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; }).observe(pip);
+  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) measure(); }).observe(pip);
+
+  // Measure where things are only when the layout can change (scroll, resize, page switch),
+  // never every frame: reading positions each frame forces the browser to redo layout.
+  let pipRect = null;
+  function measure() {
+    pipRect = pip.getBoundingClientRect();
+    for (const eye of eyes) {
+      const r = eye.el.getBoundingClientRect();
+      eye.cx = r.left + r.width / 2; eye.cy = r.top + r.height / 2; eye.w = r.width; eye.h = r.height;
+    }
+  }
+  let dirty = true;
+  const markDirty = () => { dirty = true; };
+  addEventListener('scroll', markDirty, { passive: true });
+  addEventListener('resize', markDirty);
+  addEventListener('pip:view', markDirty);
+  setInterval(markDirty, 1500); // Pip gently bobs, so refresh now and then
 
   function wander(now) {
     if (now < wanderAt) return;
-    const r = pip.getBoundingClientRect();
+    const r = pipRect;
     target = {
       x: r.left + r.width * (0.1 + Math.random() * 0.8),
       y: r.top + r.height * (0.15 + Math.random() * 0.5),
@@ -35,27 +52,33 @@ export function initEyes(pip) {
     wanderAt = now + 1400 + Math.random() * 1800;
   }
 
-  function frame(now) {
-    requestAnimationFrame(frame);
-    if (!visible || document.documentElement.dataset.theme === 'day') return;
-    if (now - lastInput > IDLE_MS) wander(now);
-    if (!target) return;
-
+  // Glints move only when there's somewhere new to look (pointer moves, or an idle glance);
+  // CSS transitions do the smooth easing, so there's no animation loop running all the time.
+  let queued = false;
+  function aim() {
+    queued = false;
+    if (!visible || document.documentElement.dataset.theme === 'day' || !target) return;
+    if (dirty || !pipRect) { measure(); dirty = false; }
     for (const eye of eyes) {
-      const r = eye.el.getBoundingClientRect();
-      const dx = target.x - (r.left + r.width / 2);
-      const dy = target.y - (r.top + r.height / 2);
+      const dx = target.x - eye.cx, dy = target.y - eye.cy;
       const dist = Math.hypot(dx, dy) || 1;
       const reach = Math.min(1, dist / 220); // closer cursor → smaller movement
-      const tx = (dx / dist) * r.width * 0.27 * reach;
-      const ty = (dy / dist) * r.height * 0.25 * reach;
-      eye.x += (tx - eye.x) * 0.16;
-      eye.y += (ty - eye.y) * 0.16;
-      eye.glint.style.setProperty('--gx', `${eye.x.toFixed(2)}px`);
-      eye.glint.style.setProperty('--gy', `${eye.y.toFixed(2)}px`);
+      eye.glint.style.setProperty('--gx', `${((dx / dist) * eye.w * 0.27 * reach).toFixed(1)}px`);
+      eye.glint.style.setProperty('--gy', `${((dy / dist) * eye.h * 0.25 * reach).toFixed(1)}px`);
     }
   }
-  requestAnimationFrame(frame);
+  const request = () => { if (!queued) { queued = true; requestAnimationFrame(aim); } };
+  addEventListener('pointermove', request, { passive: true });
+  addEventListener('pointerdown', request, { passive: true });
+  (function glance() {
+    setTimeout(() => {
+      if (visible && performance.now() - lastInput > IDLE_MS) {
+        if (dirty || !pipRect) { measure(); dirty = false; }
+        wanderAt = 0; wander(performance.now()); request();
+      }
+      glance();
+    }, 1400 + Math.random() * 1800);
+  })();
 
   // Blink every few seconds (only while awake).
   (function scheduleBlink() {

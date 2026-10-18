@@ -46,7 +46,7 @@ const TOPICS = [
       if (m.dreams) bits.push(`you found ${m.dreams} of my 5 wall doodles`);
       if (b) bits.push(`your best dream shift is ${b} ★`);
       if (m.eggs?.wisp) bits.push('and you found Wisp’s window!');
-      return `let me think… ${bits.join(', ')}. (it’s all on my home page too, in pip_remembers_you.txt)`;
+      return `let me think… ${bits.join(', ')}. (it’s all on my home page too, in “pip remembers you”)`;
     }],
     chips: ['tell me a secret', "let's play!"],
   },

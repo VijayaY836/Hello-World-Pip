@@ -112,7 +112,7 @@ export function initStory({ onScene } = {}) {
       cap.setAttribute('aria-hidden', String(!active));
     });
     dots.forEach((d, i) => (i + 1 === n ? d.setAttribute('aria-current', 'step') : d.removeAttribute('aria-current')));
-    capFile.textContent = `story_0${n}.txt`;
+    capFile.textContent = `chapter ${n}`;
     onScene?.(n);
   }
 

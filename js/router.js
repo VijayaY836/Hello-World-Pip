@@ -11,8 +11,8 @@ const TITLES = {
   work: 'Pip · Things I Make',
   play: 'Pip · Games & Secrets',
 };
-const FILE = { home: '', story: 'story.html', work: 'work.html', play: 'play.html' };
-const ADDRESS = 'http://www.midnightnursery.net/~pip/';
+const FILE = { home: '', story: ' ✦ my story', work: ' ✦ my workbench', play: ' ✦ let’s play' };
+const ADDRESS = 'Pip’s Midnight Nursery';
 
 function resolve(hash) {
   const h = hash.replace(/^#/, '');

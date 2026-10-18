@@ -19,7 +19,7 @@ function initLullaby() {
     box.classList.add('is-playing');
     btn.disabled = true;
     btn.textContent = 'playing… ♪';
-    note.textContent = sound.on ? 'now playing: wiegenlied_pip_mix.mid' : 'sound is off: tap 🔇 up top to hear it!';
+    note.textContent = sound.on ? '♪ now playing: pip’s lullaby' : 'sound is off: tap 🔇 up top to hear it!';
 
     const glyphs = ['♪', '♫', '♬', '♩'];
     const spawn = setInterval(() => {

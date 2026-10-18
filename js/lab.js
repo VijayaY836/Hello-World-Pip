@@ -32,11 +32,11 @@ export function initLab() {
   const lab = document.getElementById('lab');
 
   let pattern = [...PRESET];
-  let name = 'pips_lullaby.mid';
+  let name = 'pip’s lullaby';
   const fromHash = decode((location.hash.match(/^#lullaby=([0-9a-f]+)/i) || [])[1]);
-  if (fromHash) { pattern = fromHash; name = 'a_friends_lullaby.mid'; }
+  if (fromHash) { pattern = fromHash; name = 'a friend’s lullaby'; }
   else {
-    try { const saved = decode(localStorage.getItem(STORE_KEY)); if (saved) { pattern = saved; name = 'my_lullaby.mid'; } } catch { /* storage unavailable */ }
+    try { const saved = decode(localStorage.getItem(STORE_KEY)); if (saved) { pattern = saved; name = 'my lullaby'; } } catch { /* storage unavailable */ }
   }
 
   // ---------- build the grid ----------
@@ -70,12 +70,12 @@ export function initLab() {
     cells.forEach((row, r) => row.forEach((cell, c) => {
       cell.setAttribute('aria-pressed', String(Boolean(pattern[c] & (1 << r))));
     }));
-    file.textContent = `lullaby_lab.exe · ${name}`;
+    file.textContent = `the lullaby lab ✦ ${name}`;
   }
 
   function save(newName) {
     if (newName) name = newName;
-    if (newName === 'my_lullaby.mid' || newName === 'dreamed_up.mid') remember({ composed: true });
+    if (newName === 'my lullaby' || newName === 'a dreamed-up lullaby') remember({ composed: true });
     try { localStorage.setItem(STORE_KEY, encode(pattern)); } catch { /* storage unavailable */ }
     paint();
   }
@@ -83,7 +83,7 @@ export function initLab() {
   function toggle(r, c) {
     pattern[c] ^= 1 << r;
     if (pattern[c] & (1 << r)) voiceNote(ROWS[r][1], voice());
-    save('my_lullaby.mid');
+    save('my lullaby');
   }
 
   grid.addEventListener('click', (e) => {
@@ -203,8 +203,8 @@ export function initLab() {
   document.addEventListener('visibilitychange', () => { if (document.hidden && playing && !sound.on) setPlaying(false); });
 
   // ---------- tools ----------
-  document.getElementById('labPreset').addEventListener('click', () => { pattern = [...PRESET]; save('pips_lullaby.mid'); plink(); });
-  document.getElementById('labClear').addEventListener('click', () => { pattern = Array(STEPS).fill(0); save('untitled.mid'); plink(0.8); });
+  document.getElementById('labPreset').addEventListener('click', () => { pattern = [...PRESET]; save('pip’s lullaby'); plink(); });
+  document.getElementById('labClear').addEventListener('click', () => { pattern = Array(STEPS).fill(0); save('a blank page'); plink(0.8); });
   document.getElementById('labDream').addEventListener('click', () => {
     // A gentle random walk: small steps up and down, a few rests, a low note on the strong beats.
     let r = 3 + Math.floor(Math.random() * 3);
@@ -215,7 +215,7 @@ export function initLab() {
       if ((c === 0 || c === 4) && r < 6) mask |= 1 << 7;
       return mask;
     });
-    save('dreamed_up.mid');
+    save('a dreamed-up lullaby');
     plink(1.2);
   });
   document.getElementById('labShare').addEventListener('click', async () => {
@@ -237,6 +237,6 @@ export function initLab() {
   // A lullaby link opened while already on the site.
   window.addEventListener('hashchange', () => {
     const shared = decode((location.hash.match(/^#lullaby=([0-9a-f]+)/i) || [])[1]);
-    if (shared) { pattern = shared; name = 'a_friends_lullaby.mid'; paint(); }
+    if (shared) { pattern = shared; name = 'a friend’s lullaby'; paint(); }
   });
 }

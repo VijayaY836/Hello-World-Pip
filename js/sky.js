@@ -45,7 +45,7 @@ export function initSky() {
   }
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    dpr = 1; // stars are tiny soft dots, so standard resolution looks the same and costs far less
     W = innerWidth; H = innerHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
@@ -54,22 +54,30 @@ export function initSky() {
 
   const COLORS = { white: '255,248,230', gold: '255,222,150', pink: '255,200,230' };
 
+  // Glows are painted once into small sprites and reused every frame (much cheaper than gradients per star).
+  function glowSprite(rgb, size = 64) {
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    const g = c.getContext('2d'); const r = size / 2;
+    const grad = g.createRadialGradient(r, r, 0, r, r, r);
+    grad.addColorStop(0, `rgba(${rgb},1)`); grad.addColorStop(0.25, `rgba(${rgb},.5)`); grad.addColorStop(1, `rgba(${rgb},0)`);
+    g.fillStyle = grad; g.fillRect(0, 0, size, size);
+    return c;
+  }
+  const GLOW = { white: glowSprite(COLORS.white), gold: glowSprite(COLORS.gold), pink: glowSprite(COLORS.pink), lav: glowSprite('215,195,255'), sun: glowSprite('255,214,150') };
+  const SPARK = (() => {
+    const size = 96, c = document.createElement('canvas'); c.width = c.height = size;
+    const g = c.getContext('2d'); const r = size / 2, s = size * 0.2;
+    const grad = g.createRadialGradient(r, r, 0, r, r, r); grad.addColorStop(0, 'rgba(255,240,210,.5)'); grad.addColorStop(1, 'rgba(255,240,210,0)');
+    g.fillStyle = grad; g.fillRect(0, 0, size, size);
+    g.fillStyle = 'rgba(255,250,235,1)'; g.translate(r, r); g.beginPath();
+    g.moveTo(0, -s); g.quadraticCurveTo(0, 0, s, 0); g.quadraticCurveTo(0, 0, 0, s); g.quadraticCurveTo(0, 0, -s, 0); g.quadraticCurveTo(0, 0, 0, -s); g.fill();
+    return c;
+  })();
+
   function drawSparkle(x, y, size, alpha, rot) {
-    ctx.save();
-    ctx.translate(x, y); ctx.rotate(rot);
-    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, size * 2.6);
-    g.addColorStop(0, `rgba(255,240,210,${0.45 * alpha})`);
-    g.addColorStop(1, 'rgba(255,240,210,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(0, 0, size * 2.6, 0, TAU); ctx.fill();
-    ctx.fillStyle = `rgba(255,250,235,${alpha})`;
-    ctx.beginPath();
-    ctx.moveTo(0, -size);
-    ctx.quadraticCurveTo(0, 0, size, 0);
-    ctx.quadraticCurveTo(0, 0, 0, size);
-    ctx.quadraticCurveTo(0, 0, -size, 0);
-    ctx.quadraticCurveTo(0, 0, 0, -size);
-    ctx.fill();
+    const d = size * 4.8;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.translate(x, y); ctx.rotate(rot);
+    ctx.drawImage(SPARK, -d / 2, -d / 2, d, d);
     ctx.restore();
   }
 
@@ -80,6 +88,7 @@ export function initSky() {
     const scroll = scrollY;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    ctx.globalAlpha = 1;
 
     if (night > 0.02) {
       // twinkling stars (each on its own rhythm), with a soft glow on the brighter ones
@@ -88,13 +97,11 @@ export function initSky() {
         const a = (0.25 + 0.75 * tw) * night;
         const y = ((s.y - scroll * s.depth) % H + H) % H;
         const c = COLORS[s.hue];
-        if (s.r > 1.3) {
-          const g = ctx.createRadialGradient(s.x, y, 0, s.x, y, s.r * 5);
-          g.addColorStop(0, `rgba(${c},${0.35 * a})`); g.addColorStop(1, `rgba(${c},0)`);
-          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(s.x, y, s.r * 5, 0, TAU); ctx.fill();
-        }
-        ctx.fillStyle = `rgba(${c},${a})`;
-        ctx.beginPath(); ctx.arc(s.x, y, s.r * (0.85 + 0.25 * tw), 0, TAU); ctx.fill();
+        if (s.r > 1.3) { const d = s.r * 10; ctx.globalAlpha = 0.45 * a; ctx.drawImage(GLOW[s.hue], s.x - d / 2, y - d / 2, d, d); }
+        ctx.globalAlpha = a; ctx.fillStyle = `rgb(${c})`;
+        const rr = s.r * (0.85 + 0.25 * tw);
+        if (rr < 1.2) ctx.fillRect(s.x - rr, y - rr, rr * 2, rr * 2); // tiny stars: a square looks the same as a dot, and is cheaper
+        else { ctx.beginPath(); ctx.arc(s.x, y, rr, 0, TAU); ctx.fill(); }
       }
       // big four-point sparkle stars that slowly pulse and turn
       for (const sp of sparkles) {
@@ -115,7 +122,7 @@ export function initSky() {
         const nx = sh.vx / Math.hypot(sh.vx, sh.vy), ny = sh.vy / Math.hypot(sh.vx, sh.vy);
         const g = ctx.createLinearGradient(sh.x, sh.y, sh.x - nx * len, sh.y - ny * len);
         g.addColorStop(0, `rgba(255,250,235,${0.95 * sh.life * night})`); g.addColorStop(1, 'rgba(255,200,230,0)');
-        ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.lineCap = 'round';
+        ctx.globalAlpha = 1; ctx.strokeStyle = g; ctx.lineWidth = 2; ctx.lineCap = 'round';
         ctx.beginPath(); ctx.moveTo(sh.x, sh.y); ctx.lineTo(sh.x - nx * len, sh.y - ny * len); ctx.stroke();
         ctx.fillStyle = `rgba(255,255,245,${sh.life * night})`;
         ctx.beginPath(); ctx.arc(sh.x, sh.y, 2.2, 0, TAU); ctx.fill();
@@ -124,15 +131,13 @@ export function initSky() {
     }
 
     // dream-motes drifting upward (lavender at night, sunny gold by day)
-    const moteColor = night > 0.5 ? '215,195,255' : '255,214,150';
+    const moteSprite = night > 0.5 ? GLOW.lav : GLOW.sun;
     for (const m of motes) {
       m.y -= m.vy * dt; m.sway += dt * m.swaySpeed;
       if (m.y < -10) Object.assign(m, newMote(false));
       const x = m.x + Math.sin(m.sway) * 14;
       const a = m.life * (0.35 + 0.35 * Math.sin(m.sway * 1.7)) * (0.55 + 0.45 * night);
-      const g = ctx.createRadialGradient(x, m.y, 0, x, m.y, m.r * 4);
-      g.addColorStop(0, `rgba(${moteColor},${a})`); g.addColorStop(1, `rgba(${moteColor},0)`);
-      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, m.y, m.r * 4, 0, TAU); ctx.fill();
+      const d = m.r * 8; ctx.globalAlpha = Math.max(0, a); ctx.drawImage(moteSprite, x - d / 2, m.y - d / 2, d, d);
     }
   }
 
@@ -140,12 +145,23 @@ export function initSky() {
     requestAnimationFrame(loop);
     if (document.hidden) { last = now; return; }
     const d = Math.min(100, now - (last || now)); last = now; acc += d;
-    if (acc < 24) return;         // cap at ~40fps: plenty for a gentle sky, kind to batteries
+    if (acc < 32) return;         // cap at ~30fps: plenty for a gentle sky, kind to batteries
     frame(now, acc); acc = 0;
   }
 
   addEventListener('resize', resize);
   resize();
-  if (calm.matches) { frame(performance.now(), 16); return; } // one still, starry frame
-  requestAnimationFrame(loop);
+  // Paint a still starry sky right away, then start twinkling once the page has settled
+  // (or the moment the visitor interacts), so the first load stays snappy.
+  frame(performance.now(), 16);
+  if (calm.matches) return; // reduced motion: keep the still sky
+  let started = false;
+  const begin = () => {
+    if (started) return; started = true;
+    ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((t) => removeEventListener(t, begin));
+    requestAnimationFrame(loop);
+  };
+  ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((t) => addEventListener(t, begin, { once: true, passive: true }));
+  const later = () => setTimeout(begin, 5000);
+  if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
 }

@@ -1,3 +1,9 @@
+/* Mali: the handwritten accent font, bundled with the site (SIL Open Font License).
+   size-adjust scales it to fit the label sizes the layout was designed with. */
+@font-face { font-family: "Mali"; src: url("../assets/fonts/mali-500.woff2") format("woff2"); font-weight: 100 500; font-display: swap; size-adjust: 79%; }
+@font-face { font-family: "Mali"; src: url("../assets/fonts/mali-600.woff2") format("woff2"); font-weight: 600; font-display: swap; size-adjust: 79%; }
+@font-face { font-family: "Mali"; src: url("../assets/fonts/mali-700.woff2") format("woff2"); font-weight: 700 900; font-display: swap; size-adjust: 79%; }
+
 /* =========================================================
    Pip's homepage · Baby's First Website (haX.baby, Track 1)
    ========================================================= */
@@ -7,7 +13,7 @@
   /* Whimsical type: one bubbly rounded family + a handwritten accent */
   --font-display: "Fredoka", "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
-  --font-hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
+  --font-hand: "Mali", "Fredoka", "Trebuchet MS", system-ui, sans-serif;
   --font-pixel: var(--font-hand); /* old name, now handwritten everywhere */
 
   --radius: 26px;
@@ -207,6 +213,7 @@ a { color: inherit; }
   background: radial-gradient(circle, #fffbe8 0 30%, var(--glint) 55%, transparent 72%);
   box-shadow: 0 0 10px 4px var(--glint-halo), 0 0 24px 10px rgba(255, 190, 90, .25);
   transform: translate(var(--gx, 0px), var(--gy, 0px)) scale(var(--gs, 1));
+  transition: transform .45s cubic-bezier(.25, .8, .25, 1), opacity .4s ease;
   animation: glint-pulse 3s ease-in-out infinite;
   transition: opacity .4s ease;
 }
@@ -1288,3 +1295,80 @@ h1, h2, h3, .hero__title, .sec__head h2, .work__head h2, .routes__head h2 { font
 /* ---- Gentler page transitions ---- */
 .view.is-entering { animation: view-in .6s var(--ease-soft); }
 @keyframes view-in { from { opacity: 0; transform: translateY(10px) scale(.995); filter: blur(4px); } }
+
+/* =========================================================
+   Phase 2 · page-by-page whimsy
+   ========================================================= */
+
+/* Header: a soft hanging sign instead of a fake address bar */
+.address { justify-content: flex-start; gap: 10px; padding: 4px 18px; font-size: 1.45rem; font-weight: 700; color: var(--gold);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--win-solid) 85%, transparent), color-mix(in srgb, var(--win-solid) 55%, transparent));
+  box-shadow: 0 0 18px -6px var(--win-glow); }
+.address__dot { width: auto; height: auto; background: none; box-shadow: none; font-size: 1.05rem; filter: drop-shadow(0 0 6px rgba(255, 220, 140, .8)); animation: bob 4s ease-in-out infinite; }
+.address__url { letter-spacing: .01em; }
+
+/* Breadcrumb + kickers: handwritten, with sparkles */
+.page-head__crumb { font-family: var(--font-hand); font-size: 1.4rem; font-weight: 600; color: var(--ink-soft); }
+.home-chip { font-weight: 600; }
+
+/* Marquee: a glowing ribbon */
+.marquee { background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 22%, transparent) 15%, color-mix(in srgb, var(--accent-2) 22%, transparent) 85%, transparent);
+  border-block: 0; font-family: var(--font-hand); font-size: 1.6rem; font-weight: 600; color: var(--gold); padding: 6px 0; }
+
+/* Story captions: soft storybook card */
+.caption .win__bar { padding-bottom: 0; }
+.caption__dots button { border-color: var(--accent-2); width: 12px; height: 12px; transition: background-color .3s, transform .3s var(--ease-bounce); }
+.caption__dots button[aria-current="step"] { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
+.caption__dots { position: absolute; right: 18px; top: 14px; }
+.caption .win__bar { justify-content: flex-start; padding-left: 20px; }
+.cap h2 { color: var(--accent); font-size: clamp(1.25rem, 2.4vw, 1.6rem); }
+.stage { --sky-top: #0f0c33; --sky-bot: #4b2a6b; }
+.stage__sky { background: linear-gradient(180deg, #0f0c33 0%, #2a1f5e 50%, #5a3278 100%); }
+.stage[data-scene="6"] .stage__sky::after { background: linear-gradient(180deg, #8fb7ea 0%, #ffc8d6 60%, #ffe0b0 100%); }
+
+/* Footer: melts into the sky instead of a hard band */
+.foot__inner { background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--sky-1) 70%, transparent)); border-top: 0; }
+.foot__bye { font-family: var(--font-display); color: var(--accent); text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 45%, transparent); }
+.foot__hint, .credits h2, .foot__copy, .odo__label, .odo__caption { font-family: var(--font-hand); font-size: 1.35rem; }
+.credits h2 { font-weight: 700; }
+.fh { --fh: color-mix(in srgb, var(--sky-2) 70%, #000); border-radius: 10px 10px 0 0; }
+[data-theme="day"] .fh { --fh: #f0c9d6; }
+.fh i { border-radius: 6px 6px 3px 3px; }
+
+/* Hit counter: a cute brass music-box counter instead of a green LCD */
+.odo { background: linear-gradient(180deg, #f6d48a, #d9a24a); border: 0; border-radius: 14px; padding: 6px; box-shadow: 0 0 0 2px #fff3 inset, 0 10px 24px -10px var(--shadow); }
+.odo__digit { background: linear-gradient(180deg, #fffaf0, #f5e6cf 50%, #fffaf0); border-radius: 8px; }
+.odo__digit::after { background: rgba(160, 110, 60, .15); }
+.odo__strip i { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: #b8437a; text-shadow: none; }
+
+/* 88×31 badges become rounded stickers */
+.b88 { border: 0; border-radius: 10px; font-family: var(--font-hand); font-size: 1.05rem; font-weight: 700; line-height: .9; }
+
+/* Chat: a cozy whisper window */
+.chat__launcher { border: 1.5px solid var(--win-edge); background: color-mix(in srgb, var(--win-solid) 85%, transparent); box-shadow: 0 10px 26px -10px var(--shadow), 0 0 22px -6px var(--win-glow); }
+.chat__panel .win__bar { justify-content: space-between; padding: 12px 14px 6px 18px; }
+.chat__panel .win__bar > span:first-child { padding: 0; }
+.chat__panel .win__bar > span:first-child::before, .chat__panel .win__bar > span:first-child::after { content: none; }
+.chat__close { border: 1.5px solid var(--win-edge); border-radius: 999px; background: transparent; color: var(--ink); width: 28px; height: 28px; }
+.chat__log { background: transparent; }
+.chat__msg--pip p { background: color-mix(in srgb, var(--win-solid) 85%, transparent); border: 1.5px solid var(--win-edge); border-radius: 18px 18px 18px 6px; }
+.chat__msg--you p { border-radius: 18px 18px 6px 18px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 85%, #fff), var(--accent)); }
+.chat__who { font-family: var(--font-hand); font-size: 1.1rem; }
+.chat__chips { border-top: 1.5px dashed var(--win-edge); }
+.chat__form { border-top: 0; }
+.chat__form input, .gb__input, .memo__name input { border: 1.5px solid var(--win-edge); border-radius: 14px; background: color-mix(in srgb, var(--sky-1) 35%, transparent); }
+[data-theme="day"] .chat__form input, [data-theme="day"] .gb__input, [data-theme="day"] .memo__name input { background: #fff; }
+
+/* Lab, game, room and 3D stages: rounded insets that glow */
+.lab__body, .game, .room, .pip3d__stage, .card__art, .chart { border-radius: 20px; }
+.lab__body, .pip3d__stage { margin: 0 12px 12px; }
+.game, .room { margin: 0 12px; }
+.lab__cell { border-radius: 12px; }
+.lab__note, .lab__beats, .seg legend, .lab__status, .gb__label, .gb__count, .gb__mode, .gb__status, .gb__meta, .routes__now, .routes__tally, .room__hint, .game__hud, .game__best, .game__legend, .chart__lbl, .card__note, .memo__hello, .pip3d__status, .cap__hint, .sticker, .room__count { font-family: var(--font-hand); font-weight: 600; }
+.lab__note, .lab__beats { font-size: 1.15rem; }
+.game__hud { font-size: 1.7rem; }
+.sticker { border-radius: 10px; }
+.chat__panel { background: var(--win-solid); }
+.chat__panel .chat__log { background: color-mix(in srgb, var(--sky-1) 30%, var(--win-solid)); margin: 0 10px; border-radius: 18px; }
+.sky__canvas { animation: sky-in 1.6s var(--ease-soft) both; }
+@keyframes sky-in { from { opacity: 0; } }
