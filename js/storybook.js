@@ -35,9 +35,9 @@ function mumble(mood, x = 150, y = 130, s = 1) {
   const extra = {
     scared: '<path d="M-74 -6 q-6 8 0 16 M-82 -10 q-8 12 0 24 M74 -6 q6 8 0 16 M82 -10 q8 12 0 24" stroke="#8a74d6" stroke-width="3" fill="none" stroke-linecap="round"/>',
     frizzy: '<path d="M-56 -4 l-12 -6 8 -8 -10 -12 12 -2 -2 -14 12 4 4 -14 10 10 10 -12 4 14 12 -4 -2 14 12 2 -10 12 8 8 -12 6" fill="#8a74d6" stroke="#8a74d6" stroke-width="2" stroke-linejoin="round"/>',
-    dim: '<text x="40" y="-44" font-family="Fraunces, serif" font-weight="800" font-size="30" fill="#c9b6f2">?</text>',
+    dim: '<text x="40" y="-44" font-family="Fredoka, sans-serif" font-weight="800" font-size="30" fill="#c9b6f2">?</text>',
     happy: '',
-    sleep: `${STAR(0, 40, 18)}<text x="46" y="-40" font-family="Fraunces, serif" font-weight="800" font-size="20" fill="#c9b6f2">z z</text>`,
+    sleep: `${STAR(0, 40, 18)}<text x="46" y="-40" font-family="Fredoka, sans-serif" font-weight="800" font-size="20" fill="#c9b6f2">z z</text>`,
   }[mood];
   return `<g transform="translate(${x} ${y}) scale(${s})">${mood === 'frizzy' ? extra : ''}<path d="${BODY}" fill="#8a74d6"/><path d="M-40 -28 l-10 -14 M40 -28 l10 -14" stroke="#8a74d6" stroke-width="6" stroke-linecap="round"/>${eyes}${mouth}${cheeks}${mood === 'frizzy' ? '' : extra}</g>`;
 }

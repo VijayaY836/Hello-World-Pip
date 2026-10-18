@@ -21,9 +21,23 @@ import { initGuestbook } from './guestbook.js';
 import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
 import { initPip3D } from './pip3d.js';
+import { initSky } from './sky.js';
 
 // Memories first, so this visit is counted.
 initMemory();
+
+initSky(); // twinkling stars, sparkles, shooting stars and dream-motes
+
+// The sky drifts a little as you scroll (parallax depth for the star layers).
+(() => {
+  const sky = document.querySelector('.sky');
+  if (!sky || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let queued = false;
+  addEventListener('scroll', () => {
+    if (queued) return; queued = true;
+    requestAnimationFrame(() => { sky.style.setProperty('--scroll', String(Math.round(scrollY))); queued = false; });
+  }, { passive: true });
+})();
 
 const NIGHT_LINES = [
   "hi! i'm pip ♡",

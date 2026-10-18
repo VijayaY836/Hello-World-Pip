@@ -4,58 +4,77 @@
 
 /* ---------- Tokens ---------- */
 :root {
-  --font-display: "Fraunces", Georgia, serif;
+  /* Whimsical type: one bubbly rounded family + a handwritten accent */
+  --font-display: "Fredoka", "Baloo 2", "Trebuchet MS", system-ui, sans-serif;
   --font-body: "Fredoka", "Trebuchet MS", system-ui, sans-serif;
-  --font-pixel: "VT323", ui-monospace, monospace;
+  --font-hand: "Caveat", "Segoe Print", "Comic Sans MS", cursive;
+  --font-pixel: var(--font-hand); /* old name, now handwritten everywhere */
 
-  --radius: 14px;
+  --radius: 26px;
+  --radius-sm: 16px;
   --gutter: clamp(16px, 4vw, 40px);
-  --bar-h: 52px;
-  --ease-bounce: cubic-bezier(.34, 1.56, .64, 1);
-  --ease-soft: cubic-bezier(.22, .8, .3, 1);
+  --bar-h: 58px;
+  --ease-bounce: cubic-bezier(.34, 1.4, .64, 1);
+  --ease-soft: cubic-bezier(.25, .8, .25, 1);
+  --dur: .45s;
 }
 
-/* Night (default): Pip is awake */
+/* Night (default): dusky indigo melting into plum */
 :root,
 :root[data-theme="night"] {
-  --bg: #15123a;
-  --bg-2: #211b55;
-  --ink: #fbeee0;
-  --ink-soft: #c9c0ec;
-  --accent: #ff9fbd;
-  --accent-ink: #2a1340;
-  --gold: #ffd27a;
-  --win: #241e5c;
-  --win-edge: #4a3f9a;
-  --bar-a: #ff8fb1;
-  --bar-b: #8f4cc0;
-  --bar-ink: #fff;
-  --shadow: rgba(5, 3, 20, .55);
-  --tile: radial-gradient(circle at 20% 30%, #fff8 0 1px, transparent 1.6px),
-          radial-gradient(circle at 70% 80%, #ffe9a8aa 0 1.2px, transparent 2px),
-          radial-gradient(circle at 85% 20%, #fff5 0 .8px, transparent 1.4px);
+  --sky-1: #0f0c33;      /* top of the sky */
+  --sky-2: #2a1f5e;      /* indigo */
+  --sky-3: #4b2a6b;      /* plum */
+  --sky-4: #8a4f86;      /* rose dusk at the horizon */
+  --bg: #1a1544;
+  --bg-2: #2b2163;
+  --ink: #fff4ea;        /* moonlight cream */
+  --ink-soft: #d9cdf3;
+  --accent: #ff9ec0;     /* blush pink */
+  --accent-2: #c7b2ff;   /* lavender */
+  --accent-ink: #3a1640;
+  --gold: #ffd98a;       /* soft gold */
+  --win: rgba(50, 38, 108, .9);
+  --win-solid: #34286f;
+  --win-edge: rgba(199, 178, 255, .35);
+  --win-glow: rgba(199, 178, 255, .25);
+  --bar-a: #ff9ec0;
+  --bar-b: #c7b2ff;
+  --bar-ink: #3a1640;
+  --shadow: rgba(8, 4, 30, .45);
+  --tile: none;
   --glint: #ffd889;
   --glint-halo: rgba(255, 196, 92, .75);
+  --cloud: rgba(255, 220, 245, .10);
+  --star: #fff6dd;
   color-scheme: dark;
 }
 
-/* Day: Pip is asleep (night shift, you know) */
+/* Day: a pastel sunrise (Pip is asleep) */
 :root[data-theme="day"] {
-  --bg: #fff8f1;
-  --bg-2: #ffe9e1;
-  --ink: #5c4033;
-  --ink-soft: #8a6a5a;
-  --accent: #a34063;
+  --sky-1: #9ccaf0;
+  --sky-2: #c9dcf7;
+  --sky-3: #ffe3d3;
+  --sky-4: #ffd7a8;
+  --bg: #fff6ee;
+  --bg-2: #ffe8e0;
+  --ink: #5a3d55;
+  --ink-soft: #8a6a80;
+  --accent: #d0507f;
+  --accent-2: #8f6fd6;
   --accent-ink: #fff;
-  --gold: #e2a23b;
-  --win: #fffdf9;
-  --win-edge: #e8cfc2;
-  --bar-a: #a34063;
-  --bar-b: #d77a9c;
-  --bar-ink: #fff;
-  --shadow: rgba(120, 70, 50, .18);
-  --tile: radial-gradient(circle at 25% 25%, #f7d9de 0 2px, transparent 2.5px),
-          radial-gradient(circle at 75% 75%, #f3e2c4 0 2px, transparent 2.5px);
+  --gold: #d8902a;
+  --win: rgba(255, 252, 248, .93);
+  --win-solid: #fffaf5;
+  --win-edge: rgba(208, 80, 127, .22);
+  --win-glow: rgba(255, 190, 210, .45);
+  --bar-a: #ffb3cc;
+  --bar-b: #d6c4ff;
+  --bar-ink: #5a2550;
+  --shadow: rgba(140, 80, 110, .18);
+  --tile: none;
+  --cloud: rgba(255, 255, 255, .7);
+  --star: rgba(255, 255, 255, .0);
   color-scheme: light;
 }
 
@@ -1155,3 +1174,117 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
 .pip3d__tools .chip { color: var(--ink); border-color: var(--win-edge); }
 .pip3d__tools .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 @media (max-width: 720px) { .pip3d__stage { aspect-ratio: 4 / 5; } }
+
+
+/* =========================================================
+   DESIGN SYSTEM v2 · whimsical storybook night
+   (overrides the older retro-terminal styles above)
+   ========================================================= */
+
+/* ---- Base ---- */
+body { background: var(--sky-1); font-size: 17px; letter-spacing: .005em; }
+h1, h2, h3, .hero__title, .sec__head h2, .work__head h2, .routes__head h2 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.01em; }
+.kicker { font-family: var(--font-hand); font-size: 1.55rem; font-weight: 600; letter-spacing: 0; color: var(--gold); text-transform: none; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 12px; }
+
+/* ---- The living sky (fixed, behind everything) ---- */
+.sky { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+  background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 38%, var(--sky-3) 72%, var(--sky-4) 100%);
+  transition: background .9s var(--ease-soft); }
+.sky > div { position: absolute; will-change: transform; }
+.sky__stars { inset: -10% 0 -10% 0; background-repeat: repeat; transform: translate3d(0, calc(var(--scroll, 0) * var(--depth) * -1px), 0); }
+.sky__stars--far { --depth: .02; background-size: 180px 180px; opacity: .55;
+  background-image: radial-gradient(1px 1px at 20px 30px, var(--star), transparent), radial-gradient(1px 1px at 120px 80px, var(--star), transparent), radial-gradient(1px 1px at 70px 150px, var(--star), transparent), radial-gradient(1px 1px at 160px 10px, var(--star), transparent);
+  animation: twinkle-a 7s ease-in-out infinite alternate; }
+.sky__stars--mid { --depth: .05; background-size: 260px 260px; opacity: .8;
+  background-image: radial-gradient(1.5px 1.5px at 40px 60px, var(--star), transparent), radial-gradient(1.5px 1.5px at 200px 140px, #ffe4b0, transparent), radial-gradient(1.2px 1.2px at 120px 220px, var(--star), transparent);
+  animation: twinkle-b 5s ease-in-out infinite alternate; }
+.sky__stars--near { --depth: .1; background-size: 420px 420px;
+  background-image: radial-gradient(2.2px 2.2px at 90px 120px, #fff, transparent), radial-gradient(2px 2px at 320px 300px, #ffd9f0, transparent), radial-gradient(2.4px 2.4px at 260px 60px, #fff1c8, transparent);
+  animation: twinkle-a 4s ease-in-out infinite alternate-reverse; }
+@keyframes twinkle-a { from { opacity: .35; } to { opacity: .9; } }
+@keyframes twinkle-b { from { opacity: .9; } to { opacity: .45; } }
+.sky__moon { right: 9%; top: 9%; width: clamp(70px, 9vw, 120px); aspect-ratio: 1; border-radius: 50%;
+  /* a crescent made from a shadow, so no dark disc shows against the gradient */
+  box-shadow: inset calc(clamp(70px, 9vw, 120px) * -.26) calc(clamp(70px, 9vw, 120px) * .08) 0 0 #ffe9b0;
+  filter: drop-shadow(0 0 22px rgba(255, 226, 160, .55)) drop-shadow(0 0 70px rgba(255, 190, 220, .25));
+  transform: translate3d(0, calc(var(--scroll, 0) * -.03px), 0) rotate(-12deg); transition: box-shadow .9s, background .9s; }
+[data-theme="day"] .sky__moon { background: radial-gradient(circle, #fff6d6, #ffd27a 65%); box-shadow: none; filter: drop-shadow(0 0 40px rgba(255, 200, 100, .7)); }
+.sky__aurora { inset: -20% -20% auto -20%; height: 70%; opacity: .55;
+  background: radial-gradient(40% 60% at 30% 50%, rgba(199, 178, 255, .35), transparent 70%), radial-gradient(35% 55% at 70% 40%, rgba(255, 158, 192, .28), transparent 70%), radial-gradient(30% 50% at 50% 70%, rgba(150, 230, 220, .14), transparent 70%);
+  animation: aurora 26s ease-in-out infinite alternate; }
+[data-theme="day"] .sky__aurora { opacity: .35; }
+@keyframes aurora { from { transform: translate3d(-4%, 0, 0) scale(1); } to { transform: translate3d(4%, 3%, 0) scale(1.08); } }
+.sky__canvas { position: absolute; inset: 0; }
+/* Fluffy clouds: soft puffs built from gradients (no blur filters, so they're cheap to move).
+   Faint wisps at night, big bright fluffy clouds by day, drifting at different speeds/depths. */
+.sky__cloud { --w: 520px; width: var(--w); height: calc(var(--w) * .36); left: 0; opacity: .14; transition: opacity 1.2s var(--ease-soft);
+  background:
+    radial-gradient(closest-side, #fff 55%, rgba(255,255,255,0)) 2% 66% / 32% 56% no-repeat,
+    radial-gradient(closest-side, #fff 58%, rgba(255,255,255,0)) 24% 30% / 36% 80% no-repeat,
+    radial-gradient(closest-side, #fff 58%, rgba(255,255,255,0)) 50% 8% / 40% 100% no-repeat,
+    radial-gradient(closest-side, #fff 58%, rgba(255,255,255,0)) 76% 30% / 34% 80% no-repeat,
+    radial-gradient(closest-side, #fff 55%, rgba(255,255,255,0)) 98% 66% / 30% 56% no-repeat,
+    radial-gradient(closest-side, #fff 62%, rgba(255,255,255,0)) 50% 92% / 90% 46% no-repeat;
+  border-radius: 999px;
+  animation: drift var(--dur-cloud, 120s) linear var(--delay, 0s) infinite; }
+.sky__cloud--1 { top: 10%; --w: 460px; --dur-cloud: 95s; --delay: -20s; }
+.sky__cloud--2 { top: 30%; --w: 640px; --dur-cloud: 150s; --delay: -95s; }
+.sky__cloud--3 { top: 52%; --w: 380px; --dur-cloud: 80s; --delay: -50s; }
+.sky__cloud--4 { top: 68%; --w: 560px; --dur-cloud: 130s; --delay: -10s; }
+.sky__cloud--5 { top: 20%; --w: 300px; --dur-cloud: 70s; --delay: -60s; }
+.sky__cloud--6 { top: 84%; --w: 720px; --dur-cloud: 170s; --delay: -120s; }
+[data-theme="day"] .sky__cloud { opacity: .92; }
+[data-theme="day"] .sky__cloud--3, [data-theme="day"] .sky__cloud--5 { opacity: .75; }
+@keyframes drift { from { transform: translate3d(-110%, 0, 0); } to { transform: translate3d(calc(100vw + 10%), 0, 0); } }
+@keyframes bob-cloud { 50% { translate: 0 -8px; } }
+@media (max-width: 720px) { .sky__cloud { --w: 300px !important; } .sky__cloud--2, .sky__cloud--6 { --w: 380px !important; } }
+@media (prefers-reduced-motion: reduce) { .sky * { animation: none !important; } }
+
+/* ---- Soft storybook cards (replace the old .exe windows) ---- */
+.win { background: var(--win); border: 1.5px solid var(--win-edge); border-radius: var(--radius);
+  box-shadow: 0 0 0 6px var(--win-glow) inset, 0 18px 40px -12px var(--shadow), 0 0 30px -6px var(--win-glow);
+  transition: background-color var(--dur) var(--ease-soft), border-color var(--dur), box-shadow var(--dur); }
+.win__bar { justify-content: center; padding: 10px 16px 4px; background: none; color: var(--gold);
+  font-family: var(--font-hand); font-size: 1.35rem; font-weight: 700; line-height: 1.1; text-align: center; }
+.win__bar > span:first-child { position: relative; padding: 0 18px; }
+.win__bar > span:first-child::before, .win__bar > span:first-child::after { content: "✦"; position: absolute; top: 50%; translate: 0 -50%; font-size: .7em; color: var(--accent-2); }
+.win__bar > span:first-child::before { left: 0; } .win__bar > span:first-child::after { right: 0; }
+.win__btns { display: none; }
+
+/* ---- Squishy buttons, chips and controls ---- */
+.btn, .chip, .ctrl { transition: transform .25s var(--ease-bounce), box-shadow .3s var(--ease-soft), background-color .3s, border-color .3s, color .3s; }
+.btn { border: 0; border-radius: 999px; padding: 10px 22px; font-weight: 600; letter-spacing: .01em;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 80%, #fff) 0%, var(--accent) 100%); color: var(--accent-ink);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .6) inset, 0 -3px 0 rgba(0, 0, 0, .12) inset, 0 8px 18px -6px color-mix(in srgb, var(--accent) 70%, transparent); }
+.btn:hover { transform: translateY(-2px) scale(1.03); }
+.btn:active { transform: translateY(1px) scale(.96); box-shadow: 0 2px 0 rgba(0, 0, 0, .12) inset, 0 3px 8px -4px var(--shadow); }
+.btn--ghost { background: color-mix(in srgb, var(--win-solid) 70%, transparent); color: var(--ink); box-shadow: 0 0 0 1.5px var(--win-edge) inset, 0 6px 14px -8px var(--shadow); }
+.chip { border-radius: 999px; border: 1.5px solid var(--win-edge); background: color-mix(in srgb, var(--win-solid) 60%, transparent); box-shadow: 0 4px 10px -6px var(--shadow); }
+.chip:hover { transform: translateY(-2px) scale(1.04); border-color: var(--accent); }
+.chip:active { transform: scale(.95); }
+.ctrl { border: 1.5px solid var(--win-edge); background: color-mix(in srgb, var(--win-solid) 70%, transparent); box-shadow: 0 6px 14px -8px var(--shadow); }
+.ctrl:hover { transform: translateY(-2px) scale(1.04); }
+.ctrl:active { transform: scale(.95); box-shadow: none; }
+
+/* ---- Header: a soft floating ribbon ---- */
+.topbar { background: color-mix(in srgb, var(--sky-1) 55%, transparent); border-bottom: 0; box-shadow: 0 10px 30px -18px var(--shadow); }
+.address { font-family: var(--font-hand); font-size: 1.3rem; font-weight: 600; border: 1.5px solid var(--win-edge); background: color-mix(in srgb, var(--win-solid) 50%, transparent); }
+.topbar__nav { font-family: var(--font-display); font-size: 1rem; font-weight: 500; gap: 6px; }
+.topbar__nav a { padding: 4px 12px; border-radius: 999px; transition: background-color .3s, color .3s; }
+.topbar__nav a:hover { text-decoration: none; background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.topbar__nav a[aria-current="page"] { text-decoration: none; color: var(--accent-ink); background: var(--accent); }
+
+/* ---- Retire hard pixel shadows site-wide ---- */
+.bubble, .toast, .sticker, .b88, .story-pip__badge, .ornament__tag, .odo, .gb__note, .foot__wisp p { box-shadow: 0 10px 24px -10px var(--shadow); }
+.bubble { border-radius: 22px; border: 1.5px solid var(--win-edge); background: var(--win-solid); }
+.bubble::before { border-color: var(--win-edge); background: var(--win-solid); }
+.toast { border-radius: 999px; border: 1.5px solid var(--win-edge); background: var(--win-solid); }
+
+/* ---- Headings get a soft glow instead of hard offsets ---- */
+.hero__title { text-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 40%, var(--sky-2)), 0 0 40px color-mix(in srgb, var(--accent) 55%, transparent); }
+.sec__head h2, .work__head h2, .routes__head h2 { text-shadow: 0 0 28px color-mix(in srgb, var(--accent) 45%, transparent); }
+
+/* ---- Gentler page transitions ---- */
+.view.is-entering { animation: view-in .6s var(--ease-soft); }
+@keyframes view-in { from { opacity: 0; transform: translateY(10px) scale(.995); filter: blur(4px); } }

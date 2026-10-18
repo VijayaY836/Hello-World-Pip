@@ -9,13 +9,24 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%99%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,600..800,100&family=Fredoka:wght@400;500;600&family=VT323&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,600..800,100&family=Fredoka:wght@400;500;600&family=VT323&display=swap" rel="stylesheet" /></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Caveat:wght@500..700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&family=Caveat:wght@500..700&display=swap" rel="stylesheet" /></noscript>
   <link rel="preload" as="image" href="assets/pip-cloud.webp" fetchpriority="high" />
   <link rel="stylesheet" href="css/style.css" />
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
+  <!-- The living night sky behind every page -->
+  <div class="sky" aria-hidden="true">
+    <div class="sky__aurora"></div>
+    <div class="sky__moon"></div>
+    <div class="sky__cloud sky__cloud--1"></div>
+    <div class="sky__cloud sky__cloud--2"></div>
+    <div class="sky__cloud sky__cloud--3"></div>
+    <div class="sky__cloud sky__cloud--4"></div>
+    <div class="sky__cloud sky__cloud--5"></div>
+    <div class="sky__cloud sky__cloud--6"></div>
+  </div>
   <!-- psst. curious visitor! someone in town is still awake. look for the dark window. -->
   <a class="skip" href="#main">Skip to content</a>
 
@@ -65,7 +76,7 @@
 
       <div class="hero__text">
         <p class="kicker">★ welcome to my homepage ★</p>
-        <h1 id="hello-title" class="hero__title">Pip</h1><br><br>
+        <h1 id="hello-title" class="hero__title">Pip</h1>
         <p class="hero__role">Junior Dream Engineer · <span>Midnight Nursery</span></p>
         <p class="hero__tagline">“I build the dreams you fall asleep inside.”</p>
         <nav class="doors" aria-label="Explore Pip's homepage">
@@ -634,7 +645,7 @@
           <li>Nana Noctua illustration: added by Vij for this site.</li>
           <li>Wisp, Mumble, the town, the storybook pictures, the basket &amp; the grumpy mitten: hand-drawn SVG for this site.</li>
           <li>All sounds synthesized live with the Web Audio API. Lullaby melody: Johannes Brahms, “Wiegenlied” (1868, public domain).</li>
-          <li>3D Pip: drawn with Three.js (MIT licence), loaded only for that section. Fonts: Fraunces, Fredoka &amp; VT323 via Google Fonts. No other libraries.</li>
+          <li>3D Pip: drawn with Three.js (MIT licence), loaded only for that section. Fonts: Fredoka &amp; Caveat via Google Fonts. No other libraries.</li>
         </ul>
       </section>
       <p class="foot__copy">© 1999–2026 Pip · all dreams reserved · last updated tonight, 2:14 a.m.</p>
