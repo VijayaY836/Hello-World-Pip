@@ -27,13 +27,13 @@
 </p>
 
 <p align="center">
-  <a href="https://YOUR-LIVE-LINK.vercel.app"><b>🌙 visit the nursery</b></a> &nbsp;·&nbsp;
+  <a href="hello-world-pip.vercel.app"><b>🌙 visit the nursery</b></a> &nbsp;·&nbsp;
   <a href="#tour">🗺️ take the tour</a> &nbsp;·&nbsp;
   <a href="#brief">✅ the brief, ticked off</a> &nbsp;·&nbsp;
   <a href="#credits">📜 credits</a>
 </p>
 
-<p align="center"><sub>live at <b>https://YOUR-LIVE-LINK.vercel.app</b></sub></p>
+<p align="center"><sub>live at <b>hello-world-pip.vercel.app</b></sub></p>
 
 <p align="center">
   <img src="docs/screenshots/home-night.webp" alt="The home page: a living map of Pip's mushroom-pond dreamland at night, with Pip floating on his cloud in the middle and banners for the Moon, the Mushroom Workshop and Mushroom Hollow" />
