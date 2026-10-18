@@ -110,7 +110,7 @@ const PAGES = {
 // Once the home page has settled, quietly fetch the other pages' code so they open instantly.
 addEventListener('load', () => setTimeout(() => {
   ['./story.js', './toys.js', './lab.js', './storybook.js', './routes.js', './nightroom.js', './game.js', './guestbook.js'].forEach((m) => {
-    const l = document.createElement('link'); l.rel = 'modulepreload'; l.href = new URL(m, import.meta.url).href; document.head.appendChild(l);
+    const l = document.createElement('link'); l.rel = 'modulepreload'; l.href = import.meta.resolve ? import.meta.resolve(m) : new URL(m, import.meta.url).href; document.head.appendChild(l);
   });
 }, 3500), { once: true });
 const ready = new Set();

@@ -11,11 +11,13 @@ Long ago, a little ghost named Wisp couldn't fall asleep because nobody sang to 
 
 ## Pages
 
-Home has three big doors (Story, Work, Play); each opens its own page (`#/story`, `#/work`, `#/play`) with the same header and footer. Back/forward buttons, direct links and shared `#lullaby=` links all work.
+Home is **the Dream Cartographer**: a living, explorable map of Pip's dreamland, with Pip in the middle. Drag, swipe, use the arrow keys or the ‹ › buttons to explore; the compass brings you back to Pip. Three big banners are the main pages (`#/story`, `#/work`, `#/play`). Seven more places are hidden as twinkling stars: hover, focus or tap one to reveal its name (it turns pink once found), and the counter in the corner tracks how many you've found. Tap the counter and Pip points you to the next one. Pick any place and a trail of stardust appears; Pip flies along it, the map follows, and the page opens. Places you've visited get a ✓, and what you've found is remembered. Back/forward buttons, direct links and shared `#lullaby=` links all work.
+
+The map is a single painting of Pip's mushroom pond (2375 × 822), shown at or below its real size so it stays sharp, in three tiles. On a wide screen most of it fits across; on a phone you swipe. At night the land is tinted and lit with a glowing moon, flickering windows, a shimmering waterfall, fireflies and a little mail plane; by day it's back to pastel.
 
 | Page | What's there |
 |---|---|
-| Home | Pip (live eyes, nose boop, day/night), the three doors, `pip.nfo` |
+| Home | The Dream Cartographer map: Pip (live eyes, nose boop, day/night) in the middle of his dreamland, 10 places to fly to, then `pip.nfo` |
 | Story | The 6-scene origin story |
 | Work | Workbench, Lullaby Lab, Storybook, Dream Delivery Routes |
 | Play | Lights-Out Nursery, Catch the Dreams, the Dream Wall guestbook |
@@ -99,6 +101,7 @@ js/memory.js   Pip remembers you
 js/chat.js     "whisper to pip": Pip chats back
 js/pip3d.js    3D Pip (Three.js)
 js/sky.js      the living sky: twinkling stars, sparkles, shooting stars, dream-motes
+js/dreammap.js the home map: places, stardust trails, panning, Pip's flights
 js/vendor/     three.module.min.js + its MIT licence
 api/hits.js    Vercel function for the site-wide hit counter
 api/guestbook.js  Vercel function for the guestbook
@@ -110,7 +113,12 @@ vercel.json    cache headers
 
 - **Pip, music box and lantern art:** official haX.baby Track 1 asset pack. Backgrounds removed; the eye glints were painted out and are redrawn live in CSS so they can move. The story uses the pack's portrait of Pip with the lantern and music box, with its "Pip" lettering painted out.
 - **Nana Noctua illustration:** added by Vij for this site.
+- **Dreamland map art:** an AI-generated painting chosen by Vij, shown at its original resolution (cut into tiles, nothing upscaled).
 - **Wisp, Mumble, the town, the storybook illustrations, the basket and the grumpy mitten:** hand-drawn SVG for this site. The bedtime story is original.
 - **Lullaby melody:** Johannes Brahms, “Wiegenlied” Op. 49 No. 4 (1868, public domain). Every sound is synthesized in the browser.
 - **Fonts:** Fredoka via Google Fonts; Mali by Cadson Demak (SIL Open Font License), bundled in `assets/fonts/` with its licence.
 - **3D:** [Three.js](https://threejs.org) r160 (MIT licence), bundled in `js/vendor/`, loaded only for the 3D Pip section. No other libraries or frameworks. Built with AI assistance (Claude).
+
+## Deploying
+
+Before each deploy, run `python3 stamp.py`. It gives every CSS/JS file a version stamp (in `index.html`, plus an import map for the modules), so a browser never mixes an old cached file with a new page. `vercel.json` also tells browsers to re-check CSS/JS on every visit (a quick 304 when nothing changed).
