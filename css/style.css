@@ -1668,14 +1668,15 @@ html[data-view="home"] .sky__moon { opacity: 0; } /* the painting has its own mo
 }
 /* small screens: a compact cartouche, smaller controls */
 @media (max-width: 720px) {
-  .dm__cartouche { left: 10px; right: 96px; top: 10px; padding: 8px 14px 10px; border-radius: 20px; }
+  .dm__cartouche { left: 10px; right: 82px; top: 10px; padding: 8px 14px 10px; border-radius: 20px; }
   #view-home .dm__cartouche .hero__title { font-size: 2.6rem; }
   #view-home .dm__cartouche .kicker { font-size: .95rem; }
   #view-home .dm__cartouche .hero__role { font-size: .88rem; }
   .dm__cartouche .hero__tagline { display: none; }
-  .dm__nav { right: 10px; top: 10px; }
+  .dm__nav { right: 10px; top: 10px; padding: 2px; }
   .dm__pan { display: none; } /* phones swipe instead */
-  .dm__compass .cp { width: 42px; height: 42px; }
+  .dm__compass { padding: 3px 5px 2px; gap: 0; font-size: .62rem; border-radius: 16px; } /* a small compass on phones */
+  .dm__compass .cp { width: 30px; height: 30px; }
   .dm__found { left: 10px; bottom: 12px; font-size: .92rem; padding: 7px 13px; }
   #view-home .dm__pip .pip { width: 190px; }
   #view-home .dm__pip .bubble { font-size: 14px; max-width: 240px; }
@@ -1933,3 +1934,4 @@ html { cursor: var(--cur); }
 #soundBtn[aria-pressed="true"] .pi { animation: pi-wiggle 2.4s ease-in-out infinite; }
 @keyframes pi-wiggle { 0%, 80%, 100% { transform: none; } 88% { transform: rotate(-8deg); } 94% { transform: rotate(6deg); } }
 @media (prefers-reduced-motion: reduce) { #soundBtn .pi { animation: none !important; } }
+@media (max-width: 720px) { .dm__pan { display: none; } } /* phones swipe the map, so no arrows (keeps the compass small) */
