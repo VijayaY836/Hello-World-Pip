@@ -19,6 +19,7 @@ import { initRoutes } from './routes.js';
 import { initRouter } from './router.js';
 import { initGuestbook } from './guestbook.js';
 import { initMemory, remember, greeting, memory } from './memory.js';
+import { initChat } from './chat.js';
 
 // Memories first (so this visit is counted), then pages.
 initMemory();
@@ -98,6 +99,7 @@ initSparkles();
 initClickSounds();
 initCounter();
 initGuestbook();
+initChat();
 initChaos();
 
 console.log('%c☾ hi, curious one! pip says: someone in town is still awake…', 'color:#ff9fbd;font:16px/1.4 monospace');

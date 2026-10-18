@@ -43,6 +43,7 @@ Home has three big doors (Story, Work, Play); each opens its own page (`#/story`
 |---|---|
 | 📌 Live dream guestbook | See "Live guestbook" below: a real backend (Vercel function + Upstash Redis) |
 | 🧠 Pip remembers you | Returning visitors get a personal greeting (name, days away, unfinished story, doodles left, best score, late-night visits). `pip_remembers_you.txt` on Home shows visit count, first-met date, a discovery checklist, a resume link and a name Pip can call you. Stored only in the visitor's browser, with a two-tap "forget me" |
+| 💬 Pip chats back | **PipMessenger 98** (the "talk to pip" button on every page): a rule-based chat in Pip's voice with ~35 topics. Tappable default questions to start, follow-up suggestions after every answer, free typing too. Pip uses what it remembers (name, visits, best score), and some answers act: sing a lullaby, open a page, switch day/night or chaos mode. No AI service: instant, free, works offline |
 
 ### Side quests
 
@@ -93,6 +94,7 @@ js/counter.js  hit counter odometer
 js/chaos.js    Responsive Chaos Mode
 js/guestbook.js  the Dream Wall guestbook
 js/memory.js   Pip remembers you
+js/chat.js     PipMessenger 98: Pip chats back
 api/hits.js    Vercel function for the site-wide hit counter
 api/guestbook.js  Vercel function for the guestbook
 assets/        3 WebP images from the official pack (cut out, optimized)

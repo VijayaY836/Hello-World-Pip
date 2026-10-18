@@ -7,7 +7,7 @@ import { rattle, windChime } from './audio.js';
 const HAS_OWN_SOUND = [
   '#soundBtn', '#themeBtn', '#chaosBtn', '#heroPip', '#windBtn', '#musicBox', '.swatches',
   '#labGrid', '.lab__tools', '.seg', '.lab__status', '.book-wrap', '#gameStart', '#roomLights',
-  '#wispWindow', '.chaos-pip',
+  '#wispWindow', '.chaos-pip', '.chat',
 ].join(', ');
 
 export function initClickSounds() {
