@@ -44,6 +44,7 @@ Home has three big doors (Story, Work, Play); each opens its own page (`#/story`
 | 📌 Live dream guestbook | See "Live guestbook" below: a real backend (Vercel function + Upstash Redis) |
 | 🧠 Pip remembers you | Returning visitors get a personal greeting (name, days away, unfinished story, doodles left, best score, late-night visits). `pip_remembers_you.txt` on Home shows visit count, first-met date, a discovery checklist, a resume link and a name Pip can call you. Stored only in the visitor's browser, with a two-tap "forget me" |
 | 💬 Pip chats back | **PipMessenger 98** (the "talk to pip" button on every page): a rule-based chat in Pip's voice with ~35 topics. Tappable default questions to start, follow-up suggestions after every answer, free typing too. Pip uses what it remembers (name, visits, best score), and some answers act: sing a lullaby, open a page, switch day/night or chaos mode. No AI service: instant, free, works offline |
+| ⚡ Lighthouse 90+ | Mobile: Performance 91, Accessibility 100, Best Practices 96, SEO 100. Desktop: 100 / 100 / 96 / 100 (local run, before Vercel's compression). Each page sets itself up only when first opened, fonts don't block the first paint, small thumbnails for small images, long cache headers for art (`vercel.json`) |
 
 ### Side quests
 
@@ -97,13 +98,15 @@ js/memory.js   Pip remembers you
 js/chat.js     PipMessenger 98: Pip chats back
 api/hits.js    Vercel function for the site-wide hit counter
 api/guestbook.js  Vercel function for the guestbook
-assets/        3 WebP images from the official pack (cut out, optimized)
+assets/        WebP images from the official pack (cut out, optimized) + small thumbnails
+vercel.json    cache headers
 ```
 
 ## Credits
 
-- **Pip, music box and lantern art:** official haX.baby Track 1 asset pack. Backgrounds removed; the eye glints were painted out and are redrawn live in CSS so they can move.
-- **Wisp, Nana Noctua, Mumble, the town, the storybook illustrations, the basket and the grumpy mitten:** hand-drawn SVG for this site. The bedtime story is original.
+- **Pip, music box and lantern art:** official haX.baby Track 1 asset pack. Backgrounds removed; the eye glints were painted out and are redrawn live in CSS so they can move. The story uses the pack's portrait of Pip with the lantern and music box, with its "Pip" lettering painted out.
+- **Nana Noctua illustration:** added by Vij for this site.
+- **Wisp, Mumble, the town, the storybook illustrations, the basket and the grumpy mitten:** hand-drawn SVG for this site. The bedtime story is original.
 - **Lullaby melody:** Johannes Brahms, “Wiegenlied” Op. 49 No. 4 (1868, public domain). Every sound is synthesized in the browser.
 - **Fonts:** Fraunces, Fredoka and VT323 via Google Fonts.
 - No frameworks or libraries. Built with AI assistance (Claude).
