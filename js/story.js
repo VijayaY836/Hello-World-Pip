@@ -132,6 +132,7 @@ export function initStory({ onScene } = {}) {
 
   function update() {
     ticking = false;
+    if (!section.offsetParent) return; // page not showing
     if (!geo) measure();
     const raw = (window.scrollY + geo.barH - geo.sectionTop) / Math.max(1, geo.range);
     const progress = Math.min(0.9999, Math.max(0, raw));

@@ -814,7 +814,7 @@ a { color: inherit; }
 .book__controls .btn:disabled { opacity: .4; cursor: default; transform: none; }
 .book__count { font-family: var(--font-pixel); font-size: 1.25rem; min-width: 7ch; text-align: center; color: var(--ink-soft); }
 
-@media (max-width: 1100px) { .topbar__nav { display: none; } }
+@media (max-width: 860px) { .topbar__nav { display: none; } }
 @media (max-width: 759px) {
   .book { --pw: min(340px, 86vw); width: var(--pw); aspect-ratio: 3 / 4.2; overflow: hidden; border-radius: 12px; }
   .book[data-state] .book__inner { transform: none; }
@@ -957,4 +957,64 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
   .routes__map { max-height: calc(100svh - var(--bar-h) - 250px); margin: 0 auto; }
   .routes__log { display: none; }  /* phones show the "en route" line + tally instead */
   .routes__now { padding-bottom: 10px; font-size: 1.15rem; }
+}
+
+/* =========================================================
+   Pages (home · story · work · play)
+   ========================================================= */
+.view.is-entering { animation: view-in .45s var(--ease-soft); }
+@keyframes view-in { from { opacity: 0; transform: translateY(14px); } }
+#main:focus { outline: none; }
+.topbar__nav a[aria-current="page"] { color: var(--accent); text-decoration: underline wavy; text-underline-offset: 4px; }
+
+/* Home: the three doors */
+.hero { min-height: auto; padding-bottom: 36px; }
+.doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 6px; max-width: 560px; }
+.door { display: block; text-decoration: none; color: var(--ink); transition: transform .2s var(--ease-bounce), box-shadow .2s; }
+.door:hover, .door:focus-visible { transform: translateY(-6px) rotate(-1.5deg); box-shadow: 9px 11px 0 var(--shadow); }
+.door:nth-child(2):hover, .door:nth-child(2):focus-visible { transform: translateY(-6px) rotate(1.5deg); }
+.door .win__bar { font-size: 1.05rem; }
+.door .win__btns i { width: 14px; height: 14px; font-size: .7rem; }
+.door__body { display: grid; justify-items: center; gap: 2px; padding: 14px 8px 14px; text-align: center; }
+.door__art { height: 78px; width: auto; margin-bottom: 6px; filter: drop-shadow(0 6px 10px var(--shadow)); transition: transform .3s var(--ease-bounce); }
+.door:hover .door__art { transform: scale(1.1) rotate(-4deg); }
+.door__orb {
+  width: 64px; height: 64px; margin: 7px 0 13px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #fff, #ffd9f0 40%, #b9a8ff 75%);
+  box-shadow: 0 0 22px 8px rgba(220, 190, 255, .55);
+  animation: breathe 3s ease-in-out infinite;
+}
+.door__title { font-family: var(--font-display); font-weight: 800; font-size: 1.6rem; line-height: 1; color: var(--accent); }
+.door__sub { font-family: var(--font-pixel); font-size: 1.1rem; color: var(--ink-soft); }
+.about { display: grid; justify-items: center; padding: 0 var(--gutter) 48px; }
+.about .nfo { width: 100%; max-width: 560px; }
+
+/* Inner pages */
+.page-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 14px var(--gutter) 0; }
+.home-chip { text-decoration: none; color: var(--ink); border-color: var(--win-edge); }
+.page-head__crumb { font-family: var(--font-pixel); font-size: 1.25rem; color: var(--gold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.next-page { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 36px var(--gutter) 10px; }
+.next-page .btn { margin: 0; text-decoration: none; }
+#view-story .next-page { padding-top: 24px; }
+#view-work .work { padding-top: 32px; }
+#view-play .nightroom { padding-top: 32px; }
+
+@media (max-width: 720px) {
+  .doors { gap: 8px; width: 100%; }
+  .door__body { padding: 10px 4px 12px; }
+  .door__art { height: 56px; }
+  .door__orb { width: 46px; height: 46px; margin: 5px 0 11px; }
+  .door__title { font-size: 1.25rem; }
+  .door__sub { font-size: .95rem; line-height: 1; }
+  .door .win__bar { font-size: .95rem; padding: 3px 6px; }
+  .door .win__btns { display: none; }
+}
+@media (max-width: 720px) {
+  #view-home .pip { width: min(230px, 56vw); }
+  #view-home .hero { padding-top: 8px; gap: 4px; }
+  #view-home .bubble { margin-top: -10px; padding: 6px 12px; min-height: 0; font-size: .92rem; }
+  #view-home .hero__title { font-size: clamp(3.6rem, 18vw, 4.6rem); }
+  #view-home .kicker { margin: 0; font-size: 1.15rem; }
+  #view-home .hero__role { margin: .2rem 0 0; font-size: 1rem; }
+  #view-home .hero__tagline { margin: .1rem 0 .6rem; font-size: 1rem; }
 }

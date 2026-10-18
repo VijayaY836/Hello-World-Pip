@@ -9,6 +9,17 @@ Built for **Baby's First Website** (haX.baby, 17–19 Oct 2026), **Track 1: The 
 
 Long ago, a little ghost named Wisp couldn't fall asleep because nobody sang to them, so the dream meant for that night was never dreamed. It drifted past the moon, bonked into a chimney, and woke up as Pip: a moonlight face, two stars caught in the eyes, always sleepy, and *very* against silence. Nana Noctua found Pip in the nursery's lost-and-found, Pip hummed a wobbly first lullaby, built Wisp a real dream, and became the Junior Dream Engineer.
 
+## Pages
+
+Home has three big doors (Story, Work, Play); each opens its own page (`#/story`, `#/work`, `#/play`) with the same header and footer. Back/forward buttons, direct links and shared `#lullaby=` links all work.
+
+| Page | What's there |
+|---|---|
+| Home | Pip (live eyes, nose boop, day/night), the three doors, `pip.nfo` |
+| Story | The 6-scene origin story |
+| Work | Workbench, Lullaby Lab, Storybook, Dream Delivery Routes |
+| Play | Lights-Out Nursery, Catch the Dreams |
+
 ## What's on the page
 
 | Requirement | Where |
@@ -55,6 +66,7 @@ ES modules need a server, so opening `index.html` straight from disk won't load 
 index.html
 css/style.css
 js/main.js     wires everything together
+js/router.js   home / story / work / play pages
 js/audio.js    Web Audio synth: plinks, giggles, music box, hum, chime
 js/eyes.js     cursor-following eyes, blinking, idle wandering
 js/theme.js    day/night toggle

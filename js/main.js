@@ -16,10 +16,14 @@ import { initClickSounds } from './clicks.js';
 import { initCounter } from './counter.js';
 import { initChaos } from './chaos.js';
 import { initRoutes } from './routes.js';
+import { initRouter } from './router.js';
+
+// Pages first, so every feature starts on the right page.
+initRouter();
 
 const NIGHT_LINES = [
   "hi! i'm pip ♡",
-  'psst… scroll down. i’ll tell you how i was born.',
+  'psst… tap Story and i’ll tell you how i was born.',
   'it’s too quiet in here. (try the sound button!)',
   'my eyes are real stars. look!',
 ];
@@ -63,7 +67,7 @@ say(isDay() ? 'zzz… night shift… zzz…' : NIGHT_LINES[0], 0);
 
 let lineIndex = 0;
 setInterval(() => {
-  if (isDay() || document.hidden || window.scrollY > window.innerHeight * 0.6) return;
+  if (isDay() || document.hidden || document.documentElement.dataset.view !== 'home' || window.scrollY > window.innerHeight * 0.6) return;
   lineIndex = (lineIndex + 1) % NIGHT_LINES.length;
   say(NIGHT_LINES[lineIndex], 4200);
 }, 9000);

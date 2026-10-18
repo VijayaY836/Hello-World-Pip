@@ -65,6 +65,7 @@ export function initGame() {
   // ---------- sizing & backdrop ----------
   function measure() {
     const r = root.getBoundingClientRect();
+    if (!r.width || !r.height) return; // its page is hidden right now
     W = r.width; H = r.height;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr);
@@ -300,6 +301,7 @@ export function initGame() {
   }
 
   function draw() {
+    if (!W || !H) return;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     if (backdrop) ctx.drawImage(backdrop, 0, 0); else { ctx.fillStyle = '#120f33'; ctx.fillRect(0, 0, canvas.width, canvas.height); }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);

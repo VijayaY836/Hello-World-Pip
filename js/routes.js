@@ -176,7 +176,7 @@ export function initRoutes() {
 
   function update(initial = false) {
     ticking = false;
-    if (!path) return;
+    if (!path || !section.offsetParent) return; // page not showing
     const r = section.getBoundingClientRect();
     const range = section.offsetHeight - stage.offsetHeight;
     const top = parseFloat(getComputedStyle(stage).top) || 0;
@@ -196,4 +196,6 @@ export function initRoutes() {
   window.addEventListener('resize', request);
   wide.addEventListener('change', build);
   build();
+  // Path lengths can't be measured while the page is hidden; rebuild once it's shown.
+  new IntersectionObserver(([e]) => { if (e.isIntersecting && !len) build(); }).observe(section);
 }

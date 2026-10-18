@@ -16,7 +16,7 @@
 </head>
 <body>
   <!-- psst. curious visitor! someone in town is still awake. look for the dark window. -->
-  <a class="skip" href="#story">Skip to Pip's story</a>
+  <a class="skip" href="#main">Skip to content</a>
 
   <!-- ===== Top bar: fake browser chrome + controls ===== -->
   <header class="topbar">
@@ -25,14 +25,10 @@
       <span class="address__url">http://www.midnightnursery.net/~pip/</span>
     </div>
     <nav class="topbar__nav" aria-label="Sections">
-      <a href="#hello">hello</a>
-      <a href="#story">story</a>
-      <a href="#work">work</a>
-      <a href="#lab">lab</a>
-      <a href="#book">book</a>
-      <a href="#routes">map</a>
-      <a href="#nightroom">lights</a>
-      <a href="#play">play</a>
+      <a href="#/" data-route="home">home</a>
+      <a href="#/story" data-route="story">story</a>
+      <a href="#/work" data-route="work">work</a>
+      <a href="#/play" data-route="play">play</a>
     </nav>
     <div class="controls">
       <button class="ctrl" id="soundBtn" type="button" aria-pressed="false" aria-label="Sound is off. Turn sound on">
@@ -47,7 +43,9 @@
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
+    <!-- ============ HOME ============ -->
+    <div class="view" id="view-home" data-view="home">
     <!-- ===== 1. WHAT PIP IS ===== -->
     <section class="hero" id="hello" aria-labelledby="hello-title">
       <div class="hero__art">
@@ -69,8 +67,39 @@
         <h1 id="hello-title" class="hero__title">Pip</h1>
         <p class="hero__role">Junior Dream Engineer · <span>Midnight Nursery</span></p>
         <p class="hero__tagline">“I build the dreams you fall asleep inside.”</p>
+        <nav class="doors" aria-label="Explore Pip's homepage">
+          <a class="win door door--story" href="#/story">
+            <span class="win__bar"><span>story.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+            <span class="door__body">
+              <span class="door__art door__orb" aria-hidden="true"></span>
+              <span class="door__title">Story</span>
+              <span class="door__sub">how i was born</span>
+            </span>
+          </a>
+          <a class="win door door--work" href="#/work">
+            <span class="win__bar"><span>work/</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+            <span class="door__body">
+              <img class="door__art" src="assets/music-box.webp" width="487" height="554" alt="" aria-hidden="true" decoding="async" />
+              <span class="door__title">Work</span>
+              <span class="door__sub">things i make</span>
+            </span>
+          </a>
+          <a class="win door door--play" href="#/play">
+            <span class="win__bar"><span>play.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+            <span class="door__body">
+              <img class="door__art" src="assets/lantern.webp" width="390" height="560" alt="" aria-hidden="true" decoding="async" />
+              <span class="door__title">Play</span>
+              <span class="door__sub">games &amp; secrets</span>
+            </span>
+          </a>
+        </nav>
 
-        <div class="win nfo">
+      </div>
+
+    </section>
+
+    <section class="about" aria-label="About Pip">
+      <div class="win nfo">
           <div class="win__bar"><span>pip.nfo</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
           <dl class="nfo__list">
             <div><dt>species</dt><dd>baby (moon-skull variety)</dd></div>
@@ -81,9 +110,6 @@
           </dl>
           <p class="nfo__about">My face is made of moonlight, and two little stars got stuck in my eyes. I’m sleepy and a bit clumsy, but I’m very good at one thing: making nights feel less quiet.</p>
         </div>
-      </div>
-
-      <a class="scroll-hint" href="#story"><span>scroll for my story</span><span aria-hidden="true">↓</span></a>
     </section>
 
     <div class="marquee" aria-hidden="true">
@@ -93,6 +119,14 @@
       </div>
     </div>
 
+    </div>
+
+    <!-- ============ STORY ============ -->
+    <div class="view" id="view-story" data-view="story" hidden>
+      <div class="page-head">
+        <a class="chip home-chip" href="#/">⌂ home</a>
+        <span class="page-head__crumb">C:\PIP\STORY&gt; the_dream_nobody_dreamed.txt</span>
+      </div>
     <!-- ===== 2. PIP'S STORY (scroll-driven) ===== -->
     <section class="story" id="story" aria-label="Pip's origin story: The Dream Nobody Dreamed" style="--scenes: 6">
       <div class="stage" id="stage" data-scene="1">
@@ -204,6 +238,15 @@
       </div>
     </section>
 
+      <nav class="next-page" aria-label="More pages"><a class="btn btn--ghost" href="#/">⌂ home</a><a class="btn" href="#/work">next: see what i make →</a></nav>
+    </div>
+
+    <!-- ============ WORK ============ -->
+    <div class="view" id="view-work" data-view="work" hidden>
+      <div class="page-head">
+        <a class="chip home-chip" href="#/">⌂ home</a>
+        <span class="page-head__crumb">C:\PIP\WORK&gt;</span>
+      </div>
     <!-- ===== 3. WHAT PIP DOES ===== -->
     <section class="work" id="work" aria-labelledby="work-title">
       <header class="work__head">
@@ -355,6 +398,15 @@
       </div>
     </section>
 
+      <nav class="next-page" aria-label="More pages"><a class="btn btn--ghost" href="#/story">← my story</a><a class="btn" href="#/play">next: come play →</a></nav>
+    </div>
+
+    <!-- ============ PLAY ============ -->
+    <div class="view" id="view-play" data-view="play" hidden>
+      <div class="page-head">
+        <a class="chip home-chip" href="#/">⌂ home</a>
+        <span class="page-head__crumb">C:\PIP\PLAY&gt;</span>
+      </div>
     <!-- ===== Tier 2 · Lights-Out Nursery (flashlight cursor) ===== -->
     <section class="sec nightroom" id="nightroom" aria-labelledby="nr-title">
       <header class="sec__head">
@@ -475,6 +527,8 @@
         <p class="sr" id="gameLive" aria-live="polite"></p>
       </div>
     </section>
+      <nav class="next-page" aria-label="More pages"><a class="btn btn--ghost" href="#/work">← things i make</a><a class="btn" href="#/">⌂ back home</a></nav>
+    </div>
   </main>
 
   <!-- ===== Footer ===== -->

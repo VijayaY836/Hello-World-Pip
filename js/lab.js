@@ -232,5 +232,9 @@ export function initLab() {
   });
 
   paint();
-  if (fromHash) requestAnimationFrame(() => lab.scrollIntoView());
+  // A lullaby link opened while already on the site.
+  window.addEventListener('hashchange', () => {
+    const shared = decode((location.hash.match(/^#lullaby=([0-9a-f]+)/i) || [])[1]);
+    if (shared) { pattern = shared; name = 'a_friends_lullaby.mid'; paint(); }
+  });
 }
