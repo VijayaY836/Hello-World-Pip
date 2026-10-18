@@ -8,7 +8,7 @@ import { memory, remember, best, greeting } from './memory.js';
 
 const DEFAULT_CHIPS = [
   'who are you?', 'tell me your story', 'what do you make?', 'sing me a lullaby',
-  'who is Mumble?', 'tell me a secret', "let's play!", 'goodnight, pip',
+  'build me a dream', 'tell me a secret', "let's play!", 'goodnight, pip',
 ];
 
 const pick = (list) => list[Math.floor(Math.random() * list.length)];
@@ -78,6 +78,12 @@ const TOPICS = [
       'every night from 7pm to 7am i build dreams. the moths want lullabies, the ghosts want warm lights, and the owls want very quiet libraries.',
     ],
     chips: ['what do you make?', 'what does a dream feel like?'],
+  },
+  {
+    id: 'workshop', test: /workshop|build (me )?a dream|make (me )?a dream|dream maker/i,
+    replies: ['in my Dream Workshop you pick who the dream is for, a mood, a place and a sound, and i build it: a little scene, a bedtime story and its own lullaby! you can keep it on your dream shelf or send it to a friend ✦'],
+    chips: ['sing me a lullaby', 'who is Mumble?'],
+    link: { href: '#workshop', label: '✨ build a dream' },
   },
   {
     id: 'make', test: /what (do|did) you (make|build|create)|\bbuild|project|portfolio|creation|invent|your work|workbench/i,

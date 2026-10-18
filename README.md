@@ -19,7 +19,7 @@ The map is a single painting of Pip's mushroom pond (2375 × 822), shown at or b
 |---|---|
 | Home | The Dream Cartographer map: Pip (live eyes, nose boop, day/night) in the middle of his dreamland, 10 places to fly to, then `pip.nfo` |
 | Story | The 6-scene origin story |
-| Work | Workbench, Lullaby Lab, Storybook, Dream Delivery Routes |
+| Work | **The Dream Workshop**, Workbench, Lullaby Lab, Storybook, Dream Delivery Routes |
 | Play | Lights-Out Nursery, Catch the Dreams, the Dream Wall guestbook |
 
 ## What's on the page
@@ -38,6 +38,10 @@ The map is a single painting of Pip's mushroom pond (2375 × 822), shown at or b
 | **Tier 2 · Storybook** | "Mumble and the Very Big Dark", an original 10-page picture book with 3D page turns; buttons, ← → keys, swipe or tap |
 | **Tier 2 · Dream Delivery Routes** | Scroll-synced SVG map: the flight path draws itself (stroke-dashoffset) while Pip flies along it; 5 rooftop stops light up as dreams drop down the chimneys, with a live delivery log |
 | **Tier 2 · Mini-game** | Catch the Dreams: 30-second canvas game, combos, alarm clocks to dodge, best score + all-time "dreams delivered" |
+
+### The Dream Workshop
+
+Pip's actual job, made playable. Pick who the dream is for, a mood, a place and a sound (or 🎲 surprise me), and Pip flies in and builds it: a little animated scene (5 hand-drawn SVG places, the mood sets how everything moves), a short bedtime story written from your choices, and its own 12-note lullaby (the mood shapes the melody and tempo; the sound picks the voice). Keep dreams on your dream shelf (saved in this browser), share one as a link (`#dream=…` opens the exact same dream), or pin it to the Dream Wall. 6 × 5 × 5 × 4 = 600 possible dreams.
 
 ### Tier 3
 
@@ -102,6 +106,7 @@ js/chat.js     "whisper to pip": Pip chats back
 js/pip3d.js    3D Pip (Three.js)
 js/sky.js      the living sky: twinkling stars, sparkles, shooting stars, dream-motes
 js/dreammap.js the home map: places, stardust trails, panning, Pip's flights
+js/workshop.js the Dream Workshop: build a dream (scene, story, lullaby), dream shelf, share links
 js/vendor/     three.module.min.js + its MIT licence
 api/hits.js    Vercel function for the site-wide hit counter
 api/guestbook.js  Vercel function for the guestbook

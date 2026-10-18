@@ -13,9 +13,9 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&display=swap" rel="stylesheet" /></noscript>
   <link rel="preload" as="image" href="assets/pip-cloud.webp" fetchpriority="high" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/mali-600.woff2" crossorigin />
-  <script type="importmap">{"imports":{"./js/audio.js":"./js/audio.js?v=d0c84c0d","./js/chaos.js":"./js/chaos.js?v=d0c84c0d","./js/chat.js":"./js/chat.js?v=d0c84c0d","./js/clicks.js":"./js/clicks.js?v=d0c84c0d","./js/counter.js":"./js/counter.js?v=d0c84c0d","./js/dreammap.js":"./js/dreammap.js?v=d0c84c0d","./js/eggs.js":"./js/eggs.js?v=d0c84c0d","./js/eyes.js":"./js/eyes.js?v=d0c84c0d","./js/fx.js":"./js/fx.js?v=d0c84c0d","./js/game.js":"./js/game.js?v=d0c84c0d","./js/guestbook.js":"./js/guestbook.js?v=d0c84c0d","./js/lab.js":"./js/lab.js?v=d0c84c0d","./js/main.js":"./js/main.js?v=d0c84c0d","./js/memory.js":"./js/memory.js?v=d0c84c0d","./js/nightroom.js":"./js/nightroom.js?v=d0c84c0d","./js/pip3d.js":"./js/pip3d.js?v=d0c84c0d","./js/router.js":"./js/router.js?v=d0c84c0d","./js/routes.js":"./js/routes.js?v=d0c84c0d","./js/sky.js":"./js/sky.js?v=d0c84c0d","./js/sparkles.js":"./js/sparkles.js?v=d0c84c0d","./js/story.js":"./js/story.js?v=d0c84c0d","./js/storybook.js":"./js/storybook.js?v=d0c84c0d","./js/theme.js":"./js/theme.js?v=d0c84c0d","./js/toys.js":"./js/toys.js?v=d0c84c0d","./js/vendor/three.module.min.js":"./js/vendor/three.module.min.js?v=d0c84c0d"}}</script>
-  <link rel="stylesheet" href="css/style.css?v=d0c84c0d" />
-  <script type="module" src="js/main.js?v=d0c84c0d"></script>
+  <script type="importmap">{"imports":{"./js/audio.js":"./js/audio.js?v=2543f699","./js/chaos.js":"./js/chaos.js?v=2543f699","./js/chat.js":"./js/chat.js?v=2543f699","./js/clicks.js":"./js/clicks.js?v=2543f699","./js/counter.js":"./js/counter.js?v=2543f699","./js/dreammap.js":"./js/dreammap.js?v=2543f699","./js/eggs.js":"./js/eggs.js?v=2543f699","./js/eyes.js":"./js/eyes.js?v=2543f699","./js/fx.js":"./js/fx.js?v=2543f699","./js/game.js":"./js/game.js?v=2543f699","./js/guestbook.js":"./js/guestbook.js?v=2543f699","./js/lab.js":"./js/lab.js?v=2543f699","./js/main.js":"./js/main.js?v=2543f699","./js/memory.js":"./js/memory.js?v=2543f699","./js/nightroom.js":"./js/nightroom.js?v=2543f699","./js/pip3d.js":"./js/pip3d.js?v=2543f699","./js/router.js":"./js/router.js?v=2543f699","./js/routes.js":"./js/routes.js?v=2543f699","./js/sky.js":"./js/sky.js?v=2543f699","./js/sparkles.js":"./js/sparkles.js?v=2543f699","./js/story.js":"./js/story.js?v=2543f699","./js/storybook.js":"./js/storybook.js?v=2543f699","./js/theme.js":"./js/theme.js?v=2543f699","./js/toys.js":"./js/toys.js?v=2543f699","./js/vendor/three.module.min.js":"./js/vendor/three.module.min.js?v=2543f699","./js/workshop.js":"./js/workshop.js?v=2543f699"}}</script>
+  <link rel="stylesheet" href="css/style.css?v=2543f699" />
+  <script type="module" src="js/main.js?v=2543f699"></script>
 </head>
 <body>
   <!-- The living night sky behind every page -->
@@ -280,6 +280,45 @@
         <a class="chip home-chip" href="#/">⌂ home</a>
         <span class="page-head__crumb">✦ the workbench & other wonders</span>
       </div>
+    <!-- ===== The Dream Workshop ===== -->
+    <section class="sec dw" id="workshop" aria-labelledby="dw-title">
+      <header class="sec__head">
+        <p class="kicker">✦ where dreams get made</p>
+        <h2 id="dw-title">The Dream Workshop</h2>
+        <p>Pick four ingredients and I’ll build you a dream: a little scene, a bedtime story, and its very own lullaby.</p>
+      </header>
+      <div class="win dw-win">
+        <div class="win__bar"><span id="dwFile">dream_workshop ✦ new order</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+        <div class="dw__body">
+          <form class="dw__form" id="dwForm">
+            <div class="dw__groups"></div>
+            <div class="dw__go">
+              <button class="chip" id="dwSurprise" type="button">🎲 surprise me</button>
+              <button class="btn" id="dwBuild" type="submit">✨ build my dream</button>
+            </div>
+          </form>
+          <div class="dw__out">
+            <div class="dw__stage is-empty" id="dwStage" role="img" aria-label="Your dream will appear here.">
+              <div class="dw__placeholder"><img src="assets/pip-sm.webp" width="180" height="240" alt="" loading="lazy" decoding="async" /><p>your dream will appear here ✦</p></div>
+            </div>
+            <div class="dw__after" id="dwAfter" hidden>
+              <p class="dw__story" id="dwStory" aria-live="polite"></p>
+              <div class="dw__actions">
+                <button class="btn" id="dwPlay" type="button" aria-pressed="false">▶ play its lullaby</button>
+                <button class="chip" id="dwKeep" type="button">⭐ keep on my shelf</button>
+                <button class="chip" id="dwShare" type="button">🔗 share this dream</button>
+                <button class="chip" id="dwPin" type="button">📌 pin it to the dream wall</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dw__shelf-wrap">
+          <p class="dw__shelf-title">✦ my dream shelf</p>
+          <ul class="dw__shelf" id="dwShelf" aria-label="Dreams you kept"></ul>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== 3. WHAT PIP DOES ===== -->
     <section class="work" id="work" aria-labelledby="work-title">
       <header class="work__head">

@@ -99,8 +99,8 @@ const PAGES = {
     });
   },
   async work() {
-    const [toys, lab, book, routes] = await Promise.all([import('./toys.js'), import('./lab.js'), import('./storybook.js'), import('./routes.js')]);
-    toys.initToys(); lab.initLab(); book.initStorybook(); routes.initRoutes();
+    const [toys, lab, book, routes, shop] = await Promise.all([import('./toys.js'), import('./lab.js'), import('./storybook.js'), import('./routes.js'), import('./workshop.js')]);
+    shop.initWorkshop(); toys.initToys(); lab.initLab(); book.initStorybook(); routes.initRoutes();
   },
   async play() {
     const [room, game, p3d, gb] = await Promise.all([import('./nightroom.js'), import('./game.js'), import('./pip3d.js'), import('./guestbook.js')]);
@@ -109,7 +109,7 @@ const PAGES = {
 };
 // Once the home page has settled, quietly fetch the other pages' code so they open instantly.
 addEventListener('load', () => setTimeout(() => {
-  ['./story.js', './toys.js', './lab.js', './storybook.js', './routes.js', './nightroom.js', './game.js', './guestbook.js'].forEach((m) => {
+  ['./story.js', './toys.js', './workshop.js', './lab.js', './storybook.js', './routes.js', './nightroom.js', './game.js', './guestbook.js'].forEach((m) => {
     const l = document.createElement('link'); l.rel = 'modulepreload'; l.href = import.meta.resolve ? import.meta.resolve(m) : new URL(m, import.meta.url).href; document.head.appendChild(l);
   });
 }, 3500), { once: true });

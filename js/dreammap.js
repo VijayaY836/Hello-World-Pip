@@ -16,7 +16,7 @@ const FIT_W = 1800;                 // on a wide screen, fit this much of the ma
 // Places on the map. `main` places get big banners; the rest are hidden sparkles to find.
 const PLACES = [
   { id: 'story', href: '#/story', x: 1300, y: 262, icon: '📖', name: 'The Moon', sub: 'my story', main: true, line: 'the moon watched over the night i was dreamed…' },
-  { id: 'work', href: '#/work', x: 520, y: 360, icon: '🛠️', name: 'The Mushroom Workshop', sub: 'things i make', main: true, line: 'my workshop is under the big mushroom!' },
+  { id: 'work', href: '#/work', x: 520, y: 360, icon: '🛠️', name: 'The Mushroom Workshop', sub: 'dreams & things i make', main: true, line: 'my workshop! come build a dream with me ✦' },
   { id: 'play', href: '#/play', x: 1840, y: 262, icon: '🎮', name: 'Mushroom Hollow', sub: 'games & secrets', main: true, line: 'the mushroom house is where we play!' },
   { id: 'lab', href: '#lab', x: 135, y: 480, icon: '🎼', name: 'The Humming Glade', sub: 'lullaby lab', line: 'the glowing glade hums any tune you write.' },
   { id: 'book', href: '#book', x: 440, y: 600, icon: '📕', name: 'The Toadstool Library', sub: 'Mumble’s storybook', line: 'Mumble’s book is tucked under that toadstool.' },

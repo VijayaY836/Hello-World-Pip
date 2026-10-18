@@ -1,6 +1,6 @@
 // Tiny hash router: one page per view (#/, #/story, #/work, #/play).
 // Header and footer stay; only the middle swaps. Old section links (#lab, #book…)
-// and shared lullaby links (#lullaby=…) still work: they open the right page and scroll there.
+// and shared lullaby / dream links (#lullaby=…, #dream=…) still work: they open the right page and scroll there.
 
 import { remember } from './memory.js';
 
@@ -20,6 +20,7 @@ function resolve(hash) {
   const route = h.match(/^\/(\w+)/);
   if (route && VIEWS.includes(route[1])) return { view: route[1] };
   if (h.startsWith('lullaby=')) return { view: 'work', target: 'lab' };
+  if (h.startsWith('dream=')) return { view: 'work', target: 'workshop' };
   // A plain #id: open whichever page contains it.
   const el = document.getElementById(h);
   const view = el?.closest('.view')?.dataset.view;

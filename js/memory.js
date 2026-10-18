@@ -17,7 +17,7 @@ const store = {
 };
 
 function fresh() {
-  return { first: 0, last: 0, prev: 0, visits: 0, name: '', lastPage: '', storyDone: false, dreams: 0, bookDone: false, routesDone: false, composed: false, wished: false, played: false, eggs: {}, visited: {}, found: {} };
+  return { first: 0, last: 0, prev: 0, visits: 0, name: '', lastPage: '', storyDone: false, dreams: 0, bookDone: false, routesDone: false, composed: false, wished: false, played: false, eggs: {}, visited: {}, found: {}, built: false };
 }
 function load() {
   try { return { ...fresh(), ...JSON.parse(store.get(KEY) || '{}') }; } catch { return fresh(); }
@@ -113,6 +113,7 @@ export function initMemory() {
       row(b > 0 || mem.played, b > 0 ? `best dream shift: ${b} ★` : 'played catch the dreams'),
       row(mem.bookDone, 'read Mumble’s storybook'),
       row(mem.routesDone, 'flew my delivery route'),
+      row(mem.built, 'built a dream in the workshop'),
       row(mem.composed, 'wrote a lullaby in the lab'),
       row(mem.wished, 'pinned a wish on the dream wall'),
       row(Boolean(mem.eggs.wisp), mem.eggs.wisp ? 'found the secret window' : '??? (a secret)'),
