@@ -4,23 +4,14 @@ import { sound, plink, hum } from './audio.js';
 import { say, setDefaultLine } from './fx.js';
 import { initEyes } from './eyes.js';
 import { initTheme } from './theme.js';
-import { initStory } from './story.js';
-import { initToys } from './toys.js';
 import { initEggs } from './eggs.js';
-import { initNightRoom } from './nightroom.js';
-import { initGame } from './game.js';
-import { initLab } from './lab.js';
-import { initStorybook } from './storybook.js';
 import { initSparkles } from './sparkles.js';
 import { initClickSounds } from './clicks.js';
 import { initCounter } from './counter.js';
 import { initChaos } from './chaos.js';
-import { initRoutes } from './routes.js';
 import { initRouter } from './router.js';
-import { initGuestbook } from './guestbook.js';
 import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
-import { initPip3D } from './pip3d.js';
 import { initSky } from './sky.js';
 import { initDreamMap } from './dreammap.js';
 
@@ -96,8 +87,10 @@ setInterval(() => {
 
 // --- Each page sets itself up the first time it's opened (keeps the first load light) ---
 let story = null;
+// Each page's code is only downloaded the first time that page is opened, so the home page loads light.
 const PAGES = {
-  story() {
+  async story() {
+    const { initStory } = await import('./story.js');
     story = initStory({
       onScene(n) {
         if (n === 4) hum(); // Pip's first wobbly hum: the first sound in the story
@@ -105,13 +98,25 @@ const PAGES = {
       },
     });
   },
-  work() { initToys(); initLab(); initStorybook(); initRoutes(); },
-  play() { initNightRoom(); initGame(); initPip3D(); initGuestbook(); },
+  async work() {
+    const [toys, lab, book, routes] = await Promise.all([import('./toys.js'), import('./lab.js'), import('./storybook.js'), import('./routes.js')]);
+    toys.initToys(); lab.initLab(); book.initStorybook(); routes.initRoutes();
+  },
+  async play() {
+    const [room, game, p3d, gb] = await Promise.all([import('./nightroom.js'), import('./game.js'), import('./pip3d.js'), import('./guestbook.js')]);
+    room.initNightRoom(); game.initGame(); p3d.initPip3D(); gb.initGuestbook();
+  },
 };
+// Once the home page has settled, quietly fetch the other pages' code so they open instantly.
+addEventListener('load', () => setTimeout(() => {
+  ['./story.js', './toys.js', './lab.js', './storybook.js', './routes.js', './nightroom.js', './game.js', './guestbook.js'].forEach((m) => {
+    const l = document.createElement('link'); l.rel = 'modulepreload'; l.href = new URL(m, import.meta.url).href; document.head.appendChild(l);
+  });
+}, 3500), { once: true });
 const ready = new Set();
 window.addEventListener('pip:view', (e) => {
   const view = e.detail;
-  if (PAGES[view] && !ready.has(view)) { ready.add(view); PAGES[view](); }
+  if (PAGES[view] && !ready.has(view)) { ready.add(view); PAGES[view]().catch((err) => console.error('page setup failed', err)); }
 });
 
 initDreamMap(); // the home page's living map
