@@ -6,7 +6,7 @@
 
 import { sound, audioOut } from './audio.js';
 
-const VOLUME = 0.26;          // the music bus, under the master volume: quiet on purpose
+const VOLUME = 0.76;          // the music bus, under the master volume: quiet on purpose
 const DUCKED = 0.035;         // while other music plays
 const LOOKAHEAD = 1.2;        // seconds of notes scheduled ahead
 const TICK = 250;             // ms between scheduler runs
