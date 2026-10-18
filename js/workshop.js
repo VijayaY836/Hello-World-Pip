@@ -2,6 +2,7 @@
 // a little animated scene, a short bedtime story, and its very own lullaby.
 // Dreams can be kept on the dream shelf (this browser), shared as a link (#dream=…), or pinned to the Dream Wall.
 
+import { icon } from './icons.js';
 import { sound, voiceNote, plink, chime } from './audio.js';
 import { sparks, toast, say } from './fx.js';
 import { remember } from './memory.js';
@@ -192,14 +193,14 @@ export function initWorkshop() {
   let tuneTimer = 0, playing = false;
   function stopTune() {
     clearTimeout(tuneTimer); playing = false; duck('workshop', false);
-    playBtn.textContent = '▶ play its lullaby'; playBtn.setAttribute('aria-pressed', 'false');
+    playBtn.innerHTML = `${icon('play')} play its lullaby`; playBtn.setAttribute('aria-pressed', 'false');
     stage.querySelector('.dw__scene')?.classList.remove('is-singing');
   }
   function playTune() {
     if (!current) return;
     if (!sound.on) { toast('🔇 sound is off: tap the sound button up top to hear your dream’s lullaby'); return; }
     stopTune(); playing = true; duck('workshop', true);
-    playBtn.textContent = '■ stop'; playBtn.setAttribute('aria-pressed', 'true');
+    playBtn.innerHTML = `${icon('stop')} stop`; playBtn.setAttribute('aria-pressed', 'true');
     const steps = compose(current);
     const voice = SOUND[current.sound].voice;
     const tempo = MOOD[current.mood].tempo;
@@ -239,7 +240,7 @@ export function initWorkshop() {
   function updateKeep() {
     const kept = current && readShelf().includes(encode(current));
     keepBtn.disabled = Boolean(kept);
-    keepBtn.textContent = kept ? '✓ on your shelf' : '⭐ keep on my shelf';
+    keepBtn.innerHTML = kept ? '✓ on your shelf' : `${icon('bookmark')} keep on my shelf`;
   }
   keepBtn.addEventListener('click', () => {
     if (!current) return;

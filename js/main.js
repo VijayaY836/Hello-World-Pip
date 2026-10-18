@@ -1,5 +1,6 @@
 // Pip's homepage: wires everything together.
 
+import { icon } from './icons.js';
 import { sound, plink, hum } from './audio.js';
 import { say, setDefaultLine } from './fx.js';
 import { initEyes } from './eyes.js';
@@ -47,7 +48,7 @@ const soundBtn = document.getElementById('soundBtn');
 function renderSound(on) {
   soundBtn.setAttribute('aria-pressed', String(on));
   soundBtn.setAttribute('aria-label', on ? 'sound on: mute' : 'sound off: turn sound on');
-  soundBtn.querySelector('.ctrl__icon').textContent = on ? '🔊' : '🔇';
+  soundBtn.querySelector('.ctrl__icon').innerHTML = icon(on ? 'volume' : 'mute');
   soundBtn.querySelector('.ctrl__label').textContent = on ? 'sound on' : 'sound off';
   document.documentElement.classList.toggle('sound-on', on);
 }

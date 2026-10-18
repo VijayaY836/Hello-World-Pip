@@ -2,11 +2,12 @@
 // This adds the little "← back" / "next →" bar to every room, and shows on each card what
 // Pip remembers you've done there (✓ built a dream, best score, 3/5 doodles found…).
 
+import { icon } from './icons.js';
 import { memory, best, onMemory } from './memory.js';
 
 const HUBS = {
-  work: { back: '#/work', label: '← back to the workshop', rooms: ['workshop', 'work', 'lab', 'book', 'routes'] },
-  play: { back: '#/play', label: '← back to all games', rooms: ['nightroom', 'play', 'pip3d-sec', 'guestbook'] },
+  work: { back: '#/work', label: 'back to the workshop', rooms: ['workshop', 'work', 'lab', 'book', 'routes'] },
+  play: { back: '#/play', label: 'back to all games', rooms: ['nightroom', 'play', 'pip3d-sec', 'guestbook'] },
 };
 
 const DONE = {
@@ -28,8 +29,8 @@ export function initHubs() {
       const nav = document.createElement('nav');
       nav.className = 'room-nav';
       nav.setAttribute('aria-label', 'Room navigation');
-      nav.innerHTML = `<a class="chip room-nav__back" href="${hub.back}">${hub.label}</a>`
-        + `<a class="chip room-nav__next" href="#${next.id}">next: ${next.dataset.roomName.toLowerCase()} →</a>`;
+      nav.innerHTML = `<a class="chip room-nav__back" href="${hub.back}">${icon('left')} ${hub.label}</a>`
+        + `<a class="chip room-nav__next" href="#${next.id}">next: ${next.dataset.roomName.toLowerCase()} ${icon('right')}</a>`;
       room.prepend(nav);
     });
   }

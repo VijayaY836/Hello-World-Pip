@@ -2,6 +2,7 @@
 // Rows are a C-major pentatonic scale, so any pattern sounds gentle.
 // Patterns are saved in the browser and can be shared as a link (#lullaby=…).
 
+import { icon } from './icons.js';
 import { sound, voiceNote, plink } from './audio.js';
 import { toast } from './fx.js';
 import { remember } from './memory.js';
@@ -184,7 +185,7 @@ export function initLab() {
     clearTimeout(timer);
     clearInterval(clock);
     playBtn.setAttribute('aria-pressed', String(on));
-    playBtn.textContent = on ? '■ stop' : '▶ play';
+    playBtn.innerHTML = on ? `${icon('stop')} stop` : `${icon('play')} play`;
     box.classList.toggle('is-playing', on);
     if (on) {
       endedMessage = '';

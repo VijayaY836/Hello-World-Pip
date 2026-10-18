@@ -6,6 +6,7 @@
 //    ricochets off whatever edges your screen has.
 // Stickers never take clicks, tilts stay small, so everything still works.
 
+import { icon } from './icons.js';
 import { plink, chime } from './audio.js';
 import { sparks, toast } from './fx.js';
 
@@ -112,7 +113,7 @@ export function initChaos() {
     btn.setAttribute('aria-pressed', String(on));
     btn.setAttribute('aria-label', on ? 'Turn off chaos mode' : 'Turn on chaos mode');
     btn.querySelector('.ctrl__label').textContent = on ? 'calm' : 'chaos';
-    btn.querySelector('.ctrl__icon').textContent = on ? '🧘' : '🌀';
+    btn.querySelector('.ctrl__icon').innerHTML = icon(on ? 'leaf' : 'zap');
     try { localStorage.setItem(STORE_KEY, on ? '1' : '0'); } catch { /* storage unavailable */ }
 
     cancelAnimationFrame(raf);

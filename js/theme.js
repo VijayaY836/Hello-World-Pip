@@ -1,5 +1,7 @@
 // Day / night toggle. Night: Pip is awake and working. Day: Pip is asleep (night shift).
 
+import { icon } from './icons.js';
+
 const STORE_KEY = 'pip-theme';
 const META_COLORS = { night: '#15123a', day: '#fff8f1' };
 
@@ -14,7 +16,7 @@ export function initTheme({ button, onChange }) {
     const isDay = theme === 'day';
     button.setAttribute('aria-pressed', String(isDay));
     button.setAttribute('aria-label', isDay ? 'Switch to night mode' : 'Switch to day mode');
-    button.querySelector('.ctrl__icon').textContent = isDay ? '🌙' : '☀️';
+    button.querySelector('.ctrl__icon').innerHTML = icon(isDay ? 'moon' : 'sun');
     button.querySelector('.ctrl__label').textContent = isDay ? 'night' : 'day';
     try { localStorage.setItem(STORE_KEY, theme); } catch { /* storage unavailable */ }
     if (announce) onChange?.(theme);

@@ -1917,3 +1917,19 @@ html { cursor: var(--cur); }
 :where(a[href], button:not(:disabled), summary, label, select, [role="button"], [role="radio"], [role="tab"], input[type="radio"], input[type="checkbox"], input[type="range"]) { cursor: var(--cur-hand); }
 :where(input:not([type="radio"]):not([type="checkbox"]):not([type="range"]):not([type="submit"]):not([type="button"]), textarea) { cursor: text; }
 :where(button:disabled) { cursor: var(--cur); }
+
+/* =====================================================================
+   Pixel icons (Pixelarticons, MIT): crisp on a 24px grid
+   ===================================================================== */
+.pi-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.pi { width: 18px; height: 18px; flex: none; fill: currentColor; vertical-align: -3px; shape-rendering: crispEdges; }
+.ctrl__icon { display: inline-grid; place-items: center; }
+.ctrl__icon .pi, .btn .pi, .dm__pan .pi { width: 24px; height: 24px; vertical-align: -6px; }
+.chip .pi { margin-right: 1px; }
+.btn .pi { margin: 0 2px; }
+.dm__pan { display: grid; place-items: center; padding: 0; }
+.hub-card__go { display: inline-flex; align-items: center; gap: 4px; }
+.hub-card__go .pi { width: 18px; height: 18px; vertical-align: 0; }
+#soundBtn[aria-pressed="true"] .pi { animation: pi-wiggle 2.4s ease-in-out infinite; }
+@keyframes pi-wiggle { 0%, 80%, 100% { transform: none; } 88% { transform: rotate(-8deg); } 94% { transform: rotate(6deg); } }
+@media (prefers-reduced-motion: reduce) { #soundBtn .pi { animation: none !important; } }
