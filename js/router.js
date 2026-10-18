@@ -38,7 +38,7 @@ export function initRouter() {
     for (const [name, el] of Object.entries(views)) el.hidden = name !== view;
     document.documentElement.dataset.view = view;
     window.dispatchEvent(new CustomEvent('pip:view', { detail: view })); // lets a page set itself up on first visit
-    if (view !== 'home') remember({ lastPage: view }); // where to pick up next time
+    if (view !== 'home') remember({ lastPage: view, visited: { [view]: true } }); // where to pick up next time
     document.title = TITLES[view];
     if (address) address.textContent = ADDRESS + FILE[view];
     navLinks.forEach((a) => (a.dataset.route === view ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current')));

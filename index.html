@@ -60,56 +60,75 @@
     <!-- ============ HOME ============ -->
     <div class="view" id="view-home" data-view="home">
     <!-- ===== 1. WHAT PIP IS ===== -->
-    <section class="hero" id="hello" aria-labelledby="hello-title">
-      <div class="hero__art">
-        <div class="pip" id="heroPip">
-          <img class="pip__img" src="assets/pip-cloud.webp" width="587" height="781"
-               alt="Pip, a baby with a smooth round skull face, glowing eyes and a starry nightcap with a pink bow, waving from a soft cloud." />
-          <span class="pip__eye pip__eye--l" aria-hidden="true"><span class="pip__glint"></span><span class="pip__lid"></span></span>
-          <span class="pip__eye pip__eye--r" aria-hidden="true"><span class="pip__glint"></span><span class="pip__lid"></span></span>
-          <span class="pip__blush pip__blush--l" aria-hidden="true"></span>
-          <span class="pip__blush pip__blush--r" aria-hidden="true"></span>
-          <button class="pip__nose" id="pipNose" type="button" aria-label="Boop Pip's nose"></button>
-          <span class="pip__zzz" aria-hidden="true"><i>z</i><i>z</i><i>Z</i></span>
+    <!-- ===== HOME · The Dream Cartographer: a living map of Pip's dreamland ===== -->
+    <section class="dreammap" id="hello" aria-labelledby="hello-title">
+      <div class="dm__viewport" id="dmViewport" tabindex="0" aria-label="Pip's dreamland map. Drag, swipe or use the arrow keys to explore; choose a place to travel there.">
+        <div class="dm__track" id="dmTrack">
+          <div class="dm__world" id="dmWorld">
+            <div class="dm__land"> <!-- one painted panorama in 9 tiles; only the ones near Pip load first -->
+              <img class="dm__art" src="assets/map/land-1.webp" style="left:0px" width="696" height="760" alt="" loading="lazy" decoding="async" />
+              <img class="dm__art" src="assets/map/land-2.webp" style="left:694px" width="696" height="760" alt="" loading="lazy" decoding="async" />
+              <img class="dm__art" src="assets/map/land-3.webp" style="left:1388px" width="696" height="760" alt="" loading="lazy" decoding="async" />
+              <img class="dm__art" src="assets/map/land-4.webp" style="left:2082px" width="696" height="760" alt="" decoding="async" />
+              <img class="dm__art" src="assets/map/land-5.webp" style="left:2776px" width="695" height="760" alt="" fetchpriority="high" decoding="async" />
+              <img class="dm__art" src="assets/map/land-6.webp" style="left:3469px" width="696" height="760" alt="" decoding="async" />
+              <img class="dm__art" src="assets/map/land-7.webp" style="left:4163px" width="696" height="760" alt="" loading="lazy" decoding="async" />
+              <img class="dm__art" src="assets/map/land-8.webp" style="left:4857px" width="696" height="760" alt="" loading="lazy" decoding="async" />
+              <img class="dm__art" src="assets/map/land-9.webp" style="left:5551px" width="694" height="760" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="dm__seam dm__seam--1" aria-hidden="true"></div>
+            <div class="dm__seam dm__seam--2" aria-hidden="true"></div>
+            <div class="dm__life" id="dmLife" aria-hidden="true"></div>
+            <svg class="dm__paths" id="dmPaths" viewBox="0 0 6245 760" aria-hidden="true"></svg>
+            <div class="dm__places" id="dmPlaces"></div>
+            <div class="dm__pip" id="dmPip">
+              <span class="dm__here" aria-hidden="true">✦ you are here ✦</span>
+            <div class="pip" id="heroPip">
+              <img class="pip__img" src="assets/pip-cloud.webp" width="587" height="781"
+                   alt="Pip, a baby with a smooth round skull face, glowing eyes and a starry nightcap with a pink bow, waving from a soft cloud." />
+              <span class="pip__eye pip__eye--l" aria-hidden="true"><span class="pip__glint"></span><span class="pip__lid"></span></span>
+              <span class="pip__eye pip__eye--r" aria-hidden="true"><span class="pip__glint"></span><span class="pip__lid"></span></span>
+              <span class="pip__blush pip__blush--l" aria-hidden="true"></span>
+              <span class="pip__blush pip__blush--r" aria-hidden="true"></span>
+              <button class="pip__nose" id="pipNose" type="button" aria-label="Boop Pip's nose"></button>
+              <span class="pip__zzz" aria-hidden="true"><i>z</i><i>z</i><i>Z</i></span>
+            </div>
+            <p class="bubble" id="pipBubble" aria-live="polite">hi! i'm pip ♡</p>
+            </div>
+            <img class="dm__flyer" id="dmFlyer" src="assets/pip-sm.webp" width="180" height="240" alt="" aria-hidden="true" />
+          </div>
         </div>
-        <p class="bubble" id="pipBubble" aria-live="polite">hi! i'm pip ♡</p>
       </div>
 
-      <div class="hero__text">
-        <p class="kicker">✦ welcome to my little corner of the night ✦</p>
+      <div class="dm__cartouche">
+        <p class="kicker">✦ a map of my dreamland ✦</p>
         <h1 id="hello-title" class="hero__title">Pip</h1>
-        <p class="hero__role">Junior Dream Engineer · <span>Midnight Nursery</span></p>
+        <p class="hero__role">Junior Dream Engineer at the <span>Midnight Nursery</span></p>
         <p class="hero__tagline">“I build the dreams you fall asleep inside.”</p>
-        <nav class="doors" aria-label="Explore Pip's homepage">
-          <a class="win door door--story" href="#/story">
-            <span class="win__bar"><span>my story</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-            <span class="door__body">
-              <span class="door__art door__orb" aria-hidden="true"></span>
-              <span class="door__title">Story</span>
-              <span class="door__sub">how i was born</span>
-            </span>
-          </a>
-          <a class="win door door--work" href="#/work">
-            <span class="win__bar"><span>my work</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-            <span class="door__body">
-              <img class="door__art" src="assets/music-box-sm.webp" width="155" height="176" alt="" aria-hidden="true" decoding="async" />
-              <span class="door__title">Work</span>
-              <span class="door__sub">things i make</span>
-            </span>
-          </a>
-          <a class="win door door--play" href="#/play">
-            <span class="win__bar"><span>let’s play</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-            <span class="door__body">
-              <img class="door__art" src="assets/lantern-sm.webp" width="123" height="176" alt="" aria-hidden="true" decoding="async" />
-              <span class="door__title">Play</span>
-              <span class="door__sub">games &amp; secrets</span>
-            </span>
-          </a>
-        </nav>
-
       </div>
 
+      <button class="dm__pan dm__pan--left" id="dmLeft" type="button" aria-label="Explore west">‹</button>
+      <button class="dm__pan dm__pan--right" id="dmRight" type="button" aria-label="Explore east">›</button>
+      <button class="dm__compass" id="dmCompass" type="button">
+        <span class="cp" aria-hidden="true">
+          <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" class="cp__ring" /><circle cx="50" cy="50" r="38" class="cp__ring2" /><path d="M50 1 L54 8 L46 8 Z" class="cp__n" /></svg>
+          <svg viewBox="0 0 100 100" class="cp__needle"><path d="M50 10 L58 50 L50 90 L42 50 Z" class="cp__ns" /><path d="M10 50 L50 42 L90 50 L50 58 Z" class="cp__ew" /><circle cx="50" cy="50" r="5" class="cp__hub" /></svg>
+        </span>
+        <span>back to pip</span>
+      </button>
+      <nav class="dm__legend" id="dmLegend" aria-label="Places on the map"></nav>
+      <p class="dm__hint" id="dmHint" aria-hidden="true">✦ drag to explore the dreamland ✦</p>
     </section>
+    <script>
+      /* Open the map on Pip before the first paint (dreammap.js does the rest). Same maths as home() there. */
+      (function () {
+        var v = document.getElementById('dmViewport'), h = v.parentNode.clientHeight;
+        if (!h) return;
+        var sc = Math.min(1, h / 760), span = v.clientWidth / sc;
+        v.style.setProperty('--s', sc);
+        v.scrollLeft = (span >= 1300 ? Math.max(0, Math.min(2110, 3520 - span)) : 3260 - span / 2) * sc;
+      })();
+    </script>
 
     <section class="about" aria-label="About Pip">
       <div class="win nfo">
@@ -644,6 +663,7 @@
         <ul>
           <li>Pip, music box &amp; lantern art: official haX.baby Track 1 asset pack (backgrounds removed, eye glints redrawn live in CSS; the story portrait’s name lettering painted out).</li>
           <li>Nana Noctua illustration: added by Vij for this site.</li>
+          <li>Dreamland map art: AI-generated images chosen by Vij, blended into one panorama for this site (the forest panel upscaled with EDSR super-resolution).</li>
           <li>Wisp, Mumble, the town, the storybook pictures, the basket &amp; the grumpy mitten: hand-drawn SVG for this site.</li>
           <li>All sounds synthesized live with the Web Audio API. Lullaby melody: Johannes Brahms, “Wiegenlied” (1868, public domain).</li>
           <li>3D Pip: drawn with Three.js (MIT licence), loaded only for that section. Fonts: Fredoka via Google Fonts, Mali (SIL Open Font License) bundled. No other libraries.</li>

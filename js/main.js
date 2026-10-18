@@ -22,6 +22,7 @@ import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
 import { initPip3D } from './pip3d.js';
 import { initSky } from './sky.js';
+import { initDreamMap } from './dreammap.js';
 
 // Memories first, so this visit is counted.
 initMemory();
@@ -41,7 +42,7 @@ initSky(); // twinkling stars, sparkles, shooting stars and dream-motes
 
 const NIGHT_LINES = [
   "hi! i'm pip ♡",
-  'psst… tap Story and i’ll tell you how i was born.',
+  'psst… pick a place on my map and i’ll fly you there!',
   'it’s too quiet in here. (try the sound button!)',
   'my eyes are real stars. look!',
 ];
@@ -113,6 +114,7 @@ window.addEventListener('pip:view', (e) => {
   if (PAGES[view] && !ready.has(view)) { ready.add(view); PAGES[view](); }
 });
 
+initDreamMap(); // the home page's living map
 initEggs(); // the footer town (on every page)
 
 // --- Side quests ---

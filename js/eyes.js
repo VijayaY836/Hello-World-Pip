@@ -40,6 +40,7 @@ export function initEyes(pip) {
   addEventListener('scroll', markDirty, { passive: true });
   addEventListener('resize', markDirty);
   addEventListener('pip:view', markDirty);
+  addEventListener('pip:moved', markDirty); // the dream map scrolled sideways
   setInterval(markDirty, 1500); // Pip gently bobs, so refresh now and then
 
   function wander(now) {
