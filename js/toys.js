@@ -1,6 +1,7 @@
 // Pip's Workbench: the three showcase projects.
 
 import { sound, musicBox, plink } from './audio.js';
+import { duck } from './music.js';
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -16,6 +17,7 @@ function initLullaby() {
     if (playing) return;
     playing = true;
     const seconds = musicBox();
+    duck('musicbox', true);
     box.classList.add('is-playing');
     btn.disabled = true;
     btn.textContent = 'playing… ♪';
@@ -42,6 +44,7 @@ function initLullaby() {
       btn.textContent = 'wind it up again ♪';
       note.textContent = 'the moths say thank you.';
       playing = false;
+      duck('musicbox', false);
     }, seconds * 1000 + 600);
   }
 

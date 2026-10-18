@@ -68,6 +68,9 @@ function ready() {
   return enabled && ensureContext();
 }
 
+/** For the background music: the live audio context and the master volume, only while sound is on. */
+export function audioOut() { return ready() ? { ctx, master } : null; }
+
 /** Tiny UI click. */
 export function plink(pitch = 1) {
   if (!ready()) return;
@@ -125,6 +128,9 @@ export function musicBox() {
   const beat = 0.4;
   const total = LULLABY.reduce((s, [, b]) => s + b, 0) * beat;
   if (!ready()) return total;
+  // ask the background music to step aside while the music box plays (js/music.js listens for this)
+  dispatchEvent(new CustomEvent('pip:duck', { detail: { who: 'musicbox', on: true } }));
+  setTimeout(() => dispatchEvent(new CustomEvent('pip:duck', { detail: { who: 'musicbox', on: false } })), total * 1000 + 300);
   let t = 0.05;
   for (const [n, b] of LULLABY) {
     const f = NOTE[n] * 2; // music boxes sing high

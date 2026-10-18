@@ -5,6 +5,7 @@
 import { sound, voiceNote, plink, chime } from './audio.js';
 import { sparks, toast, say } from './fx.js';
 import { remember } from './memory.js';
+import { duck } from './music.js';
 
 const WHO = [
   { icon: '🦉', name: 'a sleepy owl', short: 'owl' },
@@ -190,14 +191,14 @@ export function initWorkshop() {
   // ---------- its lullaby ----------
   let tuneTimer = 0, playing = false;
   function stopTune() {
-    clearTimeout(tuneTimer); playing = false;
+    clearTimeout(tuneTimer); playing = false; duck('workshop', false);
     playBtn.textContent = '▶ play its lullaby'; playBtn.setAttribute('aria-pressed', 'false');
     stage.querySelector('.dw__scene')?.classList.remove('is-singing');
   }
   function playTune() {
     if (!current) return;
     if (!sound.on) { toast('🔇 sound is off: tap the sound button up top to hear your dream’s lullaby'); return; }
-    stopTune(); playing = true;
+    stopTune(); playing = true; duck('workshop', true);
     playBtn.textContent = '■ stop'; playBtn.setAttribute('aria-pressed', 'true');
     const steps = compose(current);
     const voice = SOUND[current.sound].voice;

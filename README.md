@@ -247,7 +247,7 @@ How I stay quick even with a big painted map:
 - **every CSS/JS file is version-stamped**, so after a deploy no browser ever mixes old and new files.
 
 And kind:
-- 🔇 sound always starts **off**, and the mute switch is always one tap away
+- 🔇 sound always starts **off**, and the mute switch is always one tap away (it silences the background music too)
 - 🐢 **reduced motion** is respected everywhere (the map holds still, i fly instantly)
 - ⌨️ everything works with a **keyboard**: tab to places on the map, ← → to pan, Enter to fly
 - 🏷️ real labels, alt text and live regions for screen readers
@@ -261,7 +261,7 @@ And kind:
 
 | | |
 |---|---|
-| 🎵 sound | every note is synthesized live with the **Web Audio API** (music box, humming, chimes, giggles, the sneeze) |
+| 🎵 sound | every note is synthesized live with the **Web Audio API** (music box, humming, chimes, giggles, the sneeze), including two generative background tunes: *moonlight lullaby* by night and *sunny nap* by day. They crossfade when you switch, and step aside whenever other music plays |
 | 🎨 art | WebP images, hand-drawn **SVG**, CSS gradients, and **Canvas 2D** for the sky, the game and the lantern room |
 | 🧸 3D | **Three.js** r160 with a custom shader for Pip's glowing eyes |
 | 🗄️ backend | two tiny **Vercel functions** (`api/hits.js`, `api/guestbook.js`) on **Upstash Redis** |
@@ -320,6 +320,7 @@ js/
   clicks.js         click sounds
   eggs.js           secrets
   audio.js          the Web Audio synth
+  music.js          background music: generative night & day tunes, crossfade, ducking
   fx.js             speech bubble, toasts, star sparks
   theme.js          day / night
   vendor/           three.module.min.js + its MIT licence

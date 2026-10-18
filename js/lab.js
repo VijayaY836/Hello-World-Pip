@@ -5,6 +5,7 @@
 import { sound, voiceNote, plink } from './audio.js';
 import { toast } from './fx.js';
 import { remember } from './memory.js';
+import { duck } from './music.js';
 
 const ROWS = [ // top (high) → bottom (low)
   ['E5', 659.25], ['D5', 587.33], ['C5', 523.25], ['A4', 440],
@@ -179,6 +180,7 @@ export function initLab() {
 
   function setPlaying(on) {
     playing = on;
+    duck('lab', on); // the background music steps aside
     clearTimeout(timer);
     clearInterval(clock);
     playBtn.setAttribute('aria-pressed', String(on));

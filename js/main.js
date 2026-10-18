@@ -15,6 +15,7 @@ import { initChat } from './chat.js';
 import { initSky } from './sky.js';
 import { initDreamMap } from './dreammap.js';
 import { initHubs } from './hubs.js';
+import { initMusic } from './music.js';
 
 // Memories first, so this visit is counted.
 initMemory();
@@ -122,6 +123,7 @@ window.addEventListener('pip:view', (e) => {
 
 initDreamMap(); // the home page's living map
 initHubs(); // the card grids on Work and Play
+initMusic(); // gentle background music while sound is on (different by day and by night)
 initEggs(); // the footer town (on every page)
 
 // --- Side quests ---
