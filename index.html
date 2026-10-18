@@ -13,9 +13,9 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&display=swap" rel="stylesheet" /></noscript>
   <link rel="preload" as="image" href="assets/pip-cloud.webp" fetchpriority="high" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/mali-600.woff2" crossorigin />
-  <script type="importmap">{"imports":{"./js/audio.js":"./js/audio.js?v=2543f699","./js/chaos.js":"./js/chaos.js?v=2543f699","./js/chat.js":"./js/chat.js?v=2543f699","./js/clicks.js":"./js/clicks.js?v=2543f699","./js/counter.js":"./js/counter.js?v=2543f699","./js/dreammap.js":"./js/dreammap.js?v=2543f699","./js/eggs.js":"./js/eggs.js?v=2543f699","./js/eyes.js":"./js/eyes.js?v=2543f699","./js/fx.js":"./js/fx.js?v=2543f699","./js/game.js":"./js/game.js?v=2543f699","./js/guestbook.js":"./js/guestbook.js?v=2543f699","./js/lab.js":"./js/lab.js?v=2543f699","./js/main.js":"./js/main.js?v=2543f699","./js/memory.js":"./js/memory.js?v=2543f699","./js/nightroom.js":"./js/nightroom.js?v=2543f699","./js/pip3d.js":"./js/pip3d.js?v=2543f699","./js/router.js":"./js/router.js?v=2543f699","./js/routes.js":"./js/routes.js?v=2543f699","./js/sky.js":"./js/sky.js?v=2543f699","./js/sparkles.js":"./js/sparkles.js?v=2543f699","./js/story.js":"./js/story.js?v=2543f699","./js/storybook.js":"./js/storybook.js?v=2543f699","./js/theme.js":"./js/theme.js?v=2543f699","./js/toys.js":"./js/toys.js?v=2543f699","./js/vendor/three.module.min.js":"./js/vendor/three.module.min.js?v=2543f699","./js/workshop.js":"./js/workshop.js?v=2543f699"}}</script>
-  <link rel="stylesheet" href="css/style.css?v=2543f699" />
-  <script type="module" src="js/main.js?v=2543f699"></script>
+  <script type="importmap">{"imports":{"./js/audio.js":"./js/audio.js?v=179ab4c5","./js/chaos.js":"./js/chaos.js?v=179ab4c5","./js/chat.js":"./js/chat.js?v=179ab4c5","./js/clicks.js":"./js/clicks.js?v=179ab4c5","./js/counter.js":"./js/counter.js?v=179ab4c5","./js/dreammap.js":"./js/dreammap.js?v=179ab4c5","./js/eggs.js":"./js/eggs.js?v=179ab4c5","./js/eyes.js":"./js/eyes.js?v=179ab4c5","./js/fx.js":"./js/fx.js?v=179ab4c5","./js/game.js":"./js/game.js?v=179ab4c5","./js/guestbook.js":"./js/guestbook.js?v=179ab4c5","./js/hubs.js":"./js/hubs.js?v=179ab4c5","./js/lab.js":"./js/lab.js?v=179ab4c5","./js/main.js":"./js/main.js?v=179ab4c5","./js/memory.js":"./js/memory.js?v=179ab4c5","./js/nightroom.js":"./js/nightroom.js?v=179ab4c5","./js/pip3d.js":"./js/pip3d.js?v=179ab4c5","./js/router.js":"./js/router.js?v=179ab4c5","./js/routes.js":"./js/routes.js?v=179ab4c5","./js/sky.js":"./js/sky.js?v=179ab4c5","./js/sparkles.js":"./js/sparkles.js?v=179ab4c5","./js/story.js":"./js/story.js?v=179ab4c5","./js/storybook.js":"./js/storybook.js?v=179ab4c5","./js/theme.js":"./js/theme.js?v=179ab4c5","./js/toys.js":"./js/toys.js?v=179ab4c5","./js/vendor/three.module.min.js":"./js/vendor/three.module.min.js?v=179ab4c5","./js/workshop.js":"./js/workshop.js?v=179ab4c5"}}</script>
+  <link rel="stylesheet" href="css/style.css?v=179ab4c5" />
+  <script type="module" src="js/main.js?v=179ab4c5"></script>
 </head>
 <body>
   <!-- The living night sky behind every page -->
@@ -280,8 +280,68 @@
         <a class="chip home-chip" href="#/">⌂ home</a>
         <span class="page-head__crumb">✦ the workbench & other wonders</span>
       </div>
+    <section class="hub" id="work-hub" aria-labelledby="work-hub-title">
+      <header class="sec__head">
+        <p class="kicker">✦ welcome to my workshop</p>
+        <h2 id="work-hub-title">The Mushroom Workshop</h2>
+        <p>Everything I make lives under the big mushroom. Pick something and I’ll open it for you!</p>
+      </header>
+      <div class="hub__grid">
+        <a class="win hub-card hub-card--feature" href="#workshop" data-room="workshop">
+          <span class="win__bar"><span>dream_workshop.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/workshop.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">✦ new! · build a dream</span>
+            <b class="hub-card__title">The Dream Workshop</b>
+            <span class="hub-card__text">Pick four ingredients and I’ll build you a dream: a scene, a story and its own lullaby.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="built" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#work" data-room="work">
+          <span class="win__bar"><span>workbench</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/workbench.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">things i’ve made</span>
+            <b class="hub-card__title">Pip’s Workbench</b>
+            <span class="hub-card__text">My music box, my nightlights, and my growth chart.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#lab" data-room="lab">
+          <span class="win__bar"><span>lullaby_lab</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/lab.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">music toy</span>
+            <b class="hub-card__title">The Lullaby Lab</b>
+            <span class="hub-card__text">Every star is a note. Write a lullaby and I’ll sing it.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="composed" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#book" data-room="book">
+          <span class="win__bar"><span>storybook.txt</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/book.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">picture book</span>
+            <b class="hub-card__title">Bedtime Storybook</b>
+            <span class="hub-card__text">“Mumble and the Very Big Dark”, with real page turns.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="bookDone" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#routes" data-room="routes">
+          <span class="win__bar"><span>routes.map</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/routes.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">scroll adventure</span>
+            <b class="hub-card__title">Dream Delivery Routes</b>
+            <span class="hub-card__text">Fly my delivery route and drop dreams down the chimneys.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="routesDone" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
     <!-- ===== The Dream Workshop ===== -->
-    <section class="sec dw" id="workshop" aria-labelledby="dw-title">
+    <section class="sec dw pg-room" id="workshop" data-room-name="The Dream Workshop" aria-labelledby="dw-title">
       <header class="sec__head">
         <p class="kicker">✦ where dreams get made</p>
         <h2 id="dw-title">The Dream Workshop</h2>
@@ -320,7 +380,7 @@
     </section>
 
     <!-- ===== 3. WHAT PIP DOES ===== -->
-    <section class="work" id="work" aria-labelledby="work-title">
+    <section class="work pg-room" id="work" data-room-name="Pip’s Workbench" aria-labelledby="work-title">
       <header class="work__head">
         <p class="kicker">✦ things i’ve made</p>
         <h2 id="work-title">Pip’s Workbench</h2>
@@ -376,7 +436,7 @@
     </section>
 
     <!-- ===== Tier 2 · The Lullaby Lab (playable sequencer) ===== -->
-    <section class="sec lab" id="lab" aria-labelledby="lab-title">
+    <section class="sec lab pg-room" id="lab" data-room-name="The Lullaby Lab" aria-labelledby="lab-title">
       <header class="sec__head">
         <p class="kicker">✦ a little music workshop</p>
         <h2 id="lab-title">The Lullaby Lab</h2>
@@ -429,7 +489,7 @@
     </section>
 
     <!-- ===== Tier 2 · Bedtime Storybook (flip pages) ===== -->
-    <section class="sec book-sec" id="book" aria-labelledby="book-title">
+    <section class="sec book-sec pg-room" id="book" data-room-name="Bedtime Storybook" aria-labelledby="book-title">
       <header class="sec__head">
         <p class="kicker">✦ a bedtime story</p>
         <h2 id="book-title">Bedtime Storybook</h2>
@@ -449,7 +509,7 @@
     </section>
 
     <!-- ===== Tier 2 · Dream Delivery Routes (scroll-synced SVG path) ===== -->
-    <section class="routes" id="routes" aria-labelledby="routes-title">
+    <section class="routes pg-room" id="routes" data-room-name="Dream Delivery Routes" aria-labelledby="routes-title">
       <div class="routes__stage">
         <header class="routes__head">
           <p class="kicker">✦ tonight’s deliveries</p>
@@ -479,8 +539,58 @@
         <a class="chip home-chip" href="#/">⌂ home</a>
         <span class="page-head__crumb">✦ games, toys & secrets</span>
       </div>
+    <section class="hub hub--play" id="play-hub" aria-labelledby="play-hub-title">
+      <header class="sec__head">
+        <p class="kicker">✦ welcome to mushroom hollow</p>
+        <h2 id="play-hub-title">Games & Secrets</h2>
+        <p>Pick a game! Nana says only one at a time, or I get too excited.</p>
+      </header>
+      <div class="hub__grid">
+        <a class="win hub-card" href="#nightroom" data-room="nightroom">
+          <span class="win__bar"><span>lights_out.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/nightroom.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">lantern hunt</span>
+            <b class="hub-card__title">Lights-Out Nursery</b>
+            <span class="hub-card__text">The lights are off. Use my lantern to find the 5 doodles I hid.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="dreams" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#play" data-room="play">
+          <span class="win__bar"><span>catch_the_dreams.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/game.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">mini-game</span>
+            <b class="hub-card__title">Catch the Dreams</b>
+            <span class="hub-card__text">A 30-second dream shift. Catch dreams, dodge alarm clocks!</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="played" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#pip3d-sec" data-room="pip3d-sec">
+          <span class="win__bar"><span>pip_3d.obj</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/pip3d.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">3D toy</span>
+            <b class="hub-card__title">Pip in 3D</b>
+            <span class="hub-card__text">Nana knitted a 3D me. Spin me, squish me, wave hello.</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+        <a class="win hub-card" href="#guestbook" data-room="guestbook">
+          <span class="win__bar"><span>guestbook.htm</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
+          <span class="hub-card__art"><img src="assets/cards/guestbook.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__body">
+            <span class="hub-card__tag">guestbook</span>
+            <b class="hub-card__title">The Dream Wall</b>
+            <span class="hub-card__text">Leave me a wish and everyone who visits can see it ♡</span>
+            <span class="hub-card__foot"><span class="hub-card__done" data-done="wished" hidden></span><span class="hub-card__go" aria-hidden="true">open ✦</span></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
     <!-- ===== Tier 2 · Lights-Out Nursery (flashlight cursor) ===== -->
-    <section class="sec nightroom" id="nightroom" aria-labelledby="nr-title">
+    <section class="sec nightroom pg-room" id="nightroom" data-room-name="Lights-Out Nursery" aria-labelledby="nr-title">
       <header class="sec__head">
         <p class="kicker">✦ bring a lantern</p>
         <h2 id="nr-title">Lights-Out Nursery</h2>
@@ -567,7 +677,7 @@
     </section>
 
     <!-- ===== Tier 2 · Catch the Dreams (mini-game) ===== -->
-    <section class="sec play" id="play" aria-labelledby="play-title">
+    <section class="sec play pg-room" id="play" data-room-name="Catch the Dreams" aria-labelledby="play-title">
       <header class="sec__head">
         <p class="kicker">✦ a little game</p>
         <h2 id="play-title">Catch the Dreams</h2>
@@ -600,7 +710,7 @@
       </div>
     </section>
     <!-- ===== Tier 3 · 3D Pip (Three.js) ===== -->
-    <section class="sec pip3d-sec" id="pip3d-sec" aria-labelledby="p3-title">
+    <section class="sec pip3d-sec pg-room" id="pip3d-sec" data-room-name="Pip in 3D" aria-labelledby="p3-title">
       <header class="sec__head">
         <p class="kicker">✦ knitted by nana</p>
         <h2 id="p3-title">Pip in 3D</h2>
@@ -623,7 +733,7 @@
     </section>
 
     <!-- ===== Tier 3 / side quest · Live dream guestbook ===== -->
-    <section class="sec guestbook" id="guestbook" aria-labelledby="gb-title">
+    <section class="sec guestbook pg-room" id="guestbook" data-room-name="The Dream Wall" aria-labelledby="gb-title">
       <header class="sec__head">
         <p class="kicker">✦ leave a little wish</p>
         <h2 id="gb-title">The Dream Wall</h2>

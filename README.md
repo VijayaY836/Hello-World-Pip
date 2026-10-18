@@ -119,6 +119,8 @@ Pick four ingredients (**who** the dream is for, the **mood**, the **place** and
 
 ## <a name="make"></a>🛠️ things i make
 
+My **Work** and **Play** pages open on a grid of little window-cards (`dream_workshop.exe`, `lullaby_lab`, `catch_the_dreams.exe`…). Tap one and just that toy opens, with a *← back* and a *next →* so you can wander through them all. Each card also shows what I remember you've done there (✓ wrote a lullaby, ★ best shift: 12…).
+
 | | |
 |:---:|:---:|
 | <img src="docs/screenshots/workbench.webp" alt="Pip's Workbench: the music box, the Nightlight Collection with a lantern, and Pip's Growth Chart" /> | <img src="docs/screenshots/lab.webp" alt="The Lullaby Lab: an 8 by 8 grid of stars where each star is a note, with play, speed, voice and sleep-timer controls" /> |
@@ -297,6 +299,7 @@ js/
   router.js         home / story / work / play, plus shared links (#lullaby=, #dream=)
   dreammap.js       the living map: places, hidden spots, stardust trails, Pip's flights
   workshop.js       the Dream Workshop: scenes, stories, lullabies, shelf, share links
+  hubs.js           the card grids on Work and Play: room back/next bars, progress badges
   sky.js            the living sky: twinkling stars, sparkles, shooting stars, dream-motes
   eyes.js           eyes that follow you, blink and wander
   story.js          the scroll-driven origin story

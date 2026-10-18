@@ -14,6 +14,7 @@ import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
 import { initSky } from './sky.js';
 import { initDreamMap } from './dreammap.js';
+import { initHubs } from './hubs.js';
 
 // Memories first, so this visit is counted.
 initMemory();
@@ -120,6 +121,7 @@ window.addEventListener('pip:view', (e) => {
 });
 
 initDreamMap(); // the home page's living map
+initHubs(); // the card grids on Work and Play
 initEggs(); // the footer town (on every page)
 
 // --- Side quests ---
