@@ -17,6 +17,7 @@ import { initCounter } from './counter.js';
 import { initChaos } from './chaos.js';
 import { initRoutes } from './routes.js';
 import { initRouter } from './router.js';
+import { initGuestbook } from './guestbook.js';
 
 // Pages first, so every feature starts on the right page.
 initRouter();
@@ -90,6 +91,7 @@ initGame();
 initSparkles();
 initClickSounds();
 initCounter();
+initGuestbook();
 initChaos();
 
 console.log('%c☾ hi, curious one! pip says: someone in town is still awake…', 'color:#ff9fbd;font:16px/1.4 monospace');

@@ -114,6 +114,7 @@ export function initGame() {
     screen.hidden = true;
     root.classList.add('is-playing');
     root.focus({ preventScroll: true });
+    root.scrollIntoView({ block: 'center', behavior: 'smooth' }); // see the whole board while playing
     updateHud();
     last = performance.now();
     loop();
@@ -335,8 +336,10 @@ export function initGame() {
     cancelAnimationFrame(raf);
     raf = requestAnimationFrame(function tick(now) {
       if (state !== 'playing') return;
-      step(Math.min(50, now - last));
+      // Real time drives the clock; physics runs in small steps so slow frames don't tunnel.
+      let elapsed = Math.min(250, now - last);
       last = now;
+      while (elapsed > 0 && state === 'playing') { const dt = Math.min(33, elapsed); step(dt); elapsed -= dt; }
       if (state === 'playing') { draw(); raf = requestAnimationFrame(tick); }
     });
   }

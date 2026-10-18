@@ -527,6 +527,44 @@
         <p class="sr" id="gameLive" aria-live="polite"></p>
       </div>
     </section>
+    <!-- ===== Tier 3 / side quest · Live dream guestbook ===== -->
+    <section class="sec guestbook" id="guestbook" aria-labelledby="gb-title">
+      <header class="sec__head">
+        <p class="kicker">C:\PIP\GUESTBOOK&gt;</p>
+        <h2 id="gb-title">The Dream Wall</h2>
+        <p>Leave me a wish or a dream request, and I’ll pin it to the nursery wall for everyone to see.</p>
+      </header>
+
+      <div class="gb">
+        <form class="win gb__form" id="gbForm" novalidate>
+          <div class="win__bar"><span>sign_guestbook.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></div>
+          <div class="gb__fields">
+            <label class="gb__label" for="gbName">your name <small>(optional)</small></label>
+            <input class="gb__input" id="gbName" name="n" type="text" maxlength="24" autocomplete="nickname" placeholder="a sleepy visitor" />
+            <label class="gb__label" for="gbWish">your wish for Pip</label>
+            <textarea class="gb__input gb__wish" id="gbWish" name="w" maxlength="140" rows="3" required placeholder="a dream about flying whales, please!" aria-describedby="gbCount"></textarea>
+            <span class="gb__count" id="gbCount" aria-live="polite">0 / 140</span>
+            <fieldset class="gb__stickers">
+              <legend class="gb__label">pick a sticker</legend>
+              <label><input type="radio" name="s" value="moon" checked /><span aria-hidden="true">🌙</span><span class="sr">moon</span></label>
+              <label><input type="radio" name="s" value="star" /><span aria-hidden="true">⭐</span><span class="sr">star</span></label>
+              <label><input type="radio" name="s" value="zzz" /><span aria-hidden="true">💤</span><span class="sr">sleepy</span></label>
+              <label><input type="radio" name="s" value="bear" /><span aria-hidden="true">🧸</span><span class="sr">teddy bear</span></label>
+              <label><input type="radio" name="s" value="ghost" /><span aria-hidden="true">👻</span><span class="sr">ghost</span></label>
+              <label><input type="radio" name="s" value="owl" /><span aria-hidden="true">🦉</span><span class="sr">owl</span></label>
+            </fieldset>
+            <button class="btn gb__send" id="gbSend" type="submit">📌 pin my wish</button>
+            <p class="gb__status" id="gbStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+
+        <div class="gb__wall-wrap">
+          <p class="gb__mode" id="gbMode"></p>
+          <ul class="gb__wall" id="gbWall" aria-label="Wishes on the dream wall"></ul>
+        </div>
+      </div>
+    </section>
+
       <nav class="next-page" aria-label="More pages"><a class="btn btn--ghost" href="#/work">← things i make</a><a class="btn" href="#/">⌂ back home</a></nav>
     </div>
   </main>

@@ -18,7 +18,7 @@ Home has three big doors (Story, Work, Play); each opens its own page (`#/story`
 | Home | Pip (live eyes, nose boop, day/night), the three doors, `pip.nfo` |
 | Story | The 6-scene origin story |
 | Work | Workbench, Lullaby Lab, Storybook, Dream Delivery Routes |
-| Play | Lights-Out Nursery, Catch the Dreams |
+| Play | Lights-Out Nursery, Catch the Dreams, the Dream Wall guestbook |
 
 ## What's on the page
 
@@ -42,6 +42,7 @@ Home has three big doors (Story, Work, Play); each opens its own page (`#/story`
 | Quest | How |
 |---|---|
 | ✨ Sparkle cursor trail | Canvas glitter that follows the pointer (theme-aware, rainbow in chaos mode, off for reduced-motion) |
+| 📌 Live guestbook | The Dream Wall on the Play page: visitors pin wishes for Pip (`api/guestbook.js`, same Upstash Redis). Links and rude words are blocked, 140-character limit, 20-second cooldown per visitor, and everything is rendered as plain text |
 | 🔢 Hit counter odometer | Rolling odometer in the footer, backed by `api/hits.js` (Vercel function + Upstash Redis); falls back to an honest "your visits" count |
 | 🔊 Click sounds + mute | Buttons rattle, links wind-chime; mute switch always in the top bar |
 | 🌀 Responsive Chaos Mode | Toggle in the top bar: the chaos reshapes to the screen (shape-based personalities, stickers scale with screen area, re-tilts on resize, live W×H badge, DVD-style bouncing Pip) |
@@ -83,7 +84,9 @@ js/sparkles.js sparkle cursor trail
 js/clicks.js   click sounds
 js/counter.js  hit counter odometer
 js/chaos.js    Responsive Chaos Mode
+js/guestbook.js  the Dream Wall guestbook
 api/hits.js    Vercel function for the site-wide hit counter
+api/guestbook.js  Vercel function for the guestbook
 assets/        3 WebP images from the official pack (cut out, optimized)
 ```
 

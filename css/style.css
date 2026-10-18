@@ -848,17 +848,16 @@ a { color: inherit; }
 
 /* ---------- Responsive Chaos Mode ---------- */
 @keyframes rainbow-x { to { background-position: 200% 0; } }
-@keyframes tile-x { to { background-position: 240px 240px, 0 0; } }
+@keyframes tile-x { to { transform: translate(120px, 120px); } }
 @keyframes blink-x { 50% { opacity: .2; } }
 @keyframes sticker-x { 50% { transform: rotate(var(--r)) scale(1.08); } }
 @keyframes vmarquee-x { to { transform: translateY(-50%); } }
 
-html.chaos body {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ctext x='10' y='40' font-size='26'%3E%F0%9F%8C%99%3C/text%3E%3Ctext x='70' y='100' font-size='22'%3E%E2%AD%90%3C/text%3E%3Ctext x='76' y='34' font-size='14'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E"),
-    var(--tile);
-  background-size: 120px 120px, 120px 120px;
-  animation: tile-x 30s linear infinite;
+html.chaos body::before { /* moving tile on its own GPU layer, so the page isn't repainted every frame */
+  content: ""; position: fixed; inset: -120px; z-index: -1; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ctext x='10' y='40' font-size='26'%3E%F0%9F%8C%99%3C/text%3E%3Ctext x='70' y='100' font-size='22'%3E%E2%AD%90%3C/text%3E%3Ctext x='76' y='34' font-size='14'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E");
+  background-size: 120px 120px; will-change: transform;
+  animation: tile-x 12s linear infinite;
 }
 html.chaos .win__bar { background: linear-gradient(90deg, #ff5e8a, #ffb35e, #ffe95e, #6dff9b, #5ec8ff, #b07dff, #ff5e8a); background-size: 200% 100%; animation: rainbow-x 4s linear infinite; color: #1a1033; text-shadow: 1px 1px 0 #fff8; }
 html.chaos .hero__title,
@@ -905,7 +904,7 @@ html.chaos[data-shape="tiny"] .sticker-x { font-size: .85rem; opacity: .75; }
 html.chaos[data-shape="tiny"] .dims-x, html.chaos[data-shape="tall"] .dims-x { bottom: auto; top: 60px; font-size: .9rem; }
 html.chaos[data-shape="wide"] .hero__title { font-size: clamp(6rem, 16vw, 13rem); }
 html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
-@media (prefers-reduced-motion: reduce) { html.chaos body { animation: none; } }
+@media (prefers-reduced-motion: reduce) { html.chaos body::before { animation: none; } }
 
 /* ---------- Dream Delivery Routes ---------- */
 .routes { position: relative; height: 340svh; margin-top: 40px; }
@@ -1017,4 +1016,58 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
   #view-home .kicker { margin: 0; font-size: 1.15rem; }
   #view-home .hero__role { margin: .2rem 0 0; font-size: 1rem; }
   #view-home .hero__tagline { margin: .1rem 0 .6rem; font-size: 1rem; }
+}
+
+/* ---------- The Dream Wall (guestbook) ---------- */
+.gb { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; align-items: start; }
+.gb__fields { display: grid; gap: 6px; padding: 16px 18px 18px; }
+.gb__label { font-family: var(--font-pixel); font-size: 1.2rem; color: var(--gold); padding: 0; }
+.gb__label small { color: var(--ink-soft); font-size: .95rem; }
+.gb__input {
+  width: 100%; font: inherit; font-size: 1rem; color: var(--ink);
+  background: var(--bg); border: 2px inset var(--win-edge); border-radius: 10px; padding: 8px 10px;
+}
+.gb__input::placeholder { color: var(--ink-soft); opacity: .7; }
+.gb__input:focus-visible { outline: 3px dashed var(--gold); outline-offset: 2px; }
+.gb__wish { resize: vertical; min-height: 84px; }
+.gb__count { justify-self: end; font-family: var(--font-pixel); font-size: 1rem; color: var(--ink-soft); margin-top: -2px; }
+.gb__stickers { border: 0; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.gb__stickers legend { margin-bottom: 4px; }
+.gb__stickers label { position: relative; }
+.gb__stickers input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.gb__stickers span[aria-hidden] { display: grid; place-items: center; width: 42px; height: 42px; font-size: 1.4rem; border-radius: 12px; border: 2px solid var(--win-edge); background: var(--bg); transition: transform .15s var(--ease-bounce); }
+.gb__stickers input:checked + span { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, var(--bg)); transform: scale(1.1) rotate(-6deg); }
+.gb__stickers input:focus-visible + span { outline: 3px dashed var(--gold); outline-offset: 2px; }
+.gb__send { justify-self: start; margin: 8px 0 0; }
+.gb__send:disabled { opacity: .6; cursor: progress; }
+.gb__status { margin: 0; min-height: 1.4em; font-family: var(--font-pixel); font-size: 1.15rem; color: var(--gold); }
+.gb__mode { margin: 0 0 10px; font-family: var(--font-pixel); font-size: 1.2rem; color: var(--ink-soft); }
+.gb__wall {
+  list-style: none; margin: 0; padding: 18px; border-radius: var(--radius);
+  columns: 2 220px; column-gap: 16px;
+  background: repeating-linear-gradient(90deg, #8c7ac4 0 28px, #8070bb 28px 56px);
+  border: 2px solid var(--win-edge); box-shadow: inset 0 0 30px rgba(0, 0, 0, .3);
+  max-height: 640px; overflow-y: auto;
+}
+.gb__note {
+  position: relative; break-inside: avoid; margin: 8px 0 16px; padding: 18px 14px 10px;
+  background: #fff8ec; color: #5c4033; border-radius: 4px 4px 10px 4px;
+  box-shadow: 3px 4px 0 rgba(30, 20, 60, .35); rotate: var(--tilt, 0deg);
+}
+.gb__note:nth-child(3n+2) { background: #ffe7ef; }
+.gb__note:nth-child(3n) { background: #eef3ff; }
+.gb__note--pinned { background: #fff1c9 !important; }
+.gb__note::before { /* the pin */
+  content: ""; position: absolute; left: 50%; top: -6px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffb5c8, #a34063); box-shadow: 1px 2px 0 rgba(0, 0, 0, .3);
+}
+.gb__sticker { position: absolute; right: 8px; top: 6px; font-size: 1.3rem; }
+.gb__text { margin: 0 22px 6px 0; font-size: 1rem; line-height: 1.4; overflow-wrap: anywhere; }
+.gb__meta { margin: 0; font-family: var(--font-pixel); font-size: 1.05rem; color: #8a6a5a; }
+.gb__meta b { font-weight: 400; color: #a34063; }
+.gb__note.is-new { animation: pin-in .6s var(--ease-bounce); }
+@keyframes pin-in { from { transform: translateY(-30px) scale(.7); opacity: 0; } }
+@media (max-width: 860px) {
+  .gb { grid-template-columns: 1fr; }
+  .gb__wall { max-height: 520px; }
 }
