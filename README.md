@@ -220,6 +220,7 @@ Built for [**Baby's First Website**](https://hax.baby/baby-problem) by haX.baby,
 Under the dreamy paint, this is a proper little old-school homepage:
 
 - 🪟 every panel is a cozy **window** with a title bar and `_ □ ×` buttons
+- 🖱️ **pixel-art cursors** like the old online games: a chunky arrow, a pointing glove for anything clickable, and grab / grabbing hands for dragging the map
 - 🔢 a rolling **hit counter odometer** and a real **guestbook**
 - 🏷️ tiny **88×31-style badges** in the footer (*best at 2 a.m. · made w/ &lt;HTML&gt; · 0 nightmares ✓ · Pip approved*)
 - 📜 a scrolling **marquee ribbon** (*★ now accepting dream requests ★ please do not wake the moths ★*)
@@ -335,7 +336,8 @@ docs/screenshots/   the pictures in this README
 - **Nana Noctua illustration:** added by Vij for this site.
 - **The dreamland map:** an AI-generated painting chosen by Vij, shown at its original resolution (cut into tiles, nothing upscaled).
 - **The Story, Work and Play paintings:** added by Vij for this site (the moon painted out of each so the site's own moon can shine).
-- **Wisp, Mumble, the town, the storybook pictures, the Dream Workshop scenes, the basket and the grumpy mitten:** hand-drawn SVG for this site. The bedtime stories are original.
+- **Wisp, Mumble, the town, the storybook pictures, the Dream Workshop scenes, the basket and the grumpy mitten:** hand-drawn SVG for this site.
+- **Pixel cursors:** hand-drawn 16×16 pixel art for this site. The bedtime stories are original.
 - **Lullaby melody:** Johannes Brahms, *Wiegenlied* Op. 49 No. 4 (1868, public domain). Every sound is synthesized in the browser.
 - **Fonts:** [Fredoka](https://fonts.google.com/specimen/Fredoka) via Google Fonts; [Mali](https://fonts.google.com/specimen/Mali) by Cadson Demak (SIL Open Font License), bundled with its licence.
 - **3D:** [Three.js](https://threejs.org) r160 (MIT licence).

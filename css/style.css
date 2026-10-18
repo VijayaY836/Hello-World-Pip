@@ -100,7 +100,7 @@ body {
   transition: background-color .6s ease, color .6s ease;
 }
 img { max-width: 100%; height: auto; display: block; }
-button { font: inherit; color: inherit; cursor: pointer; }
+button { font: inherit; color: inherit; cursor: var(--cur-hand); }
 a { color: inherit; }
 :focus-visible { outline: 3px dashed var(--gold); outline-offset: 3px; border-radius: 6px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -245,7 +245,7 @@ a { color: inherit; }
   position: absolute; left: 54.5%; top: 38.1%; width: 9%; aspect-ratio: 1;
   transform: translate(-50%, -50%);
   border: 0; border-radius: 50%; background: transparent; padding: 0;
-  cursor: pointer;
+  cursor: var(--cur-hand);
 }
 .pip.is-booped .pip__img { animation: squish .35s var(--ease-bounce); }
 .pip__zzz { position: absolute; right: 2%; top: 4%; font-family: var(--font-display); font-weight: 800; color: var(--accent); pointer-events: none; opacity: 0; transition: opacity .4s; }
@@ -527,10 +527,10 @@ a { color: inherit; }
 .fh i { position: absolute; width: 14px; height: 16px; border-radius: 4px; background: #ffd88a; box-shadow: 0 0 10px rgba(255, 210, 130, .7); }
 .foot__secret {
   position: absolute; width: 16px; height: 18px; padding: 0; border: 0; border-radius: 4px;
-  background: #1a1640; cursor: pointer; z-index: 2;
+  background: #1a1640; cursor: var(--cur-hand); z-index: 2;
 }
 .foot__secret:hover { box-shadow: 0 0 0 2px var(--accent); }
-.foot__secret.is-lit { background: #ffd88a; box-shadow: 0 0 12px rgba(255, 210, 130, .9); cursor: default; }
+.foot__secret.is-lit { background: #ffd88a; box-shadow: 0 0 12px rgba(255, 210, 130, .9); cursor: var(--cur); }
 .foot__wisp { position: absolute; z-index: 3; display: flex; align-items: center; gap: 8px; transform: translate(-50%, 40px) scale(.2); opacity: 0; pointer-events: none; transition: transform .6s var(--ease-bounce), opacity .3s; }
 .foot__wisp svg { width: 46px; flex: none; }
 .foot__wisp.is-out svg { animation: bob 2.4s ease-in-out infinite; } /* only bob while he's visible (an animating SVG costs work every frame) */
@@ -650,7 +650,7 @@ a { color: inherit; }
   background: #6b5aa6;
   touch-action: pan-y;
 }
-@media (pointer: fine) { .room { cursor: none; } .room.is-lit { cursor: auto; } }
+@media (pointer: fine) { .room { cursor: none; } .room.is-lit { cursor: var(--cur); } }
 .room__wall {
   position: absolute; inset: 0 0 18% 0;
   background:
@@ -787,7 +787,7 @@ a { color: inherit; }
 .seg { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 4px; }
 .seg legend { width: 100%; font-family: var(--font-pixel); font-size: 1.1rem; color: #ffd27a; margin-bottom: 2px; padding: 0; }
 .seg label { position: relative; flex: 1 1 auto; }
-.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: var(--cur-hand); }
 .seg span { display: block; text-align: center; padding: 5px 8px; border-radius: 999px; border: 2px solid rgba(201, 182, 242, .35); font-size: .85rem; font-weight: 500; white-space: nowrap; }
 .seg input:checked + span { background: #ff9fbd; color: #2a1340; border-color: #ff9fbd; }
 .seg input:focus-visible + span { outline: 3px dashed #ffd27a; outline-offset: 2px; }
@@ -808,7 +808,7 @@ a { color: inherit; }
   transform-origin: left center; transform-style: preserve-3d;
   transform: perspective(2200px) rotateY(0deg);
   transition: transform .9s cubic-bezier(.3, .7, .3, 1);
-  cursor: pointer;
+  cursor: var(--cur-hand);
 }
 .sheet.is-turned { transform: perspective(2200px) rotateY(-180deg); }
 .sheet__face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
@@ -835,7 +835,7 @@ a { color: inherit; }
 .page--blank { position: absolute; inset: 0; background: #f3e6cf; border-radius: 12px 0 0 12px; }
 .book__controls { display: flex; align-items: center; gap: 12px; }
 .book__controls .btn { margin: 0; white-space: nowrap; }
-.book__controls .btn:disabled { opacity: .4; cursor: default; transform: none; }
+.book__controls .btn:disabled { opacity: .4; cursor: var(--cur); transform: none; }
 .book__count { font-family: var(--font-pixel); font-size: 1.25rem; min-width: 7ch; text-align: center; color: var(--ink-soft); }
 
 @media (max-width: 860px) { .topbar__nav { display: none; } }
@@ -916,7 +916,7 @@ html.chaos #chaosBtn { background: linear-gradient(90deg, #ff5e8a, #ffe95e, #5ec
 .dims-x b { color: #fff; font-weight: 400; }
 .chaos-pip {
   position: absolute; left: 0; top: 0; width: clamp(56px, 7vw, 86px); padding: 0; border: 0; background: none;
-  pointer-events: auto; cursor: pointer; filter: hue-rotate(var(--hue, 0deg)) drop-shadow(0 0 10px rgba(255, 255, 255, .6));
+  pointer-events: auto; cursor: var(--cur-hand); filter: hue-rotate(var(--hue, 0deg)) drop-shadow(0 0 10px rgba(255, 255, 255, .6));
   transition: filter .3s;
 }
 .chaos-pip img { width: 100%; }
@@ -1058,7 +1058,7 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
 .gb__stickers { border: 0; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .gb__stickers legend { margin-bottom: 4px; }
 .gb__stickers label { position: relative; }
-.gb__stickers input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.gb__stickers input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: var(--cur-hand); }
 .gb__stickers span[aria-hidden] { display: grid; place-items: center; width: 42px; height: 42px; font-size: 1.4rem; border-radius: 12px; border: 2px solid var(--win-edge); background: var(--bg); transition: transform .15s var(--ease-bounce); }
 .gb__stickers input:checked + span { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 22%, var(--bg)); transform: scale(1.1) rotate(-6deg); }
 .gb__stickers input:focus-visible + span { outline: 3px dashed var(--gold); outline-offset: 2px; }
@@ -1171,8 +1171,8 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
 .pip3d { max-width: 760px; margin: 0 auto; }
 .pip3d:focus-visible { outline: 3px dashed var(--gold); outline-offset: 4px; }
 .pip3d__stage { position: relative; aspect-ratio: 4 / 3; background: radial-gradient(circle at 50% 45%, #3a2f86, #120f33 72%); overflow: hidden; }
-.pip3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: grab; }
-.pip3d__canvas:active { cursor: grabbing; }
+.pip3d__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: var(--cur-grab); }
+.pip3d__canvas:active { cursor: var(--cur-grabbing); }
 .pip3d__canvas.is-pixel { image-rendering: pixelated; }
 .pip3d__fallback { position: absolute; left: 50%; top: 50%; height: 80%; width: auto; transform: translate(-50%, -50%); display: none; }
 .pip3d.is-fallback .pip3d__fallback { display: block; }
@@ -1392,11 +1392,11 @@ h1, h2, h3, .hero__title, .sec__head h2, .work__head h2, .routes__head h2 { font
   overflow-x: auto; overflow-y: hidden;
   scrollbar-width: none; -ms-overflow-style: none;
   overscroll-behavior-x: contain;
-  cursor: grab; outline: none;
+  cursor: var(--cur-grab); outline: none;
   transition: transform .5s cubic-bezier(.6, 0, .4, 1), opacity .5s ease;
 }
 .dm__viewport::-webkit-scrollbar { display: none; }
-.dm__viewport.is-dragging { cursor: grabbing; scroll-behavior: auto; }
+.dm__viewport.is-dragging { cursor: var(--cur-grabbing); scroll-behavior: auto; }
 .dm__viewport.is-dragging .dm__place { pointer-events: none; }
 .dm__viewport:focus-visible { box-shadow: inset 0 0 0 3px var(--accent); }
 .dm__track { /* sized in CSS from the start (JS only refines --s), so nothing jumps while the page loads */
@@ -1616,7 +1616,7 @@ h1, h2, h3, .hero__title, .sec__head h2, .work__head h2, .routes__head h2 { font
   border: 2px solid var(--win-edge); border-radius: 999px;
   box-shadow: 0 10px 22px -10px rgba(10, 6, 30, .8);
 }
-.dm__pan, .dm__compass { border: 0; background: transparent; color: var(--ink); cursor: pointer; transition: transform .3s var(--ease-bounce), background-color .3s; }
+.dm__pan, .dm__compass { border: 0; background: transparent; color: var(--ink); cursor: var(--cur-hand); transition: transform .3s var(--ease-bounce), background-color .3s; }
 .dm__pan { width: 38px; height: 38px; border-radius: 50%; font: 700 1.7rem/1 var(--font-display); padding-bottom: 4px; }
 .dm__pan:hover { transform: scale(1.12); background: color-mix(in srgb, var(--accent) 35%, transparent); }
 .dm__compass { display: grid; justify-items: center; gap: 1px; padding: 4px 8px 3px; border-radius: 20px; font: 600 .78rem/1 var(--font-hand); }
@@ -1640,7 +1640,7 @@ h1, h2, h3, .hero__title, .sec__head h2, .work__head h2, .routes__head h2 { font
 
 .dm__found { /* bottom-left: how many hidden spots you've found; tap it and Pip points to the next one */
   position: absolute; left: var(--gutter); bottom: 16px; z-index: 3;
-  padding: 8px 16px; border-radius: 999px; cursor: pointer;
+  padding: 8px 16px; border-radius: 999px; cursor: var(--cur-hand);
   background: color-mix(in srgb, var(--win-solid) 88%, transparent); color: var(--ink);
   border: 2px solid var(--win-edge); box-shadow: 0 10px 22px -10px rgba(10, 6, 30, .8);
   font: 600 1.1rem var(--font-hand);
@@ -1747,7 +1747,7 @@ html[data-theme="day"]:is([data-view="story"], [data-view="work"], [data-view="p
 .dw__groups { display: grid; gap: 10px; }
 .dw__group { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .dw__group legend { padding: 0; margin-bottom: 4px; font: 600 1.25rem var(--font-hand); color: var(--gold); }
-.dw__opt { position: relative; cursor: pointer; }
+.dw__opt { position: relative; cursor: var(--cur-hand); }
 .dw__opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .dw__opt span {
   display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 999px;
@@ -1818,7 +1818,7 @@ html[data-theme="day"]:is([data-view="story"], [data-view="work"], [data-view="p
 .dw__actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .dw__actions .btn { margin: 0; }
 .dw__actions .chip { color: var(--ink); }
-.dw__actions .chip[disabled] { opacity: .7; cursor: default; }
+.dw__actions .chip[disabled] { opacity: .7; cursor: var(--cur); }
 
 /* the dream shelf: little glowing jars */
 .dw__shelf-wrap { margin: 8px 20px 18px; padding-top: 10px; border-top: 2px dashed var(--win-edge); }
@@ -1827,7 +1827,7 @@ html[data-theme="day"]:is([data-view="story"], [data-view="work"], [data-view="p
 .dw__shelf-empty { color: var(--ink-soft); font-size: .92rem; }
 .dw__jar { position: relative; }
 .dw__jar-btn {
-  position: relative; width: 62px; height: 72px; border-radius: 16px 16px 24px 24px; cursor: pointer;
+  position: relative; width: 62px; height: 72px; border-radius: 16px 16px 24px 24px; cursor: var(--cur-hand);
   border: 2px solid color-mix(in srgb, #fff 45%, transparent); color: inherit;
   background: radial-gradient(circle at 50% 60%, rgba(255, 226, 150, .55), rgba(199, 178, 255, .25) 60%, rgba(255, 255, 255, .08));
   box-shadow: inset 0 -8px 14px rgba(255, 200, 120, .25), 0 8px 16px -8px var(--shadow);
@@ -1836,7 +1836,7 @@ html[data-theme="day"]:is([data-view="story"], [data-view="work"], [data-view="p
 .dw__jar-btn::before { content: ""; position: absolute; top: -8px; left: 12px; right: 12px; height: 9px; border-radius: 4px; background: #c79a6a; }
 .dw__jar-btn small { position: absolute; right: 4px; bottom: 4px; font-size: 15px; }
 .dw__jar-btn:hover { transform: translateY(-4px) rotate(-4deg); }
-.dw__jar-x { position: absolute; right: -8px; top: -12px; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--win-edge); background: var(--win-solid); color: var(--ink); font-size: 14px; line-height: 1; cursor: pointer; opacity: 0; transition: opacity .2s; }
+.dw__jar-x { position: absolute; right: -8px; top: -12px; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--win-edge); background: var(--win-solid); color: var(--ink); font-size: 14px; line-height: 1; cursor: var(--cur-hand); opacity: 0; transition: opacity .2s; }
 .dw__jar:hover .dw__jar-x, .dw__jar-x:focus-visible { opacity: 1; }
 @media (hover: none) { .dw__jar-x { opacity: .85; } }
 
@@ -1902,3 +1902,18 @@ html[data-theme="day"]:is([data-view="story"], [data-view="work"], [data-view="p
 }
 @media (prefers-reduced-motion: reduce) { .hub-card, .hub-card__art img { transition: none; } .pg-room.is-entering { animation: none; } }
 .view[data-open] > .next-page { display: none; } /* inside a room, its own back / next bar does the job */
+
+/* =====================================================================
+   Retro pixel cursors (like the old online games): arrow, pointing glove, grab hands.
+   Drawn as 16×16 pixel art, shown at 32px (with a sharp 2× version for high-DPI screens).
+   ===================================================================== */
+:root {
+  --cur: image-set(url("../assets/cursors/arrow.png") 1x, url("../assets/cursors/arrow@2x.png") 2x) 1 1, auto;
+  --cur-hand: image-set(url("../assets/cursors/hand.png") 1x, url("../assets/cursors/hand@2x.png") 2x) 10 1, pointer;
+  --cur-grab: image-set(url("../assets/cursors/grab.png") 1x, url("../assets/cursors/grab@2x.png") 2x) 16 14, grab;
+  --cur-grabbing: image-set(url("../assets/cursors/grabbing.png") 1x, url("../assets/cursors/grabbing@2x.png") 2x) 16 18, grabbing;
+}
+html { cursor: url("../assets/cursors/arrow.png") 1 1, auto; cursor: var(--cur); }
+:where(a[href], button:not(:disabled), summary, label, select, [role="button"], [role="radio"], [role="tab"], input[type="radio"], input[type="checkbox"], input[type="range"]) { cursor: url("../assets/cursors/hand.png") 10 1, pointer; cursor: var(--cur-hand); }
+:where(input:not([type="radio"]):not([type="checkbox"]):not([type="range"]):not([type="submit"]):not([type="button"]), textarea) { cursor: text; }
+:where(button:disabled) { cursor: var(--cur); }
