@@ -1,34 +1,36 @@
 // HOME · The Dream Cartographer — a living, explorable map of Pip's dreamland.
-// Three illustrated panoramas are joined into one wide world (6245 × 760 "map units").
+// One painting of Pip's mushroom pond (2375 × 822 "map units").
 // The world is only ever scaled DOWN (never above its real size), so the art stays sharp.
-// Pick a place and Pip flies along a glowing trail to it, then the page opens.
+// Three big banners (Story, Work, Play) are always shown; seven more places are hidden
+// sparkles to discover. Pick a place and Pip flies along a glowing trail to it, then the page opens.
 
 import { plink, chime } from './audio.js';
-import { sparks, say } from './fx.js';
+import { sparks, say, toast, centerOf } from './fx.js';
 import { memory, remember } from './memory.js';
 
-const W = 6245, H = 760;
-const PIP = { x: 3260, y: 400 };
+const W = 2375, H = 822;            // the pond painting, at its real size
+const PIP = { x: 1060, y: 470 };    // floating over the moonlit lake
+const VIEW_X = 1180;                // where a wide screen looks first
+const FIT_W = 1800;                 // on a wide screen, fit this much of the map across
 
-// Places on the map. `main` places get big banners; the rest are little pins.
+// Places on the map. `main` places get big banners; the rest are hidden sparkles to find.
 const PLACES = [
-  { id: 'story', href: '#/story', x: 2370, y: 470, icon: '📖', name: 'The Midnight Nursery', sub: 'my story', main: true, line: 'that’s the nursery where Nana found me!' },
-  { id: 'work', href: '#/work', x: 2560, y: 150, icon: '🛠️', name: 'The Dream Workshop', sub: 'things i make', main: true, line: 'my workshop! the windmill powers the music boxes.' },
-  { id: 'play', href: '#/play', x: 5883, y: 250, icon: '🎮', name: 'Mushroom Hollow', sub: 'games & secrets', main: true, line: 'the mushroom house is where we play!' },
-  { id: 'lab', href: '#lab', x: 270, y: 250, icon: '🎼', name: 'The Singing Tree', sub: 'lullaby lab', line: 'the star tree hums any tune you write.' },
-  { id: 'book', href: '#book', x: 760, y: 430, icon: '📕', name: 'The Reading Tree', sub: 'Mumble’s storybook', line: 'Mumble’s book lives in that tree.' },
-  { id: 'pip3d', href: '#pip3d-sec', x: 1840, y: 110, icon: '🎈', name: 'The Balloon', sub: '3D me!', line: 'hop in the balloon to see me in 3D!' },
-  { id: 'routes', href: '#routes', x: 2730, y: 170, up: true, icon: '🗺️', name: 'Sky Post', sub: 'dream deliveries', line: 'every dream gets sorted at the sky post.' },
-  { id: 'lights', href: '#nightroom', x: 2850, y: 360, icon: '🏮', name: 'The Lantern', sub: 'lights-out nursery', line: 'bring the lantern into the dark room…' },
-  { id: 'wall', href: '#guestbook', x: 3995, y: 380, icon: '📌', name: 'Wishing Cottage', sub: 'the dream wall', line: 'leave me a wish at the cottage ♡' },
-  { id: 'catch', href: '#play', x: 5250, y: 600, icon: '🌙', name: 'Stepping Stones', sub: 'catch the dreams', line: 'hop the stones and catch falling dreams!' },
+  { id: 'story', href: '#/story', x: 1300, y: 262, icon: '📖', name: 'The Moon', sub: 'my story', main: true, line: 'the moon watched over the night i was dreamed…' },
+  { id: 'work', href: '#/work', x: 520, y: 360, icon: '🛠️', name: 'The Mushroom Workshop', sub: 'things i make', main: true, line: 'my workshop is under the big mushroom!' },
+  { id: 'play', href: '#/play', x: 1840, y: 262, icon: '🎮', name: 'Mushroom Hollow', sub: 'games & secrets', main: true, line: 'the mushroom house is where we play!' },
+  { id: 'lab', href: '#lab', x: 135, y: 480, icon: '🎼', name: 'The Humming Glade', sub: 'lullaby lab', line: 'the glowing glade hums any tune you write.' },
+  { id: 'book', href: '#book', x: 440, y: 600, icon: '📕', name: 'The Toadstool Library', sub: 'Mumble’s storybook', line: 'Mumble’s book is tucked under that toadstool.' },
+  { id: 'pip3d', href: '#pip3d-sec', x: 640, y: 175, icon: '🎈', name: 'The Floating Isle', sub: '3D me!', line: 'hop up to the floating isle to see me in 3D!' },
+  { id: 'routes', href: '#routes', x: 720, y: 535, icon: '🗺️', name: 'The Winding Path', sub: 'dream deliveries', line: 'every dream travels down this path to a sleepy house.' },
+  { id: 'lights', href: '#nightroom', x: 2235, y: 140, icon: '🏮', name: 'The Dark Wood', sub: 'lights-out nursery', line: 'it’s dark in the woods… bring a lantern!' },
+  { id: 'wall', href: '#guestbook', x: 1595, y: 245, icon: '📌', name: 'Wishing Mushrooms', sub: 'the dream wall', line: 'leave me a wish by the little mushrooms ♡' },
+  { id: 'catch', href: '#play', x: 1480, y: 610, icon: '🌙', name: 'Stepping Stones', sub: 'catch the dreams', line: 'hop the stones and catch falling dreams!' },
 ];
 
 // Little living details painted over the art (in map units).
-const GLOWS = [[2222, 482, 30], [2300, 492, 30], [2372, 482, 40], [2850, 352, 40], [3520, 522, 34], [4026, 422, 26], [4078, 422, 26], [5883, 246, 46],
-  [175, 175, 22], [245, 120, 22], [355, 205, 24], [450, 175, 22], [270, 380, 26], [405, 345, 24], [180, 410, 20], [745, 360, 18], [1870, 340, 22], [1985, 360, 20]];
-const FALLS = [[3644, 472, 40, 180], [3865, 528, 60, 235], [5792, 301, 70, 200], [1855, 590, 130, 110]];
-const FIREFLIES = 26;
+const GLOWS = [[1265, 135, 90], [1950, 245, 46], [1885, 228, 18], [135, 482, 26], [270, 702, 30], [472, 745, 18], [1610, 640, 20], [2140, 470, 22], [1130, 600, 40]];
+const FALLS = [[1925, 330, 90, 215]];
+const FIREFLIES = 16;
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const calm = matchMedia('(prefers-reduced-motion: reduce)');
@@ -50,7 +52,8 @@ export function initDreamMap() {
   const places = document.getElementById('dmPlaces');
   const paths = document.getElementById('dmPaths');
   const life = document.getElementById('dmLife');
-  const legend = document.getElementById('dmLegend');
+  const foundBtn = document.getElementById('dmFound');
+  const foundText = document.getElementById('dmFoundText');
   const flyer = document.getElementById('dmFlyer');
   const pipEl = document.getElementById('dmPip');
   const hint = document.getElementById('dmHint');
@@ -62,7 +65,7 @@ export function initDreamMap() {
   for (const p of PLACES) {
     const t = trail(p);
     const glow = document.createElementNS(SVG_NS, 'path');
-    glow.setAttribute('d', t.d); glow.setAttribute('class', `dm__trail${p.main ? ' dm__trail--main' : ''}`);
+    glow.setAttribute('d', t.d); glow.setAttribute('class', 'dm__trail');
     const dust = document.createElementNS(SVG_NS, 'path');
     dust.setAttribute('d', t.d); dust.setAttribute('class', 'dm__dust');
     paths.append(glow, dust);
@@ -70,21 +73,24 @@ export function initDreamMap() {
   }
 
   const visited = () => memory().visited || {};
+  const found = () => memory().found || {};
+  const SPOTS = PLACES.filter((p) => !p.main);
   function placeEl(p) {
     const a = document.createElement('a');
-    a.className = `dm__place${p.main ? ' dm__place--main' : ''}${p.up ? ' dm__place--up' : ''}`;
+    a.className = `dm__place ${p.main ? 'dm__place--main' : 'dm__place--spot'}`;
     a.href = p.href;
     a.draggable = false; // so dragging the map never picks up the link instead
     a.dataset.id = p.id;
     a.style.setProperty('--x', p.x); a.style.setProperty('--y', p.y);
     a.style.setProperty('--wob', `${(p.x % 7) * 0.31}s`);
-    a.innerHTML = `<span class="dm__pin" aria-hidden="true"><span class="dm__icon">${p.icon}</span></span>
-      <span class="dm__flag"><b>${p.name}</b><small>${p.sub}</small><i class="dm__seen" aria-hidden="true">✓</i></span>`;
+    const mark = p.main
+      ? `<span class="dm__pin" aria-hidden="true"><span class="dm__icon">${p.icon}</span></span>`
+      : '<span class="dm__star" aria-hidden="true"></span>';
+    a.innerHTML = `${mark}<span class="dm__flag"><b>${p.main ? '' : `${p.icon} `}${p.name}</b><small>${p.sub}</small><i class="dm__seen" aria-hidden="true">✓</i></span>`;
     a.setAttribute('aria-label', `${p.name}: ${p.sub}`);
     return a;
   }
   PLACES.forEach((p) => places.appendChild(placeEl(p)));
-  legend.innerHTML = '<span class="dm__legend-title">places</span>' + PLACES.map((p) => `<a class="chip" href="${p.href}" data-id="${p.id}">${p.icon} ${p.sub}</a>`).join('');
 
   // The little living details are added once the page has settled, so they never slow the first paint.
   const buildLife = () => {
@@ -102,9 +108,9 @@ export function initDreamMap() {
   for (let i = 0; i < FIREFLIES; i++) {
     const f = document.createElement('span');
     const zone = i % 3; // forest, islands, pond
-    const x = zone === 0 ? 80 + Math.random() * 1900 : zone === 1 ? 2100 + Math.random() * 1900 : 4150 + Math.random() * 1960;
+    const x = 80 + zone * 760 + Math.random() * 740;
     f.className = 'dm__fly';
-    f.style.cssText = `--x:${x.toFixed(0)};--y:${(260 + Math.random() * 460).toFixed(0)};--dur:${(6 + Math.random() * 6).toFixed(1)}s;--delay:${(-Math.random() * 10).toFixed(1)}s;--dx:${(Math.random() * 120 - 60).toFixed(0)}px;--dy:${(-40 - Math.random() * 80).toFixed(0)}px`;
+    f.style.cssText = `--x:${x.toFixed(0)};--y:${(300 + Math.random() * 480).toFixed(0)};--dur:${(6 + Math.random() * 6).toFixed(1)}s;--delay:${(-Math.random() * 10).toFixed(1)}s;--dx:${(Math.random() * 120 - 60).toFixed(0)}px;--dy:${(-40 - Math.random() * 80).toFixed(0)}px`;
     lifeFrag.appendChild(f);
   }
   const plane = document.createElement('span');
@@ -112,8 +118,17 @@ export function initDreamMap() {
   lifeFrag.appendChild(plane);
   life.appendChild(lifeFrag);
   };
-  const later = (fn) => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 2500 }) : setTimeout(fn, 1200));
-  if (document.readyState === 'complete') later(buildLife); else addEventListener('load', () => later(buildLife), { once: true });
+  // Wake the map up on the visitor's first move, or a few seconds after loading, whichever comes first.
+  let alive = false;
+  const wake = () => {
+    if (alive) return; alive = true;
+    ['pointerdown', 'pointermove', 'keydown', 'touchstart', 'wheel'].forEach((t) => removeEventListener(t, wake));
+    buildLife();
+    section.classList.add('is-live');
+  };
+  ['pointerdown', 'pointermove', 'keydown', 'touchstart', 'wheel'].forEach((t) => addEventListener(t, wake, { passive: true }));
+  const soon = () => setTimeout(wake, 6000);
+  if (document.readyState === 'complete') soon(); else addEventListener('load', soon, { once: true });
 
   // (Pip's spot on the map is set in CSS too, so he's already in place before this script runs)
 
@@ -123,27 +138,54 @@ export function initDreamMap() {
       const page = PLACES.find((p) => p.id === a.dataset.id);
       const seen = v[a.dataset.id] || (page?.main && v[page.id]);
       a.classList.toggle('is-visited', Boolean(seen));
+      a.classList.toggle('is-found', Boolean(found()[a.dataset.id]));
     });
+    const n = SPOTS.filter((p) => found()[p.id]).length;
+    foundText.textContent = n === SPOTS.length ? `all ${n} hidden spots found!` : `${n} of ${SPOTS.length} hidden spots found`;
+    foundBtn.classList.toggle('is-complete', n === SPOTS.length);
   }
   markVisited();
+
+  // ---------- hidden spots: finding them, and a little help from Pip ----------
+  function discover(p) {
+    if (p.main || found()[p.id]) return;
+    remember({ found: { [p.id]: true } });
+    markVisited();
+    const el = places.querySelector(`[data-id="${p.id}"]`);
+    const c = centerOf(el.querySelector('.dm__star'));
+    sparks(c.x, c.y, { count: 10, spread: 70 });
+    plink(1.3);
+    if (SPOTS.every((s) => found()[s.id])) {
+      setTimeout(() => { chime(); toast('✦ you found every hidden spot in my dreamland! ✦'); sparks(innerWidth / 2, innerHeight / 2, { count: 30 }); }, 400);
+    }
+  }
+  foundBtn.addEventListener('click', () => {
+    const left = SPOTS.filter((p) => !found()[p.id]);
+    if (!left.length) { say('you found them all! you’re a real dream explorer ♡', 2800); plink(1.4); return; }
+    const mid = (view.scrollLeft + view.clientWidth / 2) / scale;
+    const next = left.reduce((a, b) => (Math.abs(b.x - mid) < Math.abs(a.x - mid) ? b : a));
+    centerOn(next.x, true);
+    say('psst… look for the twinkle over there ✦', 2800);
+    plink(1.1);
+    const el = places.querySelector(`[data-id="${next.id}"]`);
+    el.classList.remove('is-calling'); void el.offsetWidth; el.classList.add('is-calling');
+    setTimeout(() => el.classList.remove('is-calling'), 4200);
+  });
 
   // ---------- sizing: fit the map's height to the screen, never larger than the art ----------
   function size() {
     const avail = section.clientHeight;
     if (!avail) return false; // home page not showing yet
-    scale = Math.min(1, avail / H);
+    // Never bigger than the real painting (so it stays sharp); on wide screens, fit most of it across.
+    scale = Math.min(1, avail / H, view.clientWidth >= 900 ? view.clientWidth / FIT_W : 1);
     view.style.setProperty('--s', scale.toFixed(4));
     view.style.setProperty('--inv', Math.min(1.4, 1 / scale).toFixed(3)); // labels stay readable when the map is small
     track.style.width = `${W * scale}px`;
     track.style.height = `${H * scale}px`; // the same value the CSS already gave it
     return true;
   }
-  // First view: on a wide screen, show Pip together with the Nursery and the Workshop; on a phone, centre on Pip.
-  function home() {
-    const span = view.clientWidth / scale;
-    if (span >= 1300) view.scrollLeft = Math.max(0, Math.min(2110, PIP.x + 260 - span)) * scale;
-    else centerOn(PIP.x, false);
-  }
+  // First view: on a wide screen, the whole middle of the map (all three banners); on a phone, Pip.
+  function home() { centerOn(view.clientWidth >= 900 ? VIEW_X : PIP.x, false); }
   const centerOn = (x, smooth) => view.scrollTo({ left: x * scale - view.clientWidth / 2, behavior: smooth && !calm.matches ? 'smooth' : 'instant' });
 
   // ---------- panning: drag, buttons, keys (wheel scrolls the page as normal; shift+wheel / trackpad pans) ----------
@@ -167,6 +209,7 @@ export function initDreamMap() {
     if (e.key === 'ArrowLeft') { e.preventDefault(); panBy(-260); }
     if (e.key === 'ArrowRight') { e.preventDefault(); panBy(260); }
   });
+  if (matchMedia('(pointer: coarse)').matches) hint.textContent = '✦ swipe to explore the dreamland ✦';
   let hinted = false, startLeft = 0;
   view.addEventListener('scroll', () => {
     if (!hinted && view.dataset.ready && Math.abs(view.scrollLeft - startLeft) > 60) { hinted = true; hint.classList.add('is-gone'); section.classList.add('is-exploring'); }
@@ -185,10 +228,12 @@ export function initDreamMap() {
     if (!a) return;
     highlight(a.dataset.id, true);
     const p = PLACES.find((x) => x.id === a.dataset.id);
-    if (p && p.line !== lastLine && document.documentElement.dataset.theme !== 'day') { lastLine = p.line; say(p.line, 2600); }
+    if (!p) return;
+    if (e.pointerType === 'mouse') discover(p); // on touch, the first tap does this instead
+    if (p.line !== lastLine && document.documentElement.dataset.theme !== 'day') { lastLine = p.line; say(p.line, 2600); }
   });
   section.addEventListener('pointerout', (e) => { const a = e.target.closest('[data-id]'); if (a) highlight(a.dataset.id, false); });
-  section.addEventListener('focusin', (e) => { const a = e.target.closest('[data-id]'); if (a) highlight(a.dataset.id, true); });
+  section.addEventListener('focusin', (e) => { const a = e.target.closest('[data-id]'); if (!a) return; highlight(a.dataset.id, true); if (a.matches(':focus-visible')) discover(PLACES.find((x) => x.id === a.dataset.id)); });
   section.addEventListener('focusout', (e) => { const a = e.target.closest('[data-id]'); if (a) highlight(a.dataset.id, false); });
 
   // ---------- travel: Pip flies along the trail, the map follows, then the page opens ----------
@@ -235,17 +280,26 @@ export function initDreamMap() {
       }, 520);
     })(start);
   }
+  let pointerType = 'mouse';
+  section.addEventListener('pointerdown', (e) => { pointerType = e.pointerType; }, { passive: true });
+  const closeSpots = (except) => places.querySelectorAll('.dm__place--spot.is-open').forEach((x) => { if (x !== except) { x.classList.remove('is-open'); highlight(x.dataset.id, false); } });
   section.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-id]');
-    if (!a) return;
+    if (!a) { closeSpots(); return; }
     e.preventDefault();
     if (drag?.justDragged) return; // that was a drag, not a click
     const p = PLACES.find((x) => x.id === a.dataset.id);
-    if (a.closest('.dm__legend')) {           // from the legend: glide the map there first, then fly
-      centerOn((p.x + PIP.x) / 2, true);
-      setTimeout(() => travel(p), calm.matches ? 0 : 450);
+    // On a touch screen there's no hover, so the first tap on a hidden spot reveals it; the second tap travels.
+    if (!p.main && pointerType !== 'mouse' && e.detail !== 0 && !a.classList.contains('is-open')) {
+      closeSpots(a);
+      a.classList.add('is-open');
+      highlight(p.id, true);
+      discover(p);
+      if (document.documentElement.dataset.theme !== 'day') say(`${p.line} (tap again to go!)`, 3200);
       return;
     }
+    closeSpots();
+    discover(p);
     travel(p);
   });
 

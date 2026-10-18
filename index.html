@@ -19,6 +19,7 @@
 <body>
   <!-- The living night sky behind every page -->
   <div class="sky" aria-hidden="true">
+    <div class="sky__scene"></div> <!-- the painted background for the Story, Work and Play pages -->
     <div class="sky__aurora"></div>
     <div class="sky__moon"></div>
     <div class="sky__cloud sky__cloud--1"></div>
@@ -65,24 +66,15 @@
       <div class="dm__viewport" id="dmViewport" tabindex="0" aria-label="Pip's dreamland map. Drag, swipe or use the arrow keys to explore; choose a place to travel there.">
         <div class="dm__track" id="dmTrack">
           <div class="dm__world" id="dmWorld">
-            <div class="dm__land"> <!-- one painted panorama in 9 tiles; only the ones near Pip load first -->
-              <img class="dm__art" src="assets/map/land-1.webp" style="left:0px" width="696" height="760" alt="" loading="lazy" decoding="async" />
-              <img class="dm__art" src="assets/map/land-2.webp" style="left:694px" width="696" height="760" alt="" loading="lazy" decoding="async" />
-              <img class="dm__art" src="assets/map/land-3.webp" style="left:1388px" width="696" height="760" alt="" loading="lazy" decoding="async" />
-              <img class="dm__art" src="assets/map/land-4.webp" style="left:2082px" width="696" height="760" alt="" decoding="async" />
-              <img class="dm__art" src="assets/map/land-5.webp" style="left:2776px" width="695" height="760" alt="" fetchpriority="high" decoding="async" />
-              <img class="dm__art" src="assets/map/land-6.webp" style="left:3469px" width="696" height="760" alt="" decoding="async" />
-              <img class="dm__art" src="assets/map/land-7.webp" style="left:4163px" width="696" height="760" alt="" loading="lazy" decoding="async" />
-              <img class="dm__art" src="assets/map/land-8.webp" style="left:4857px" width="696" height="760" alt="" loading="lazy" decoding="async" />
-              <img class="dm__art" src="assets/map/land-9.webp" style="left:5551px" width="694" height="760" alt="" loading="lazy" decoding="async" />
+            <div class="dm__land"> <!-- one painting of the mushroom pond, at its real size, in 3 tiles -->
+              <img class="dm__art" src="assets/map/pond-1.webp" style="left:0px" width="794" height="822" alt="" loading="lazy" decoding="async" />
+              <img class="dm__art" src="assets/map/pond-2.webp" style="left:792px" width="794" height="822" alt="" fetchpriority="high" decoding="async" />
+              <img class="dm__art" src="assets/map/pond-3.webp" style="left:1584px" width="791" height="822" alt="" loading="lazy" decoding="async" />
             </div>
-            <div class="dm__seam dm__seam--1" aria-hidden="true"></div>
-            <div class="dm__seam dm__seam--2" aria-hidden="true"></div>
             <div class="dm__life" id="dmLife" aria-hidden="true"></div>
-            <svg class="dm__paths" id="dmPaths" viewBox="0 0 6245 760" aria-hidden="true"></svg>
+            <svg class="dm__paths" id="dmPaths" viewBox="0 0 2375 822" aria-hidden="true"></svg>
             <div class="dm__places" id="dmPlaces"></div>
             <div class="dm__pip" id="dmPip">
-              <span class="dm__here" aria-hidden="true">✦ you are here ✦</span>
             <div class="pip" id="heroPip">
               <img class="pip__img" src="assets/pip-cloud.webp" width="587" height="781"
                    alt="Pip, a baby with a smooth round skull face, glowing eyes and a starry nightcap with a pink bow, waving from a soft cloud." />
@@ -95,7 +87,7 @@
             </div>
             <p class="bubble" id="pipBubble" aria-live="polite">hi! i'm pip ♡</p>
             </div>
-            <img class="dm__flyer" id="dmFlyer" src="assets/pip-sm.webp" width="180" height="240" alt="" aria-hidden="true" />
+            <img class="dm__flyer" id="dmFlyer" src="assets/pip-sm.webp" width="180" height="240" alt="" aria-hidden="true" fetchpriority="low" decoding="async" />
           </div>
         </div>
       </div>
@@ -107,16 +99,18 @@
         <p class="hero__tagline">“I build the dreams you fall asleep inside.”</p>
       </div>
 
-      <button class="dm__pan dm__pan--left" id="dmLeft" type="button" aria-label="Explore west">‹</button>
-      <button class="dm__pan dm__pan--right" id="dmRight" type="button" aria-label="Explore east">›</button>
-      <button class="dm__compass" id="dmCompass" type="button">
-        <span class="cp" aria-hidden="true">
-          <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" class="cp__ring" /><circle cx="50" cy="50" r="38" class="cp__ring2" /><path d="M50 1 L54 8 L46 8 Z" class="cp__n" /></svg>
-          <svg viewBox="0 0 100 100" class="cp__needle"><path d="M50 10 L58 50 L50 90 L42 50 Z" class="cp__ns" /><path d="M10 50 L50 42 L90 50 L50 58 Z" class="cp__ew" /><circle cx="50" cy="50" r="5" class="cp__hub" /></svg>
-        </span>
-        <span>back to pip</span>
-      </button>
-      <nav class="dm__legend" id="dmLegend" aria-label="Places on the map"></nav>
+      <div class="dm__nav">
+        <button class="dm__pan" id="dmLeft" type="button" aria-label="Explore west">‹</button>
+        <button class="dm__compass" id="dmCompass" type="button">
+          <span class="cp" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" class="cp__ring" /><circle cx="50" cy="50" r="38" class="cp__ring2" /><path d="M50 1 L54 8 L46 8 Z" class="cp__n" /></svg>
+            <svg viewBox="0 0 100 100" class="cp__needle"><path d="M50 10 L58 50 L50 90 L42 50 Z" class="cp__ns" /><path d="M10 50 L50 42 L90 50 L50 58 Z" class="cp__ew" /><circle cx="50" cy="50" r="5" class="cp__hub" /></svg>
+          </span>
+          <span>back to pip</span>
+        </button>
+        <button class="dm__pan" id="dmRight" type="button" aria-label="Explore east">›</button>
+      </div>
+      <button class="dm__found" id="dmFound" type="button"><span aria-hidden="true">✦</span> <span id="dmFoundText" aria-live="polite">0 of 7 hidden spots found</span></button>
       <p class="dm__hint" id="dmHint" aria-hidden="true">✦ drag to explore the dreamland ✦</p>
     </section>
     <script>
@@ -124,9 +118,9 @@
       (function () {
         var v = document.getElementById('dmViewport'), h = v.parentNode.clientHeight;
         if (!h) return;
-        var sc = Math.min(1, h / 760), span = v.clientWidth / sc;
+        var w = v.clientWidth, sc = Math.min(1, h / 822, w >= 900 ? w / 1800 : 1);
         v.style.setProperty('--s', sc);
-        v.scrollLeft = (span >= 1300 ? Math.max(0, Math.min(2110, 3520 - span)) : 3260 - span / 2) * sc;
+        v.scrollLeft = ((w >= 900 ? 1180 : 1060) - w / sc / 2) * sc;
       })();
     </script>
 
@@ -663,7 +657,7 @@
         <ul>
           <li>Pip, music box &amp; lantern art: official haX.baby Track 1 asset pack (backgrounds removed, eye glints redrawn live in CSS; the story portrait’s name lettering painted out).</li>
           <li>Nana Noctua illustration: added by Vij for this site.</li>
-          <li>Dreamland map art: AI-generated images chosen by Vij, blended into one panorama for this site (the forest panel upscaled with EDSR super-resolution).</li>
+          <li>Dreamland map art: an AI-generated painting chosen by Vij, shown at its original resolution.</li>
           <li>Wisp, Mumble, the town, the storybook pictures, the basket &amp; the grumpy mitten: hand-drawn SVG for this site.</li>
           <li>All sounds synthesized live with the Web Audio API. Lullaby melody: Johannes Brahms, “Wiegenlied” (1868, public domain).</li>
           <li>3D Pip: drawn with Three.js (MIT licence), loaded only for that section. Fonts: Fredoka via Google Fonts, Mali (SIL Open Font License) bundled. No other libraries.</li>
