@@ -1961,3 +1961,75 @@ html { cursor: var(--cur); }
    so Story / Work / Play never wait for the JavaScript to unhide them. The router then keeps `hidden` in step. */
 html[data-view="story"] #view-story, html[data-view="work"] #view-work, html[data-view="play"] #view-play { display: block; }
 html[data-view="story"] #view-home, html[data-view="work"] #view-home, html[data-view="play"] #view-home { display: none; }
+
+/* ---------- Pip's desktop: little files on the map that open real windows ---------- */
+.dm__desk {
+  position: absolute; left: var(--gutter); top: 230px; z-index: 2;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  transition: top .35s var(--ease-soft);
+}
+.dm__file {
+  display: grid; justify-items: center; gap: 4px; width: 96px; padding: 6px 4px 5px;
+  border: 1px dotted transparent; border-radius: 4px; background: transparent; color: #fff;
+  cursor: var(--cur-hand); -webkit-tap-highlight-color: transparent;
+}
+.dm__file-icon { position: relative; width: 48px; height: 48px; filter: drop-shadow(2px 2px 0 rgba(10, 6, 30, .55)); transition: transform .3s var(--ease-bounce); }
+.dm__file-icon svg { display: block; width: 100%; height: 100%; }
+.dm__file-name {
+  padding: 1px 5px; border-radius: 2px; background: rgba(24, 16, 58, .62);
+  font: 700 13px/1.25 "Courier New", ui-monospace, monospace; letter-spacing: -.02em;
+  text-shadow: 1px 1px 0 #120c2c; white-space: nowrap;
+}
+.dm__file:hover .dm__file-icon { transform: translateY(-3px) rotate(-4deg); }
+.dm__file:focus-visible { outline: none; border-color: #fff; }
+.dm__file.is-open .dm__file-name, .dm__file:active .dm__file-name { background: #2f4fd0; } /* the classic "selected" blue */
+.dm__file-badge {
+  position: absolute; top: -7px; right: -10px; min-width: 21px; height: 21px; padding: 0 5px; border-radius: 11px;
+  background: #ff4f7b; border: 2px solid #fff; color: #fff; font: 700 12px/17px system-ui, sans-serif; text-align: center;
+  animation: file-badge 1.8s ease-in-out infinite;
+}
+.dm__file-badge[hidden] { display: none; }
+@keyframes file-badge { 0%, 100% { transform: none; } 50% { transform: translateY(-3px) scale(1.08); } }
+
+/* the windows, popped out onto the map */
+.win.is-floating {
+  position: absolute; left: 12px; top: 12px; z-index: 20; margin: 0;
+  width: min(440px, calc(100% - 24px)); max-height: calc(100% - 24px); overflow: auto; overscroll-behavior: contain;
+  text-align: left; background: var(--win-solid);
+  box-shadow: 0 0 0 6px var(--win-glow) inset, 8px 8px 0 rgba(10, 6, 30, .45), 0 24px 50px -12px rgba(10, 6, 30, .8);
+}
+.win.is-floating:focus { outline: none; }
+.win.is-floating:focus-visible { outline: 3px dashed var(--gold); outline-offset: 3px; }
+.win.is-floating .win__bar {
+  position: sticky; top: 0; z-index: 1;
+  justify-content: space-between; gap: 10px; margin: 0; padding: 5px 6px 5px 14px;
+  background: linear-gradient(90deg, var(--bar-a), var(--bar-b)); color: var(--bar-ink);
+  font-size: 1.2rem; text-align: left; cursor: var(--cur-grab); touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.win.is-floating.is-dragging .win__bar { cursor: var(--cur-grabbing); }
+.win.is-floating .win__bar > span:first-child { padding: 0; }
+.win.is-floating .win__bar > span:first-child::before, .win.is-floating .win__bar > span:first-child::after { content: none; }
+.win.is-floating .win__btns { display: flex; gap: 4px; }
+.win__b {
+  width: 24px; height: 24px; display: grid; place-items: center; padding: 0 0 2px;
+  border: 1.5px solid #fff; border-radius: 4px; background: rgba(255, 255, 255, .45); color: var(--bar-ink);
+  box-shadow: inset -2px -2px 0 rgba(58, 22, 64, .25); font: 700 15px/1 "Courier New", ui-monospace, monospace;
+  cursor: var(--cur-hand);
+}
+.win__b:hover { background: #fff; }
+.win__b:active { box-shadow: inset 2px 2px 0 rgba(58, 22, 64, .3); }
+.win__b[data-act="close"]:hover { background: #ff7fa8; color: #fff; }
+.win.is-floating.is-max { left: 12px !important; top: 12px !important; width: auto; right: 12px; bottom: 12px; max-width: none; max-height: none; }
+.win.is-floating.is-opening { animation: win-zoom .26s cubic-bezier(.2, .9, .3, 1.2) both; transform-origin: var(--ox, 0) var(--oy, 0); }
+.win.is-floating.is-closing { animation: win-zoom .22s ease-in reverse both; transform-origin: var(--ox, 0) var(--oy, 0); pointer-events: none; }
+@keyframes win-zoom { from { transform: scale(.12); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (max-width: 720px) {
+  .dm__desk { left: 8px; flex-direction: row; gap: 8px; }
+  .dm__file { width: auto; padding: 4px 3px; }
+  .dm__file-icon { width: 40px; height: 40px; }
+  .dm__file-name { font-size: 11.5px; }
+  .win.is-floating { left: 10px !important; right: 10px; width: auto; }
+  .win.is-floating .win__b[data-act="max"] { display: none; } /* it already fills the screen */
+}
+@media (prefers-reduced-motion: reduce) { .dm__file-badge { animation: none; } }

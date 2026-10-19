@@ -15,6 +15,7 @@ import { initMemory, remember, greeting, memory } from './memory.js';
 import { initChat } from './chat.js';
 import { initSky } from './sky.js';
 import { initDreamMap } from './dreammap.js';
+import { initDesk } from './desk.js';
 import { initHubs } from './hubs.js';
 import { initMusic } from './music.js';
 
@@ -140,6 +141,7 @@ initRouter();
 const afterPaint = (fn) => requestAnimationFrame(() => setTimeout(fn, 0));
 afterPaint(() => {
   initDreamMap(); // the home page's living map
+  initDesk(); // the little files on the map (about_me.txt, memories.exe)
   initSky(); // twinkling stars, sparkles, shooting stars and dream-motes
   initEggs(); // the footer town (on every page)
   initChat();
