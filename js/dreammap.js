@@ -87,7 +87,6 @@ export function initDreamMap() {
       ? `<span class="dm__pin" aria-hidden="true"><span class="dm__icon">${p.icon}</span></span>`
       : '<span class="dm__star" aria-hidden="true"></span>';
     a.innerHTML = `${mark}<span class="dm__flag"><b>${p.main ? '' : `${p.icon} `}${p.name}</b><small>${p.sub}</small><i class="dm__seen" aria-hidden="true">✓</i></span>`;
-    a.setAttribute('aria-label', `${p.name}: ${p.sub}`);
     return a;
   }
   PLACES.forEach((p) => places.appendChild(placeEl(p)));
@@ -177,7 +176,8 @@ export function initDreamMap() {
     const avail = section.clientHeight;
     if (!avail) return false; // home page not showing yet
     // Never bigger than the real painting (so it stays sharp); on wide screens, fit most of it across.
-    scale = Math.min(1, avail / H, view.clientWidth >= 900 ? view.clientWidth / FIT_W : 1);
+    const vw = innerWidth; // the window's width doesn't change when a scrollbar appears, so the map never jumps
+    scale = Math.min(1, avail / H, vw >= 900 ? vw / FIT_W : 1);
     view.style.setProperty('--s', scale.toFixed(4));
     view.style.setProperty('--inv', Math.min(1.4, 1 / scale).toFixed(3)); // labels stay readable when the map is small
     track.style.width = `${W * scale}px`;
@@ -185,7 +185,7 @@ export function initDreamMap() {
     return true;
   }
   // First view: on a wide screen, the whole middle of the map (all three banners); on a phone, Pip.
-  function home() { centerOn(view.clientWidth >= 900 ? VIEW_X : PIP.x, false); }
+  function home() { centerOn(innerWidth >= 900 ? VIEW_X : PIP.x, false); }
   const centerOn = (x, smooth) => view.scrollTo({ left: x * scale - view.clientWidth / 2, behavior: smooth && !calm.matches ? 'smooth' : 'instant' });
 
   // ---------- panning: drag, buttons, keys (wheel scrolls the page as normal; shift+wheel / trackpad pans) ----------

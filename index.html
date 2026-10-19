@@ -13,9 +13,9 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400..700&display=swap" rel="stylesheet" /></noscript>
   <link rel="preload" as="image" href="assets/pip-cloud.webp" fetchpriority="high" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/mali-600.woff2" crossorigin />
-  <script type="importmap">{"imports":{"./js/audio.js":"./js/audio.js?v=4e42141f","./js/chaos.js":"./js/chaos.js?v=4e42141f","./js/chat.js":"./js/chat.js?v=4e42141f","./js/clicks.js":"./js/clicks.js?v=4e42141f","./js/counter.js":"./js/counter.js?v=4e42141f","./js/dreammap.js":"./js/dreammap.js?v=4e42141f","./js/eggs.js":"./js/eggs.js?v=4e42141f","./js/eyes.js":"./js/eyes.js?v=4e42141f","./js/fx.js":"./js/fx.js?v=4e42141f","./js/game.js":"./js/game.js?v=4e42141f","./js/guestbook.js":"./js/guestbook.js?v=4e42141f","./js/hubs.js":"./js/hubs.js?v=4e42141f","./js/icons.js":"./js/icons.js?v=4e42141f","./js/lab.js":"./js/lab.js?v=4e42141f","./js/main.js":"./js/main.js?v=4e42141f","./js/memory.js":"./js/memory.js?v=4e42141f","./js/music.js":"./js/music.js?v=4e42141f","./js/nightroom.js":"./js/nightroom.js?v=4e42141f","./js/pip3d.js":"./js/pip3d.js?v=4e42141f","./js/router.js":"./js/router.js?v=4e42141f","./js/routes.js":"./js/routes.js?v=4e42141f","./js/sky.js":"./js/sky.js?v=4e42141f","./js/sparkles.js":"./js/sparkles.js?v=4e42141f","./js/story.js":"./js/story.js?v=4e42141f","./js/storybook.js":"./js/storybook.js?v=4e42141f","./js/theme.js":"./js/theme.js?v=4e42141f","./js/toys.js":"./js/toys.js?v=4e42141f","./js/vendor/three.module.min.js":"./js/vendor/three.module.min.js?v=4e42141f","./js/workshop.js":"./js/workshop.js?v=4e42141f"}}</script>
-  <link rel="stylesheet" href="css/style.css?v=4e42141f" />
-  <script type="module" src="js/main.js?v=4e42141f"></script>
+  <script type="importmap">{"imports":{"./js/audio.js":"./js/audio.js?v=f3ac3040","./js/chaos.js":"./js/chaos.js?v=f3ac3040","./js/chat.js":"./js/chat.js?v=f3ac3040","./js/clicks.js":"./js/clicks.js?v=f3ac3040","./js/counter.js":"./js/counter.js?v=f3ac3040","./js/dreammap.js":"./js/dreammap.js?v=f3ac3040","./js/eggs.js":"./js/eggs.js?v=f3ac3040","./js/eyes.js":"./js/eyes.js?v=f3ac3040","./js/fx.js":"./js/fx.js?v=f3ac3040","./js/game.js":"./js/game.js?v=f3ac3040","./js/guestbook.js":"./js/guestbook.js?v=f3ac3040","./js/hubs.js":"./js/hubs.js?v=f3ac3040","./js/icons.js":"./js/icons.js?v=f3ac3040","./js/lab.js":"./js/lab.js?v=f3ac3040","./js/main.js":"./js/main.js?v=f3ac3040","./js/memory.js":"./js/memory.js?v=f3ac3040","./js/music.js":"./js/music.js?v=f3ac3040","./js/nightroom.js":"./js/nightroom.js?v=f3ac3040","./js/pip3d.js":"./js/pip3d.js?v=f3ac3040","./js/router.js":"./js/router.js?v=f3ac3040","./js/routes.js":"./js/routes.js?v=f3ac3040","./js/sky.js":"./js/sky.js?v=f3ac3040","./js/sparkles.js":"./js/sparkles.js?v=f3ac3040","./js/story.js":"./js/story.js?v=f3ac3040","./js/storybook.js":"./js/storybook.js?v=f3ac3040","./js/theme.js":"./js/theme.js?v=f3ac3040","./js/toys.js":"./js/toys.js?v=f3ac3040","./js/vendor/three.module.min.js":"./js/vendor/three.module.min.js?v=f3ac3040","./js/workshop.js":"./js/workshop.js?v=f3ac3040"}}</script>
+  <link rel="stylesheet" href="css/style.css?v=f3ac3040" />
+  <script type="module" src="js/main.js?v=f3ac3040"></script>
 </head>
 <body>
   <!-- pixel icons: Pixelarticons by Gerrit Halfmann (MIT) -->
@@ -125,9 +125,9 @@
       (function () {
         var v = document.getElementById('dmViewport'), h = v.parentNode.clientHeight;
         if (!h) return;
-        var w = v.clientWidth, sc = Math.min(1, h / 822, w >= 900 ? w / 1800 : 1);
+        var w = innerWidth, sc = Math.min(1, h / 822, w >= 900 ? w / 1800 : 1);
         v.style.setProperty('--s', sc);
-        v.scrollLeft = ((w >= 900 ? 1180 : 1060) - w / sc / 2) * sc;
+        v.scrollLeft = ((w >= 900 ? 1180 : 1060) - v.clientWidth / sc / 2) * sc;
       })();
     </script>
 
@@ -295,7 +295,7 @@
       <div class="hub__grid">
         <a class="win hub-card hub-card--feature" href="#workshop" data-room="workshop">
           <span class="win__bar"><span>dream_workshop.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-          <span class="hub-card__art"><img src="assets/cards/workshop.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__art"><img src="assets/cards/workshop.webp" width="640" height="400" alt="" fetchpriority="high" decoding="async" /></span>
           <span class="hub-card__body">
             <span class="hub-card__tag">✦ new! · build a dream</span>
             <b class="hub-card__title">The Dream Workshop</b>
@@ -305,7 +305,7 @@
         </a>
         <a class="win hub-card" href="#work" data-room="work">
           <span class="win__bar"><span>workbench</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-          <span class="hub-card__art"><img src="assets/cards/workbench.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__art"><img src="assets/cards/workbench.webp" width="640" height="400" alt="" decoding="async" /></span>
           <span class="hub-card__body">
             <span class="hub-card__tag">things i’ve made</span>
             <b class="hub-card__title">Pip’s Workbench</b>
@@ -554,7 +554,7 @@
       <div class="hub__grid">
         <a class="win hub-card" href="#nightroom" data-room="nightroom">
           <span class="win__bar"><span>lights_out.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-          <span class="hub-card__art"><img src="assets/cards/nightroom.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__art"><img src="assets/cards/nightroom.webp" width="640" height="400" alt="" fetchpriority="high" decoding="async" /></span>
           <span class="hub-card__body">
             <span class="hub-card__tag">lantern hunt</span>
             <b class="hub-card__title">Lights-Out Nursery</b>
@@ -564,7 +564,7 @@
         </a>
         <a class="win hub-card" href="#play" data-room="play">
           <span class="win__bar"><span>catch_the_dreams.exe</span><span class="win__btns" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span></span>
-          <span class="hub-card__art"><img src="assets/cards/game.webp" width="640" height="400" alt="" loading="lazy" decoding="async" /></span>
+          <span class="hub-card__art"><img src="assets/cards/game.webp" width="640" height="400" alt="" decoding="async" /></span>
           <span class="hub-card__body">
             <span class="hub-card__tag">mini-game</span>
             <b class="hub-card__title">Catch the Dreams</b>
@@ -840,10 +840,10 @@
         <button class="btn" type="submit">send</button>
       </form>
     </section>
-    <button class="chat__launcher" id="chatLauncher" type="button" aria-expanded="false" aria-controls="chatPanel" aria-label="talk to pip">
+    <button class="chat__launcher" id="chatLauncher" type="button" aria-expanded="false" aria-controls="chatPanel">
       <span class="chat__avatar" aria-hidden="true"><img src="assets/pip-sm.webp" width="180" height="240" alt="" loading="lazy" decoding="async" /></span>
       <span class="chat__label">talk to pip</span>
-      <span class="chat__badge" id="chatBadge" aria-hidden="true">1</span>
+      <span class="chat__badge" id="chatBadge" data-n="1" aria-hidden="true"></span>
     </button>
   </div>
 

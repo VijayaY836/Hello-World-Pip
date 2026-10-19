@@ -101,14 +101,6 @@ const PAGES = {
       },
     });
   },
-  async work() {
-    const [toys, lab, book, routes, shop] = await Promise.all([import('./toys.js'), import('./lab.js'), import('./storybook.js'), import('./routes.js'), import('./workshop.js')]);
-    shop.initWorkshop(); toys.initToys(); lab.initLab(); book.initStorybook(); routes.initRoutes();
-  },
-  async play() {
-    const [room, game, p3d, gb] = await Promise.all([import('./nightroom.js'), import('./game.js'), import('./pip3d.js'), import('./guestbook.js')]);
-    room.initNightRoom(); game.initGame(); p3d.initPip3D(); gb.initGuestbook();
-  },
 };
 // Once the home page has settled, quietly fetch the other pages' code so they open instantly.
 addEventListener('load', () => setTimeout(() => {
@@ -120,6 +112,24 @@ const ready = new Set();
 window.addEventListener('pip:view', (e) => {
   const view = e.detail;
   if (PAGES[view] && !ready.has(view)) { ready.add(view); PAGES[view]().catch((err) => console.error('page setup failed', err)); }
+});
+// Work and Play open on cards, so each toy is only set up the first time its card is opened.
+const ROOMS = {
+  workshop: () => import('./workshop.js').then((m) => m.initWorkshop()),
+  work: () => import('./toys.js').then((m) => m.initToys()),
+  lab: () => import('./lab.js').then((m) => m.initLab()),
+  book: () => import('./storybook.js').then((m) => m.initStorybook()),
+  routes: () => import('./routes.js').then((m) => m.initRoutes()),
+  nightroom: () => import('./nightroom.js').then((m) => m.initNightRoom()),
+  play: () => import('./game.js').then((m) => m.initGame()),
+  'pip3d-sec': () => import('./pip3d.js').then((m) => m.initPip3D()),
+  guestbook: () => import('./guestbook.js').then((m) => m.initGuestbook()),
+};
+window.addEventListener('pip:room', (e) => {
+  const room = e.detail;
+  if (!ROOMS[room] || ready.has(room)) return;
+  ready.add(room);
+  ROOMS[room]().then(() => dispatchEvent(new Event('resize'))).catch((err) => console.error('room setup failed', err));
 });
 
 initDreamMap(); // the home page's living map

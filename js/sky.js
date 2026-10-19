@@ -44,12 +44,15 @@ export function initSky() {
     return { x: Math.random() * W, y: anywhere ? Math.random() * H : H + 10, r: rand(1, 2.6), vy: rand(6, 16), sway: rand(0, TAU), swaySpeed: rand(0.4, 1), life: rand(0.4, 1) };
   }
 
+  let started = false;
   function resize() {
     dpr = 1; // stars are tiny soft dots, so standard resolution looks the same and costs far less
+    if (innerWidth === W && innerHeight === H) return; // pages send "resize" to re-measure; nothing to redo here
     W = innerWidth; H = innerHeight;
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
     seed();
+    if (!started) frame(performance.now(), 16); // keep the still sky painted until it starts twinkling
   }
 
   const COLORS = { white: '255,248,230', gold: '255,222,150', pink: '255,200,230' };
@@ -151,17 +154,16 @@ export function initSky() {
 
   addEventListener('resize', resize);
   resize();
-  // Paint a still starry sky right away, then start twinkling once the page has settled
+  // Paint a still starry sky right away, then start twinkling the moment the visitor moves (or a few seconds after the page has settled)
   // (or the moment the visitor interacts), so the first load stays snappy.
   frame(performance.now(), 16);
   if (calm.matches) return; // reduced motion: keep the still sky
-  let started = false;
   const begin = () => {
     if (started) return; started = true;
     ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((t) => removeEventListener(t, begin));
     requestAnimationFrame(loop);
   };
   ['pointerdown', 'pointermove', 'keydown', 'scroll', 'touchstart'].forEach((t) => addEventListener(t, begin, { once: true, passive: true }));
-  const later = () => setTimeout(begin, 5000);
+  const later = () => setTimeout(() => (window.requestIdleCallback ? requestIdleCallback(begin, { timeout: 4000 }) : begin()), 9000);
   if (document.readyState === 'complete') later(); else addEventListener('load', later, { once: true });
 }

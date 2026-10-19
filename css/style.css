@@ -1159,7 +1159,7 @@ html.chaos[data-shape="wide"] .work__grid { gap: 48px; }
 .chat__form .btn { margin: 0; min-height: 38px; padding: 6px 14px; }
 @media (max-width: 720px) {
   .chat { right: 10px; bottom: 10px; left: 10px; }
-  .chat__label { display: none; }
+  .chat__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } /* hidden on phones, still read out */
   .chat__launcher { padding: 4px; }
   .chat__panel { width: 100%; height: min(70svh, 560px); }
 }
@@ -1935,3 +1935,24 @@ html { cursor: var(--cur); }
 @keyframes pi-wiggle { 0%, 80%, 100% { transform: none; } 88% { transform: rotate(-8deg); } 94% { transform: rotate(6deg); } }
 @media (prefers-reduced-motion: reduce) { #soundBtn .pi { animation: none !important; } }
 @media (max-width: 720px) { .dm__pan { display: none; } } /* phones swipe the map, so no arrows (keeps the compass small) */
+
+.chat__badge::after { content: attr(data-n); } /* the number is drawn by CSS, so it isn't part of the button's spoken name */
+
+/* phones get lighter copies of the page paintings (the screen is small, so they still look sharp) */
+@media (max-width: 820px) {
+  html[data-view="story"] .sky__scene { --scene: url("../assets/bg-story-m.webp"); }
+  html[data-view="play"] .sky__scene { --scene: url("../assets/bg-play-m.webp"); }
+  html[data-view="work"] .sky__scene { --scene: url("../assets/bg-work-m.webp"); }
+  .stage__sky { background:
+    radial-gradient(130% 95% at 50% 55%, transparent 50%, rgba(15, 12, 51, .6) 100%),
+    linear-gradient(rgba(15, 12, 51, .2), rgba(15, 12, 51, .2)),
+    url("../assets/bg-story-m.webp") center bottom / cover no-repeat; }
+}
+
+/* chapter dots: a comfy 24px tap target, still drawn as a small dot */
+.caption__dots { gap: 0; }
+.caption__dots button { position: relative; width: 24px; height: 24px; padding: 0; border: 0 !important; background: transparent !important; transform: none !important; }
+.caption__dots button::before { content: ""; position: absolute; left: 6px; top: 6px; width: 12px; height: 12px; border-radius: 50%; box-sizing: border-box; border: 2px solid var(--accent-2); transition: background-color .3s, transform .3s var(--ease-bounce); }
+.caption__dots button[aria-current="step"]::before { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
+.caption__dots button:hover::before { transform: scale(1.2); }
+.caption__dots { right: 10px; top: 8px; }
