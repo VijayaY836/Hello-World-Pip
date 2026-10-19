@@ -2054,3 +2054,7 @@ html:is([data-view="story"], [data-view="work"], [data-view="play"], [data-view=
 .sheep-sec__note { margin: 18px 0 0; text-align: center; font: 600 1.05rem var(--font-hand); color: var(--ink-soft); }
 @media (max-width: 720px) { .sheep { aspect-ratio: 1 / 1; max-height: 70svh; } }
 @media (prefers-reduced-motion: reduce) { .sheep-sec .sec__head .kicker { animation: none; } }
+
+/* recording mode (?rec): hide the system cursor everywhere; js/reccursor.js draws the pixel one */
+html.rec-cursor, html.rec-cursor * { cursor: none !important; }
+.rec-cursor__img { position: fixed; left: 0; top: 0; z-index: 2147483647; width: 32px; height: 32px; pointer-events: none; opacity: 0; image-rendering: pixelated; }

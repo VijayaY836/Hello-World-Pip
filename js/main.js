@@ -134,6 +134,8 @@ window.addEventListener('pip:room', (e) => {
 });
 
 initHubs(); // the card grids on Work and Play
+// Recording mode (…/?rec): the page draws the pixel cursor itself, so screen recordings always show it.
+if (new URLSearchParams(location.search).has('rec')) import('./reccursor.js').then((m) => m.initRecCursor());
 
 // Pages: showing the first page also sets it up.
 initRouter();
