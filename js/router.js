@@ -4,14 +4,15 @@
 
 import { remember } from './memory.js';
 
-const VIEWS = ['home', 'story', 'work', 'play'];
+const VIEWS = ['home', 'story', 'work', 'play', 'moondoor']; // moondoor is a secret: no menu link goes there
 const TITLES = {
   home: 'Pip · Junior Dream Engineer',
   story: 'Pip · My Story',
   work: 'Pip · Things I Make',
   play: 'Pip · Games & Secrets',
+  moondoor: 'Pip · Behind the Moon (shh)',
 };
-const FILE = { home: '', story: ' ✦ my story', work: ' ✦ my workbench', play: ' ✦ let’s play' };
+const FILE = { home: '', story: ' ✦ my story', work: ' ✦ my workbench', play: ' ✦ let’s play', moondoor: ' ✦ behind the moon' };
 const ADDRESS = 'Pip’s Midnight Nursery';
 
 function resolve(hash) {

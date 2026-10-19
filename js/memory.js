@@ -17,7 +17,7 @@ const store = {
 };
 
 function fresh() {
-  return { first: 0, last: 0, prev: 0, visits: 0, name: '', lastPage: '', storyDone: false, dreams: 0, bookDone: false, routesDone: false, composed: false, wished: false, played: false, eggs: {}, visited: {}, found: {}, built: false };
+  return { first: 0, last: 0, prev: 0, visits: 0, name: '', lastPage: '', storyDone: false, dreams: 0, bookDone: false, routesDone: false, composed: false, wished: false, played: false, eggs: {}, visited: {}, built: false, moondoor: false, sheepDone: false };
 }
 function load() {
   try { return { ...fresh(), ...JSON.parse(store.get(KEY) || '{}') }; } catch { return fresh(); }
@@ -30,7 +30,7 @@ const save = () => { store.set(KEY, JSON.stringify(mem)); listeners.forEach((fn)
 /** Record something memorable. Numbers only ever go up; eggs merge. */
 export function remember(patch) {
   for (const [k, v] of Object.entries(patch)) {
-    if (k === 'eggs' || k === 'visited' || k === 'found') mem[k] = { ...(mem[k] || {}), ...v };
+    if (k === 'eggs' || k === 'visited') mem[k] = { ...(mem[k] || {}), ...v };
     else if (typeof v === 'number' && typeof mem[k] === 'number' && k !== 'last') mem[k] = Math.max(mem[k], v);
     else mem[k] = v;
   }
@@ -118,6 +118,7 @@ export function initMemory() {
       row(mem.wished, 'pinned a wish on the dream wall'),
       row(Boolean(mem.eggs.wisp), mem.eggs.wisp ? 'found the secret window' : '??? (a secret)'),
       row(Boolean(mem.eggs.sneeze), mem.eggs.sneeze ? 'made me sneeze' : '??? (another secret)'),
+      row(mem.moondoor, !mem.moondoor ? '??? (the biggest secret)' : mem.sheepDone ? 'counted me to sleep behind the moon 🐑' : 'found the door in the moon'),
     );
     const page = mem.lastPage && mem.lastPage !== 'home' && PAGE_NAMES[mem.lastPage];
     resume.hidden = !(page && mem.visits > 1);

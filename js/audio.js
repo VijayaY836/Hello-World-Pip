@@ -227,3 +227,21 @@ export function windChime() {
     tone({ freq: f * 2.76, t: i * 0.09, dur: 0.4, vol: 0.01 });
   }
 }
+
+/** Counting Sheep: a sleepy little "baa" (higher for golden sheep). */
+export function baa(pitch = 1) {
+  if (!ready()) return;
+  tone({ freq: 360 * pitch, dur: 0.42, type: 'triangle', vol: 0.09, attack: 0.03, vibrato: 22, bend: 0.82 });
+  tone({ freq: 720 * pitch, dur: 0.32, type: 'sine', vol: 0.025, attack: 0.04, vibrato: 30, bend: 0.85 });
+}
+/** Counting Sheep: a soft springy hop. */
+export function boing() {
+  if (!ready()) return;
+  tone({ freq: 260, dur: 0.2, vol: 0.07, bend: 2.2 });
+}
+/** Counting Sheep: a sheep bumps into the fence (gently!). */
+export function bonk() {
+  if (!ready()) return;
+  tone({ freq: 150, dur: 0.16, type: 'square', vol: 0.05, bend: 0.55 });
+  tone({ freq: 95, dur: 0.22, vol: 0.09, t: 0.02, bend: 0.7 });
+}

@@ -100,6 +100,8 @@ const PAGES = {
       },
     });
   },
+  // the secret behind the moon
+  moondoor: () => import('./sheep.js').then((m) => m.initSheep()),
 };
 // Once the home page has settled, quietly fetch the other pages' code so they open instantly.
 addEventListener('load', () => setTimeout(() => {

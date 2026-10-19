@@ -1,11 +1,11 @@
 // HOME · The Dream Cartographer — a living, explorable map of Pip's dreamland.
 // One painting of Pip's mushroom pond (2375 × 822 "map units").
 // The world is only ever scaled DOWN (never above its real size), so the art stays sharp.
-// Three big banners (Story, Work, Play) are always shown; seven more places are hidden
-// sparkles to discover. Pick a place and Pip flies along a glowing trail to it, then the page opens.
+// Three big banners (Story, Work, Play): pick one and Pip flies along a glowing trail to it, then the page opens.
+// And one real secret: knock on the moon three times (at night) and it opens like a little round door.
 
 import { plink, chime } from './audio.js';
-import { sparks, say, toast, centerOf } from './fx.js';
+import { sparks, say, centerOf } from './fx.js';
 import { memory, remember } from './memory.js';
 
 const W = 2375, H = 822;            // the pond painting, at its real size
@@ -13,24 +13,18 @@ const PIP = { x: 1060, y: 470 };    // floating over the moonlit lake
 const VIEW_X = 1180;                // where a wide screen looks first
 const FIT_W = 1800;                 // on a wide screen, fit this much of the map across
 
-// Places on the map. `main` places get big banners; the rest are hidden sparkles to find.
+// Places on the map (each gets a big banner).
 const PLACES = [
   { id: 'story', href: '#/story', x: 1300, y: 262, icon: '📖', name: 'The Moon', sub: 'my story', main: true, line: 'the moon watched over the night i was dreamed…' },
   { id: 'work', href: '#/work', x: 520, y: 360, icon: '🛠️', name: 'The Mushroom Workshop', sub: 'dreams & things i make', main: true, line: 'my workshop! come build a dream with me ✦' },
   { id: 'play', href: '#/play', x: 1840, y: 262, icon: '🎮', name: 'Mushroom Hollow', sub: 'games & secrets', main: true, line: 'the mushroom house is where we play!' },
-  { id: 'lab', href: '#lab', x: 135, y: 480, icon: '🎼', name: 'The Humming Glade', sub: 'lullaby lab', line: 'the glowing glade hums any tune you write.' },
-  { id: 'book', href: '#book', x: 440, y: 600, icon: '📕', name: 'The Toadstool Library', sub: 'Mumble’s storybook', line: 'Mumble’s book is tucked under that toadstool.' },
-  { id: 'pip3d', href: '#pip3d-sec', x: 640, y: 175, icon: '🎈', name: 'The Floating Isle', sub: '3D me!', line: 'hop up to the floating isle to see me in 3D!' },
-  { id: 'routes', href: '#routes', x: 720, y: 535, icon: '🗺️', name: 'The Winding Path', sub: 'dream deliveries', line: 'every dream travels down this path to a sleepy house.' },
-  { id: 'lights', href: '#nightroom', x: 2235, y: 140, icon: '🏮', name: 'The Dark Wood', sub: 'lights-out nursery', line: 'it’s dark in the woods… bring a lantern!' },
-  { id: 'wall', href: '#guestbook', x: 1595, y: 245, icon: '📌', name: 'Wishing Mushrooms', sub: 'the dream wall', line: 'leave me a wish by the little mushrooms ♡' },
-  { id: 'catch', href: '#play', x: 1480, y: 610, icon: '🌙', name: 'Stepping Stones', sub: 'catch the dreams', line: 'hop the stones and catch falling dreams!' },
 ];
 
 // Little living details painted over the art (in map units).
 const GLOWS = [[1265, 135, 90], [1950, 245, 46], [1885, 228, 18], [135, 482, 26], [270, 702, 30], [472, 745, 18], [1610, 640, 20], [2140, 470, 22], [1130, 600, 40]];
 const FALLS = [[1925, 330, 90, 215]];
 const FIREFLIES = 16;
+const MOON = { x: 1270, y: 124, r: 64 }; // the painted crescent: a secret door (see "the moon door" below)
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const calm = matchMedia('(prefers-reduced-motion: reduce)');
@@ -52,8 +46,6 @@ export function initDreamMap() {
   const places = document.getElementById('dmPlaces');
   const paths = document.getElementById('dmPaths');
   const life = document.getElementById('dmLife');
-  const foundBtn = document.getElementById('dmFound');
-  const foundText = document.getElementById('dmFoundText');
   const flyer = document.getElementById('dmFlyer');
   const pipEl = document.getElementById('dmPip');
   const hint = document.getElementById('dmHint');
@@ -73,20 +65,16 @@ export function initDreamMap() {
   }
 
   const visited = () => memory().visited || {};
-  const found = () => memory().found || {};
-  const SPOTS = PLACES.filter((p) => !p.main);
   function placeEl(p) {
     const a = document.createElement('a');
-    a.className = `dm__place ${p.main ? 'dm__place--main' : 'dm__place--spot'}`;
+    a.className = 'dm__place dm__place--main';
     a.href = p.href;
     a.draggable = false; // so dragging the map never picks up the link instead
     a.dataset.id = p.id;
     a.style.setProperty('--x', p.x); a.style.setProperty('--y', p.y);
     a.style.setProperty('--wob', `${(p.x % 7) * 0.31}s`);
-    const mark = p.main
-      ? `<span class="dm__pin" aria-hidden="true"><span class="dm__icon">${p.icon}</span></span>`
-      : '<span class="dm__star" aria-hidden="true"></span>';
-    a.innerHTML = `${mark}<span class="dm__flag"><b>${p.main ? '' : `${p.icon} `}${p.name}</b><small>${p.sub}</small><i class="dm__seen" aria-hidden="true">✓</i></span>`;
+    a.innerHTML = `<span class="dm__pin" aria-hidden="true"><span class="dm__icon">${p.icon}</span></span>`
+      + `<span class="dm__flag"><b>${p.name}</b><small>${p.sub}</small><i class="dm__seen" aria-hidden="true">✓</i></span>`;
     return a;
   }
   PLACES.forEach((p) => places.appendChild(placeEl(p)));
@@ -134,41 +122,56 @@ export function initDreamMap() {
   function markVisited() {
     const v = visited();
     document.querySelectorAll('.dm__place').forEach((a) => {
-      const page = PLACES.find((p) => p.id === a.dataset.id);
-      const seen = v[a.dataset.id] || (page?.main && v[page.id]);
-      a.classList.toggle('is-visited', Boolean(seen));
-      a.classList.toggle('is-found', Boolean(found()[a.dataset.id]));
+      a.classList.toggle('is-visited', Boolean(v[a.dataset.id]));
     });
-    const n = SPOTS.filter((p) => found()[p.id]).length;
-    foundText.textContent = n === SPOTS.length ? `all ${n} hidden spots found!` : `${n} of ${SPOTS.length} hidden spots found`;
-    foundBtn.classList.toggle('is-complete', n === SPOTS.length);
   }
   markVisited();
 
-  // ---------- hidden spots: finding them, and a little help from Pip ----------
-  function discover(p) {
-    if (p.main || found()[p.id]) return;
-    remember({ found: { [p.id]: true } });
-    markVisited();
-    const el = places.querySelector(`[data-id="${p.id}"]`);
-    const c = centerOf(el.querySelector('.dm__star'));
-    sparks(c.x, c.y, { count: 10, spread: 70 });
-    plink(1.3);
-    if (SPOTS.every((s) => found()[s.id])) {
-      setTimeout(() => { chime(); toast('✦ you found every hidden spot in my dreamland! ✦'); sparks(innerWidth / 2, innerHeight / 2, { count: 30 }); }, 400);
+  // ---------- the moon door: a real secret ----------
+  // Knock on the painted moon three times at night and it opens: behind it is a secret game (#/moondoor).
+  // Nothing on the map says so. By day the moon is asleep and won't open.
+  const door = document.createElement('button');
+  door.type = 'button';
+  door.className = 'dm__moon';
+  door.style.cssText = `--x:${MOON.x};--y:${MOON.y};--r:${MOON.r}`;
+  door.setAttribute('aria-label', 'the moon');
+  door.innerHTML = '<span class="dm__moon-crack" aria-hidden="true"></span><span class="dm__moon-light" aria-hidden="true"></span>';
+  places.appendChild(door);
+  const KNOCKS = ['…did the moon just wobble?', 'it’s… creaking?! one more knock…'];
+  let knocks = 0, knockTimer = 0, opening = false;
+  door.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (drag?.justDragged || opening) return;
+    if (document.documentElement.dataset.theme === 'day') {
+      door.classList.remove('is-knock'); void door.offsetWidth; door.classList.add('is-knock');
+      say('shh… the moon’s asleep in the daytime. come back tonight 🌙', 3000); plink(0.7);
+      return;
     }
-  }
-  foundBtn.addEventListener('click', () => {
-    const left = SPOTS.filter((p) => !found()[p.id]);
-    if (!left.length) { say('you found them all! you’re a real dream explorer ♡', 2800); plink(1.4); return; }
-    const mid = (view.scrollLeft + view.clientWidth / 2) / scale;
-    const next = left.reduce((a, b) => (Math.abs(b.x - mid) < Math.abs(a.x - mid) ? b : a));
-    centerOn(next.x, true);
-    say('psst… look for the twinkle over there ✦', 2800);
-    plink(1.1);
-    const el = places.querySelector(`[data-id="${next.id}"]`);
-    el.classList.remove('is-calling'); void el.offsetWidth; el.classList.add('is-calling');
-    setTimeout(() => el.classList.remove('is-calling'), 4200);
+    knocks += 1;
+    clearTimeout(knockTimer);
+    knockTimer = setTimeout(() => { knocks = 0; door.dataset.knocks = '0'; }, 5000); // knock again soon, or it closes up
+    door.dataset.knocks = String(knocks);
+    door.classList.remove('is-knock'); void door.offsetWidth; door.classList.add('is-knock');
+    const c = centerOf(door);
+    if (knocks < 3) { plink(0.6 + knocks * 0.15); sparks(c.x, c.y, { count: 4 + knocks * 3, spread: 50, chars: ['✦', '✧'] }); say(KNOCKS[knocks - 1], 2600); return; }
+    // third knock: the door swings open and the map swoops inside
+    opening = true; clearTimeout(knockTimer);
+    chime(); sparks(c.x, c.y, { count: 26, spread: 120 });
+    say('the moon was a DOOR?! come on, quick! ♡', 2600);
+    remember({ moondoor: true });
+    door.classList.add('is-open');
+    const go = () => {
+      location.hash = '#/moondoor';
+      section.classList.remove('is-swooping'); door.classList.remove('is-open'); door.dataset.knocks = '0';
+      knocks = 0; opening = false;
+    };
+    if (calm.matches) { setTimeout(go, 400); return; }
+    setTimeout(() => {
+      section.style.setProperty('--ox', `${((MOON.x * scale - view.scrollLeft) / view.clientWidth * 100).toFixed(1)}%`);
+      section.style.setProperty('--oy', `${(MOON.y / H * 100).toFixed(1)}%`);
+      section.classList.add('is-swooping');
+      setTimeout(go, 520);
+    }, 900);
   });
 
   // ---------- sizing: fit the map's height to the screen, never larger than the art ----------
@@ -229,11 +232,10 @@ export function initDreamMap() {
     highlight(a.dataset.id, true);
     const p = PLACES.find((x) => x.id === a.dataset.id);
     if (!p) return;
-    if (e.pointerType === 'mouse') discover(p); // on touch, the first tap does this instead
     if (p.line !== lastLine && document.documentElement.dataset.theme !== 'day') { lastLine = p.line; say(p.line, 2600); }
   });
   section.addEventListener('pointerout', (e) => { const a = e.target.closest('[data-id]'); if (a) highlight(a.dataset.id, false); });
-  section.addEventListener('focusin', (e) => { const a = e.target.closest('[data-id]'); if (!a) return; highlight(a.dataset.id, true); if (a.matches(':focus-visible')) discover(PLACES.find((x) => x.id === a.dataset.id)); });
+  section.addEventListener('focusin', (e) => { const a = e.target.closest('[data-id]'); if (a) highlight(a.dataset.id, true); });
   section.addEventListener('focusout', (e) => { const a = e.target.closest('[data-id]'); if (a) highlight(a.dataset.id, false); });
 
   // ---------- travel: Pip flies along the trail, the map follows, then the page opens ----------
@@ -280,27 +282,12 @@ export function initDreamMap() {
       }, 520);
     })(start);
   }
-  let pointerType = 'mouse';
-  section.addEventListener('pointerdown', (e) => { pointerType = e.pointerType; }, { passive: true });
-  const closeSpots = (except) => places.querySelectorAll('.dm__place--spot.is-open').forEach((x) => { if (x !== except) { x.classList.remove('is-open'); highlight(x.dataset.id, false); } });
   section.addEventListener('click', (e) => {
     const a = e.target.closest('a[data-id]');
-    if (!a) { closeSpots(); return; }
+    if (!a) return;
     e.preventDefault();
     if (drag?.justDragged) return; // that was a drag, not a click
-    const p = PLACES.find((x) => x.id === a.dataset.id);
-    // On a touch screen there's no hover, so the first tap on a hidden spot reveals it; the second tap travels.
-    if (!p.main && pointerType !== 'mouse' && e.detail !== 0 && !a.classList.contains('is-open')) {
-      closeSpots(a);
-      a.classList.add('is-open');
-      highlight(p.id, true);
-      discover(p);
-      if (document.documentElement.dataset.theme !== 'day') say(`${p.line} (tap again to go!)`, 3200);
-      return;
-    }
-    closeSpots();
-    discover(p);
-    travel(p);
+    travel(PLACES.find((x) => x.id === a.dataset.id));
   });
 
   // ---------- day / night, resizing, coming back home ----------
