@@ -88,13 +88,11 @@ My home page is a **living map**. I float on my cloud in the middle of the mushr
 
 - **drag, swipe, use ← → or the compass** to explore. the compass always brings you back to me.
 - **three big banners** are my pages: 📖 **The Moon** (my story), 🛠️ **The Mushroom Workshop** (things i make), 🎮 **Mushroom Hollow** (games & secrets).
-- **seven hidden spots** twinkle in the painting. hover or tap one to reveal it (it turns pink once found!). the little counter in the corner keeps score, and if you get stuck, tap it and i'll point you to the next one. find all 7 for a surprise ✦
+- **psst… the moon is hiding something.** i won’t say more. (okay, one hint: it only answers at night, and it likes to be knocked on.) ✦
 - **pick any place** and a trail of stardust appears. i fly along it, the map follows me, and *whoosh*, you're there.
 - at **night** the windows flicker, the waterfall shimmers, fireflies drift and a tiny mail plane crosses the sky. by **day** i'm asleep (shh) and everything turns pastel.
 
-| a hidden spot, found | daytime (i'm napping) |
-|:---:|:---:|
-| <img src="docs/screenshots/home-spot.webp" alt="Hovering a hidden twinkling star on the map reveals 'The Dark Wood: lights-out nursery', with a glowing trail of stardust from Pip to it" /> | <img src="docs/screenshots/home-day.webp" alt="The home map in day mode: pastel colours, Pip asleep with closed eyes and floating zzz" /> |
+<p align="center"><img src="docs/screenshots/home-day.webp" width="70%" alt="The home map in day mode: pastel colours, Pip asleep with closed eyes and floating zzz" /><br><sub>daytime (i’m napping)</sub></p>
 
 > **pip's note:** my eyes follow your cursor (or your finger!), i blink, and i look around when you're quiet. boop my nose. go on. 👃
 
@@ -159,7 +157,7 @@ Press 🌀 and my site turns into a 1999 homepage: rainbow window bars, spinning
 
 ## <a name="phones"></a>📱 pocket-sized pip
 
-Built for phones first: swipe the map, tap twice on hidden spots (once to peek, once to fly), and the story scenes re-stage themselves for tall screens.
+Built for phones first: swipe the map, tap a banner to fly there, and the story scenes re-stage themselves for tall screens.
 
 <p align="center"><img src="docs/screenshots/phones.webp" alt="Three phone screens: the home map with Pip, chapter 3 of the story, and a dream about a cloud whale on the midnight train" width="820" /></p>
 
@@ -172,7 +170,7 @@ Built for phones first: swipe the map, tap twice on hidden spots (once to peek, 
 
 - 🏠 **someone in town is still awake.** one window in the footer town is dark. click it.
 - 👃 **boop my nose five times.** a… a… *ACHOO!* ✨
-- ⭐ **seven hidden spots** are tucked into the home map. find them all and i throw a tiny party.
+- 🌙 **a real secret** hides somewhere on the home map, with a game you won’t find in any menu. pip’s `memories.exe` keeps a `???` line for it until you do.
 - 🧑‍💻 **open your browser console.** i left you a note.
 - 🌀 **chaos mode** changes personality depending on your screen's shape.
 - 🧠 **come back tomorrow.** i'll remember your name, how long you were away, what you found, and your best dream-catching score (all kept in *your* browser, with a “forget me” button).
@@ -211,7 +209,7 @@ Built for [**Baby's First Website**](https://hax.baby/baby-problem) by haX.baby,
 | 🌀 responsive chaos mode | +5 | ✅ see above |
 | | **+13** | 🎉 |
 
-**Bonus:** ✨ the Dream Workshop, the living map with 7 hidden spots, and the painted Story / Work / Play pages.
+**Bonus:** ✨ the Dream Workshop, the living map (and its secret door), and the painted Story / Work / Play pages.
 
 ---
 
@@ -299,7 +297,7 @@ api/
 js/
   main.js           wires everything together, loads each page's code on first visit
   router.js         home / story / work / play, plus shared links (#lullaby=, #dream=)
-  dreammap.js       the living map: places, hidden spots, stardust trails, Pip's flights
+  dreammap.js       the living map: places, stardust trails, Pip's flights, the moon door
   workshop.js       the Dream Workshop: scenes, stories, lullabies, shelf, share links
   hubs.js           the card grids on Work and Play: room back/next bars, progress badges
   sky.js            the living sky: twinkling stars, sparkles, shooting stars, dream-motes
@@ -316,6 +314,7 @@ js/
   chat.js           whisper to pip (Pip chats back)
   memory.js         Pip remembers you
   desk.js           Pip's desktop: the file icons on the map and their pop-up windows
+  sheep.js          a secret (no spoilers here 🌙)
   counter.js        the hit counter odometer
   chaos.js          Responsive Chaos Mode
   sparkles.js       sparkle cursor trail
