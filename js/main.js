@@ -44,7 +44,12 @@ setDefaultLine(() => (isDay() ? 'zzz… night shift… zzz…' : NIGHT_LINES[0])
 
 // --- Sound toggle (always visible in the top bar) ---
 const soundBtn = document.getElementById('soundBtn');
-function renderSound(on) {
+// Recording mode (…/?rec) flips what the button shows: it says "sound on" while the site is actually silent
+// (and the other way round), so a demo video can show sound "on" without any audio playing.
+const REC = new URLSearchParams(location.search).has('rec');
+const shown = (on) => (REC ? !on : on);
+function renderSound(actual) {
+  const on = shown(actual);
   soundBtn.setAttribute('aria-pressed', String(on));
   soundBtn.setAttribute('aria-label', on ? 'sound on: mute' : 'sound off: turn sound on');
   soundBtn.querySelector('.ctrl__icon').innerHTML = icon(on ? 'volume' : 'mute');
@@ -54,7 +59,7 @@ function renderSound(on) {
 sound.onChange(renderSound);
 soundBtn.addEventListener('click', () => {
   sound.toggle();
-  if (sound.on) {
+  if (shown(sound.on)) {
     plink();
     say(isDay() ? 'zzz… (pip hums in their sleep)' : 'yay! now i can hear you ♪');
     if (story?.scene === 4) hum();
