@@ -16,5 +16,17 @@ if '<script type="importmap">' in html:
     html = re.sub(r'<script type="importmap">.*?</script>', block, html, flags=re.S)
 else:
     html = html.replace('  <link rel="stylesheet" href="css/style.css', '  ' + block + '\n  <link rel="stylesheet" href="css/style.css', 1)
+# Preload every module main.js needs at start-up, so a phone fetches them all at once instead of level by level.
+def deps(name, seen):
+    if name in seen: return
+    seen.add(name)
+    for d in re.findall(r"^import [^;]*?from '\./([\w.-]+\.js)'", (root / 'js' / name).read_text(), flags=re.M):
+        deps(d, seen)
+graph = set(); deps('main.js', graph); graph.discard('main.js')
+pre = '<!-- modulepreload -->' + ''.join(f'\n  <link rel="modulepreload" href="js/{n}?v={v}" />' for n in sorted(graph)) + '\n  <!-- /modulepreload -->'
+if '<!-- modulepreload -->' in html:
+    html = re.sub(r'<!-- modulepreload -->.*?<!-- /modulepreload -->', lambda m: pre, html, flags=re.S)
+else:
+    html = html.replace('  <script type="module" src="js/main.js', '  ' + pre + '\n  <script type="module" src="js/main.js', 1)
 (root / 'index.html').write_text(html)
 print('stamped version', v, 'for', len(files), 'files')

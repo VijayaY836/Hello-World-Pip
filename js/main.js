@@ -21,8 +21,6 @@ import { initMusic } from './music.js';
 // Memories first, so this visit is counted.
 initMemory();
 
-initSky(); // twinkling stars, sparkles, shooting stars and dream-motes
-
 // The sky drifts a little as you scroll (parallax depth for the star layers).
 (() => {
   const sky = document.querySelector('.sky');
@@ -132,19 +130,26 @@ window.addEventListener('pip:room', (e) => {
   ROOMS[room]().then(() => dispatchEvent(new Event('resize'))).catch((err) => console.error('room setup failed', err));
 });
 
-initDreamMap(); // the home page's living map
 initHubs(); // the card grids on Work and Play
-initMusic(); // gentle background music while sound is on (different by day and by night)
-initEggs(); // the footer town (on every page)
 
-// --- Side quests ---
-initSparkles();
-initClickSounds();
-initCounter();
-initChat();
-initChaos();
-
-// Pages last: showing the first page also sets it up.
+// Pages: showing the first page also sets it up.
 initRouter();
+
+// Everything else wakes up just AFTER the first paint, so the page appears first and comes alive a beat later
+// (on a phone that's the difference between seeing Pip at once and waiting for every script to run).
+const afterPaint = (fn) => requestAnimationFrame(() => setTimeout(fn, 0));
+afterPaint(() => {
+  initDreamMap(); // the home page's living map
+  initSky(); // twinkling stars, sparkles, shooting stars and dream-motes
+  initEggs(); // the footer town (on every page)
+  initChat();
+  afterPaint(() => { // and the side quests a moment after that
+    initMusic(); // gentle background music while sound is on (different by day and by night)
+    initSparkles();
+    initClickSounds();
+    initCounter();
+    initChaos();
+  });
+});
 
 console.log('%c☾ hi, curious one! pip says: someone in town is still awake…', 'color:#ff9fbd;font:16px/1.4 monospace');

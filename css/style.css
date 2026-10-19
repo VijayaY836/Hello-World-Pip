@@ -1956,3 +1956,8 @@ html { cursor: var(--cur); }
 .caption__dots button[aria-current="step"]::before { background: var(--accent); border-color: var(--accent); transform: scale(1.25); }
 .caption__dots button:hover::before { transform: scale(1.2); }
 .caption__dots { right: 10px; top: 8px; }
+
+/* The right page shows from the very first paint (a tiny script in <head> sets data-view from the link),
+   so Story / Work / Play never wait for the JavaScript to unhide them. The router then keeps `hidden` in step. */
+html[data-view="story"] #view-story, html[data-view="work"] #view-work, html[data-view="play"] #view-play { display: block; }
+html[data-view="story"] #view-home, html[data-view="work"] #view-home, html[data-view="play"] #view-home { display: none; }

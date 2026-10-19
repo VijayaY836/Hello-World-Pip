@@ -307,5 +307,5 @@ export function initDreamMap() {
   addEventListener('resize', () => { if (!section.clientHeight) return; const mid = (view.scrollLeft + view.clientWidth / 2) / scale; size(); centerOn(mid, false); });
   addEventListener('pip:view', (e) => { if (e.detail === 'home') { requestAnimationFrame(() => { if (!size()) return; markVisited(); if (!view.dataset.ready) { home(); startLeft = view.scrollLeft; view.dataset.ready = '1'; } }); } });
   size();
-  requestAnimationFrame(() => { if (!size()) return; home(); startLeft = view.scrollLeft; view.dataset.ready = '1'; });
+  requestAnimationFrame(() => { if (!size()) return; markVisited(); home(); startLeft = view.scrollLeft; view.dataset.ready = '1'; });
 }
