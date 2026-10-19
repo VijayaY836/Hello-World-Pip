@@ -142,6 +142,13 @@ const afterPaint = (fn) => requestAnimationFrame(() => setTimeout(fn, 0));
 afterPaint(() => {
   initDreamMap(); // the home page's living map
   initDesk(); // the little files on the map (about_me.txt, memories.exe)
+  // "scroll for credits!" glides down to the credits in the footer
+  document.querySelector('.credits-cue a')?.addEventListener('click', (e) => {
+    const credits = document.getElementById('credits-title');
+    if (!credits) return;
+    e.preventDefault();
+    credits.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+  });
   initSky(); // twinkling stars, sparkles, shooting stars and dream-motes
   initEggs(); // the footer town (on every page)
   initChat();

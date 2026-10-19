@@ -14,15 +14,18 @@ export function initDesk() {
   const section = document.getElementById('hello');
   const desk = document.getElementById('dmDesk');
   const card = section?.querySelector('.dm__cartouche');
-  if (!section || !desk || !card) return;
+  const nav = section?.querySelector('.dm__nav');
+  if (!section || !desk || !card || !nav) return;
 
-  // ---------- the icons sit just under the title card (which shrinks while you explore) ----------
+  // ---------- the icons sit top-right, under "back to pip" (on phones, under the title card too, which shrinks while you explore) ----------
   function place() {
     if (!section.clientHeight) return; // home page not showing
-    const top = card.getBoundingClientRect().bottom - section.getBoundingClientRect().top;
-    desk.style.top = `${Math.round(top + (phone.matches ? 8 : 14))}px`;
+    const s = section.getBoundingClientRect().top;
+    const below = phone.matches ? Math.max(card.getBoundingClientRect().bottom, nav.getBoundingClientRect().bottom) : nav.getBoundingClientRect().bottom;
+    desk.style.top = `${Math.round(below - s + (phone.matches ? 8 : 12))}px`;
   }
   new ResizeObserver(place).observe(card);
+  new ResizeObserver(place).observe(nav);
   card.addEventListener('transitionend', place);
   addEventListener('resize', place);
   addEventListener('pip:view', (e) => { if (e.detail === 'home') requestAnimationFrame(place); });
@@ -64,7 +67,7 @@ export function initDesk() {
     win.classList.add('is-floating');
     section.appendChild(win);
 
-    // where it opens: beside the icons (a little cascade if both are open); on phones, full width just under the icons
+    // where it opens: to the left of the icons (a little cascade if both are open); on phones, full width just under the icons
     if (phone.matches) {
       const top = desk.getBoundingClientRect().bottom - section.getBoundingClientRect().top + 6;
       win.style.top = `${Math.round(top)}px`;
@@ -72,7 +75,7 @@ export function initDesk() {
     } else {
       const s = section.getBoundingClientRect(), d = desk.getBoundingClientRect();
       const n = open.size;
-      const [x, y] = clamp(win, d.right - s.left + 24 + n * 36, d.top - s.top - 40 + n * 36);
+      const [x, y] = clamp(win, d.left - s.left - win.offsetWidth - 20 - n * 36, d.top - s.top + n * 36);
       win.style.left = `${x}px`; win.style.top = `${y}px`;
     }
     // zoom out of the icon it came from

@@ -186,7 +186,7 @@ Built for [**Baby's First Website**](https://hax.baby/baby-problem) by haX.baby,
 
 <table>
 <tr><th>required in every entry</th><th></th><th>where</th></tr>
-<tr><td>what pip is</td><td>✅</td><td>the title card on the map + the <i>all about me</i> window</td></tr>
+<tr><td>what pip is</td><td>✅</td><td>the title card on the map + <code>about_me.txt</code> on Pip's desktop</td></tr>
 <tr><td>what pip does (3+ things)</td><td>✅</td><td>workbench (music box, nightlights, growth chart) + lullaby lab, storybook, delivery routes, dream workshop</td></tr>
 <tr><td>his story (not a wall of text)</td><td>✅</td><td>6 scroll-driven scenes, ~40 words each</td></tr>
 <tr><td>immersion</td><td>✅</td><td>eyes follow cursor / finger, nose boop, click sounds, a mute switch always in the top bar</td></tr>
@@ -224,7 +224,7 @@ Under the dreamy paint, this is a proper little old-school homepage:
 - 🖱️ **pixel-art cursors** like the old online games: a chunky arrow, a pointing glove for anything clickable, and grab / grabbing hands for dragging the map
 - 🔢 a rolling **hit counter odometer** and a real **guestbook**
 - 🏷️ tiny **88×31-style badges** in the footer (*best at 2 a.m. · made w/ &lt;HTML&gt; · 0 nightmares ✓ · Pip approved*)
-- 📜 a scrolling **marquee ribbon** (*★ now accepting dream requests ★ please do not wake the moths ★*)
+- 🖥️ a little **desktop on the map**: double-click-style pixel files (`about_me.txt`, `memories.exe`) that zoom open into draggable windows with working `_ □ ×` buttons
 - 🌀 a full **1999 chaos mode** with stickers, a web-ring badge and a bouncing screensaver
 - 🏘️ a **footer town** with a secret window, a console note for curious people, and an address bar sign: *🌙 Pip's Midnight Nursery*
 - 💾 hand-written **HTML, CSS and JavaScript**, no framework, no build step, view-source friendly
@@ -315,6 +315,7 @@ js/
   guestbook.js      the Dream Wall
   chat.js           whisper to pip (Pip chats back)
   memory.js         Pip remembers you
+  desk.js           Pip's desktop: the file icons on the map and their pop-up windows
   counter.js        the hit counter odometer
   chaos.js          Responsive Chaos Mode
   sparkles.js       sparkle cursor trail

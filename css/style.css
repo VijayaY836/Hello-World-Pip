@@ -1964,8 +1964,8 @@ html[data-view="story"] #view-home, html[data-view="work"] #view-home, html[data
 
 /* ---------- Pip's desktop: little files on the map that open real windows ---------- */
 .dm__desk {
-  position: absolute; left: var(--gutter); top: 230px; z-index: 2;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  position: absolute; right: var(--gutter); top: 120px; z-index: 2; /* top-right, under "back to pip" (like a Mac desktop) */
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
   transition: top .35s var(--ease-soft);
 }
 .dm__file {
@@ -2025,7 +2025,7 @@ html[data-view="story"] #view-home, html[data-view="work"] #view-home, html[data
 @keyframes win-zoom { from { transform: scale(.12); opacity: 0; } to { transform: none; opacity: 1; } }
 
 @media (max-width: 720px) {
-  .dm__desk { left: 8px; flex-direction: row; gap: 8px; }
+  .dm__desk { right: 8px; top: 150px; flex-direction: row; gap: 8px; }
   .dm__file { width: auto; padding: 4px 3px; }
   .dm__file-icon { width: 40px; height: 40px; }
   .dm__file-name { font-size: 11.5px; }
@@ -2033,3 +2033,16 @@ html[data-view="story"] #view-home, html[data-view="work"] #view-home, html[data
   .win.is-floating .win__b[data-act="max"] { display: none; } /* it already fills the screen */
 }
 @media (prefers-reduced-motion: reduce) { .dm__file-badge { animation: none; } }
+
+/* the home page ends with a little sign pointing down to the credits */
+.credits-cue { margin: 0; padding: 22px var(--gutter) 26px; text-align: center; }
+.credits-cue a {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 18px; border-radius: 999px;
+  background: color-mix(in srgb, var(--win-solid) 72%, transparent); border: 2px solid var(--win-edge);
+  color: var(--gold); font: 600 1.15rem var(--font-hand); text-decoration: none;
+  transition: transform .3s var(--ease-bounce), border-color .3s;
+}
+.credits-cue a:hover { transform: translateY(-2px) rotate(-1.5deg); border-color: var(--gold); }
+.credits-cue span { display: inline-block; font-size: .8em; animation: cue-bob 1.6s ease-in-out infinite; }
+@keyframes cue-bob { 50% { transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) { .credits-cue span { animation: none; } }
