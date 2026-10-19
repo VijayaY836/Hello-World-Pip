@@ -1639,7 +1639,7 @@ html[data-view="home"] .sky__moon { opacity: 0; } /* the painting has its own mo
   .dm__compass .cp { width: 30px; height: 30px; }
   #view-home .dm__pip .pip { width: 190px; }
   #view-home .dm__pip .bubble { font-size: 14px; max-width: 240px; }
-  .dm__hint { bottom: 62px; font-size: .92rem; }
+  .dm__hint { bottom: 92px; font-size: .92rem; } /* above the desktop icons */
 }
 @media (prefers-reduced-motion: reduce) {
   .dm__glow, .dm__fall::before, .dm__fly, .dm__plane, .dm__pin, .dm__moon, .dm__hint, .dm__dust.is-lit { animation: none !important; }
@@ -1922,9 +1922,8 @@ html:is([data-view="story"], [data-view="work"], [data-view="play"], [data-view=
 
 /* ---------- Pip's desktop: little files on the map that open real windows ---------- */
 .dm__desk {
-  position: absolute; right: var(--gutter); top: 120px; z-index: 2; /* top-right, under "back to pip" (like a Mac desktop) */
-  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
-  transition: top .35s var(--ease-soft);
+  position: absolute; left: var(--gutter); bottom: 14px; z-index: 2; /* bottom-left corner, like files on a desktop */
+  display: flex; flex-direction: row; align-items: flex-end; gap: 8px;
 }
 .dm__file {
   display: grid; justify-items: center; gap: 4px; width: 96px; padding: 6px 4px 5px;
@@ -1983,7 +1982,7 @@ html:is([data-view="story"], [data-view="work"], [data-view="play"], [data-view=
 @keyframes win-zoom { from { transform: scale(.12); opacity: 0; } to { transform: none; opacity: 1; } }
 
 @media (max-width: 720px) {
-  .dm__desk { right: 8px; top: 150px; flex-direction: row; gap: 8px; }
+  .dm__desk { left: 8px; bottom: 8px; gap: 8px; }
   .dm__file { width: auto; padding: 4px 3px; }
   .dm__file-icon { width: 40px; height: 40px; }
   .dm__file-name { font-size: 11.5px; }
