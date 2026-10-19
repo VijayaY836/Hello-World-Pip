@@ -1995,7 +1995,14 @@ html:is([data-view="story"], [data-view="work"], [data-view="play"], [data-view=
 @media (prefers-reduced-motion: reduce) { .dm__file-badge { animation: none; } }
 
 /* the home page ends with a little sign pointing down to the credits */
-.credits-cue { margin: 0; padding: 22px var(--gutter) 26px; text-align: center; }
+.credits-cue { position: absolute; left: 50%; bottom: 14px; z-index: 3; margin: 0; translate: -50% 0; white-space: nowrap; } /* on the map, at the bottom of the first screen */
+.credits-cue a { box-shadow: 0 10px 22px -10px rgba(10, 6, 30, .8); }
+.dm__hint { bottom: 64px; } /* sits above the credits sign */
+@media (max-width: 720px) {
+  .credits-cue { left: auto; right: 10px; bottom: 98px; translate: none; } /* phones: just above the icon box and chat button */
+  .credits-cue a { padding: 5px 12px; font-size: .95rem; }
+  .dm__hint { bottom: 144px; }
+}
 .credits-cue a {
   display: inline-flex; align-items: center; gap: 8px; padding: 7px 18px; border-radius: 999px;
   background: color-mix(in srgb, var(--win-solid) 72%, transparent); border: 2px solid var(--win-edge);

@@ -337,7 +337,8 @@ docs/screenshots/   the pictures in this README
 - **Pip, the music box and the lantern:** the official haX.baby Track 1 asset pack. Backgrounds removed; the eye glints were painted out and are redrawn live in CSS so they can follow you. The story uses the pack's portrait of Pip, with its lettering painted out.
 - **Nana Noctua illustration:** added by Vij for this site.
 - **The dreamland map:** an AI-generated painting chosen by Vij, shown at its original resolution (cut into tiles, nothing upscaled).
-- **The Story, Work and Play paintings:** added by Vij for this site (the moon painted out of each so the site's own moon can shine).
+- **The Story, Work and Play paintings and the card pictures:** AI-generated with ChatGPT, chosen by Vij (the moon painted out of each so the site's own moon can shine).
+- **Desktop file icons and the Counting Sheep meadow:** hand-drawn pixel art and canvas drawings for this site.
 - **Wisp, Mumble, the town, the storybook pictures, the Dream Workshop scenes, the basket and the grumpy mitten:** hand-drawn SVG for this site.
 - **Pixel cursors:** hand-drawn 16×16 pixel art for this site.
 - **Pixel icons:** [Pixelarticons](https://pixelarticons.com) by Gerrit Halfmann (MIT licence), for the top-bar buttons, arrows and play controls. The bedtime stories are original.
