@@ -1999,9 +1999,10 @@ html:is([data-view="story"], [data-view="work"], [data-view="play"], [data-view=
 .credits-cue a { box-shadow: 0 10px 22px -10px rgba(10, 6, 30, .8); }
 .dm__hint { bottom: 64px; } /* sits above the credits sign */
 @media (max-width: 720px) {
-  .credits-cue { left: auto; right: 10px; bottom: 98px; translate: none; } /* phones: just above the icon box and chat button */
-  .credits-cue a { padding: 5px 12px; font-size: .95rem; }
-  .dm__hint { bottom: 144px; }
+  .credits-cue { left: auto; right: 12px; bottom: 78px; translate: none; } /* phones: a small "credits" tab just above the chat button */
+  .credits-cue a { padding: 5px 11px; font-size: .9rem; gap: 5px; }
+  .credits-cue__long { display: none; }
+  .dm__hint { bottom: 128px; }
 }
 .credits-cue a {
   display: inline-flex; align-items: center; gap: 8px; padding: 7px 18px; border-radius: 999px;
@@ -2010,7 +2011,9 @@ html:is([data-view="story"], [data-view="work"], [data-view="play"], [data-view=
   transition: transform .3s var(--ease-bounce), border-color .3s;
 }
 .credits-cue a:hover { transform: translateY(-2px) rotate(-1.5deg); border-color: var(--gold); }
-.credits-cue span { display: inline-block; font-size: .8em; animation: cue-bob 1.6s ease-in-out infinite; }
+.credits-cue span[aria-hidden] { display: inline-block; font-size: .8em; animation: cue-bob 1.6s ease-in-out infinite; }
+.credits-cue__short { display: none; }
+@media (max-width: 720px) { .credits-cue__short { display: inline; } }
 @keyframes cue-bob { 50% { transform: translateY(4px); } }
 @media (prefers-reduced-motion: reduce) { .credits-cue span { animation: none; } }
 
